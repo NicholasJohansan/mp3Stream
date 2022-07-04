@@ -14,4 +14,23 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/interstate</item>
     </style>
+
+    <style name="Theme.Mp3Stream.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ExpandedTitle">
+        <item name="android:textSize">34dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CollapsedTitle">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BottomNavText">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
