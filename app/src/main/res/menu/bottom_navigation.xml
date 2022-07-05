@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bottom_nav_library"
-        android:icon="@drawable/ic_baseline_library_music_24"
+        android:icon="@drawable/icon_bottom_nav_library_selector"
         android:title="Library" />
 
     <item
         android:id="@+id/bottom_nav_search"
-        android:icon="@drawable/ic_baseline_search_24"
+        android:icon="@drawable/icon_bottom_nav_search_selector"
         android:title="Search" />
 
     <item
         android:id="@+id/bottom_nav_equalizer"
-        android:icon="@drawable/ic_baseline_equalizer_24"
+        android:icon="@drawable/icon_bottom_nav_equalizer_selector"
         android:title="Equalizer" />
 </menu>

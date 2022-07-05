@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(navListener);
+        bottomNav.setItemIconTintList(null); // This line is needed to have gradient icons work
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment_container, new LibraryFragment()).commit();

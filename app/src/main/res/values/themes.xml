@@ -12,9 +12,15 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@color/dark_gray</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/gray</item>
         <item name="android:fontFamily">@font/interstate</item>
+
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
 
+    <!--  Set No Action Bar  -->
     <style name="Theme.Mp3Stream.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -25,7 +31,30 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="BottomNavText">
+
+    <!--  Material Components Theming  -->
+
+    <!--  Start: Bottom Navigation Bar Styles  -->
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+        <item name="itemBackground">@color/dark_gray</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavigationTextAppearance</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationTextAppearance</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorOnPrimary">@color/orange</item>
+        <item name="colorOnSurface">@color/light_gray</item>
+        <item name="colorSurface">@color/dark_gray</item>
+    </style>
+
+    <style name="BottomNavigationTextAppearance">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="BottomNavigationTheme">
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+    <!--  End: Bottom Navigation Bar Styles  -->
 </resources>
