@@ -11,12 +11,18 @@ import androidx.fragment.app.Fragment;
 
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class EqualizerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_equalizer, container, false);
+        setUpStyles(fragmentView);
         return fragmentView;
+    }
+
+    private void setUpStyles(View fragmentView) {
+        UiUtils.setToolbarGradientTitle(fragmentView);
     }
 }

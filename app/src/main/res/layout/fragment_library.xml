@@ -14,9 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Library"
-            app:titleTextAppearance="@style/AppBarTitle"
-            android:theme="@style/AppBarTitle"/>
+            app:title="Library" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

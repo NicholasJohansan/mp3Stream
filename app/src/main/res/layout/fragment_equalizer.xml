@@ -14,8 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Equalizer"
-            app:titleTextAppearance="@style/AppBarTitle"/>
+            app:title="Equalizer" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

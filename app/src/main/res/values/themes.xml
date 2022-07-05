@@ -17,14 +17,10 @@
         <item name="android:background">@color/gray</item>
         <item name="android:fontFamily">@font/interstate</item>
 
+        <!--    Material Components Theming    -->
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
     </style>
-
-    <style name="AppBarTitle">
-        <item name="android:textSize">34dp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
 
     <!--  Material Components Theming  -->
 
@@ -51,4 +47,21 @@
         <item name="android:background">@color/dark_gray</item>
     </style>
     <!--  End: Bottom Navigation Bar Styles  -->
+
+    <!--  Start: Toolbar Styles  -->
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="colorPrimary">@color/dark_gray</item>
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearance">
+        <item name="android:textSize">34dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--  End: Toolbar Styles  -->
 </resources>
