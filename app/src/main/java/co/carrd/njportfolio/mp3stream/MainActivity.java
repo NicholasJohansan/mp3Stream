@@ -17,14 +17,10 @@ import co.carrd.njportfolio.mp3stream.Fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    public CollapsingToolbarLayout toolbarLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        toolbarLayout = findViewById(R.id.toolbar_layout);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(navListener);

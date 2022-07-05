@@ -17,7 +17,6 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_search, container, false);
-        ((MainActivity) getContext()).toolbarLayout.setTitle("Search");
         return fragmentView;
     }
 }

@@ -19,7 +19,6 @@ public class LibraryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_library, container, false);
-        ((MainActivity) getContext()).toolbarLayout.setTitle("Library");
         return fragmentView;
     }
 }
