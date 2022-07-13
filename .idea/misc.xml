@@ -27,6 +27,18 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_equalizer.xml" value="0.18795289855072464" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_library.xml" value="0.14030769642485683" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_search.xml" value="0.18795289855072464" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_equalizer.xml" value="0.2265" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_equalizer_selected.xml" value="0.2265" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_equalizer_selector.xml" value="0.2115" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_library.xml" value="0.2115" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_library_selected.xml" value="0.2115" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_library_selector.xml" value="0.2115" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_search.xml" value="0.2115" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_search_selected.xml" value="0.2115" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_search_selector.xml" value="0.2115" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/equalizer/fragment_equalizer.xml" value="0.1703125" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/library/layout/fragment_library.xml" value="0.2436923148431724" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/fragment_search.xml" value="0.1107692340196238" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/menu/bottom_navigation.xml" value="0.1" />
       </map>
     </option>
