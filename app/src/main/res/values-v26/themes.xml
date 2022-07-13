@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.App.SearchFieldEditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="colorPrimary">?attr/colorSurface</item>
+        <item name="colorOnSurface">@color/orange</item>
+        <item name="android:defaultFocusHighlightEnabled">true</item>
+    </style>
+</resources>

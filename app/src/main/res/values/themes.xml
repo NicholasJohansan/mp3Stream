@@ -98,4 +98,42 @@
         <item name="cornerRadius">8dp</item>
     </style>
     <!--  End: Dropdown Menu Styles  -->
+
+    <!--  Start: Search Bar Styles  -->
+    <style name="Widget.App.SearchField" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.SearchField</item>
+        <item name="hintTextColor">@color/dark_orange</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="colorOutline">@color/orange</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="android:textColorHint">@color/orange</item>
+        <item name="boxStrokeColor">@color/search_field_text_input_outline_color</item>
+        <item name="editTextStyle">@style/Widget.App.SearchFieldEditText</item>
+        <item name="startIconDrawable">@drawable/icon_bottom_nav_search_selected</item>
+        <item name="startIconTint">@color/dark_orange</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.App.SearchFieldEditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:defaultFocusHighlightEnabled" tools:ignore="NewApi">false</item>
+    </style>
+
+    <style name="ThemeOverlay.App.SearchField" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@android:color/transparent</item>
+<!--        <item name="autoCompleteTextViewStyle">@style/Widget.App.AutoCompleteTextView.DropdownMenu</item>-->
+    </style>
+
+    <style name="Widget.App.AutoCompleteTextView.SearchField" parent="Widget.Material3.AutoCompleteTextView.FilledBox">
+    </style>
+
+    <style name="SearchFieldTheme">
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+    <!--  End: Search Bar Styles  -->
 </resources>
