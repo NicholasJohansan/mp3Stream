@@ -9,6 +9,7 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_baseline_library_music_24.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_equalizer_selector.xml" value="0.224" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_bottom_nav_library.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_bottom_nav_library_selected.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_bottom_nav_library_selector.xml" value="0.177" />
@@ -38,7 +39,8 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_search_selector.xml" value="0.2115" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/equalizer/fragment_equalizer.xml" value="0.1703125" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/library/layout/fragment_library.xml" value="0.2436923148431724" />
-        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/fragment_search.xml" value="0.1107692340196238" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/drawable/tab_indicator.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/fragment_search.xml" value="0.18461539003270633" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/menu/bottom_navigation.xml" value="0.1" />
       </map>
     </option>
@@ -48,5 +50,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.18461539003270633" />
+      </ProjectState>
+    </option>
   </component>
 </project>
