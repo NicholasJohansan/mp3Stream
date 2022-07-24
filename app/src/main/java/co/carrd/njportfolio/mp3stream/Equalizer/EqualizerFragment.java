@@ -1,4 +1,4 @@
-package co.carrd.njportfolio.mp3stream.Fragments;
+package co.carrd.njportfolio.mp3stream.Equalizer;
 
 import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;

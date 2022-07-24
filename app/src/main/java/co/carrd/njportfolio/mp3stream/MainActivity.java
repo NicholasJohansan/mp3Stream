@@ -1,19 +1,16 @@
 package co.carrd.njportfolio.mp3stream;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import co.carrd.njportfolio.mp3stream.Fragments.EqualizerFragment;
-import co.carrd.njportfolio.mp3stream.Fragments.LibraryFragment;
-import co.carrd.njportfolio.mp3stream.Fragments.SearchFragment;
+import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerFragment;
+import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
+import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
 

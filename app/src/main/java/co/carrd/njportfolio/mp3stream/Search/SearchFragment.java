@@ -1,4 +1,4 @@
-package co.carrd.njportfolio.mp3stream.Fragments;
+package co.carrd.njportfolio.mp3stream.Search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
