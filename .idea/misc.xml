@@ -3,13 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable-v24/ic_launcer_foreground.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable-v24/ic_launchr_foreground.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable-v24/ic_launer_foreground.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/bottom_navigation.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_baseline_equalizer_24.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_baseline_equalizer_color.xml" value="0.224" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_baseline_library_music_24.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_equalizer_selector.xml" value="0.224" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_launche_foreground.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/ic_launchr_background.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_bottom_nav_library.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_bottom_nav_library_selected.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_bottom_nav_library_selector.xml" value="0.177" />
@@ -28,6 +35,9 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_equalizer.xml" value="0.18795289855072464" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_library.xml" value="0.14030769642485683" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_search.xml" value="0.18795289855072464" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/ic_launcher_background.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/ic_launcher_foreground.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/ic_launchr_foreground.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_equalizer.xml" value="0.2265" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_equalizer_selected.xml" value="0.2265" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/bottom_nav/drawable/icon_bottom_nav_equalizer_selector.xml" value="0.2115" />
@@ -42,6 +52,8 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/drawable/tab_indicator.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/fragment_search.xml" value="0.18461539003270633" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/menu/bottom_navigation.xml" value="0.1" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.177" />
       </map>
     </option>
   </component>
