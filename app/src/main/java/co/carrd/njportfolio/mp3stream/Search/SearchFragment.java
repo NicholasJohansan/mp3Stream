@@ -24,6 +24,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.android.material.textfield.TextInputLayout;
 
 import co.carrd.njportfolio.mp3stream.MainActivity;
+import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Search.Classes.SearchResultsFragment;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
@@ -33,6 +34,8 @@ public class SearchFragment extends Fragment {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private AutoCompleteTextView searchEditText;
+
+    private MutableLiveData<String> searchQuery = new MutableLiveData<>("");
 
     private SearchResultsFragment[] searchResultsFragments = new SearchResultsFragment[] {
             new SearchResultsFragment("Songs"),
@@ -91,25 +94,25 @@ public class SearchFragment extends Fragment {
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchEditText.dismissDropDown();
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,
-                        new String[] {});
-                searchEditText.setAdapter(arrayAdapter);
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 Log.d("lel", charSequence.toString());
                 String newText = charSequence.toString();
-                // TODO: Set To New List
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,
-                        new String[] {
-                        });
+                if (!newText.equals("")) {
+                    MainApplication.getInstance().getSoundcloudApi()
+                            .getSearchSuggestions(newText, data -> {
+                                getActivity().runOnUiThread(() -> {
+                                    searchEditText.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, data));
+                                    searchEditText.showDropDown();
+                                });
+                            });
+                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                searchEditText.showDropDown();
             }
         });
     }
