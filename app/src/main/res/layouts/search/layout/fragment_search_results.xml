@@ -17,4 +17,12 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+    <include
+        layout="@layout/view_not_searched"
+        android:id="@+id/view_not_searched"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="visible"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
