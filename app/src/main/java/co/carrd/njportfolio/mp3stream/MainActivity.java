@@ -14,6 +14,10 @@ import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment libraryFragment = new LibraryFragment();
+    private Fragment searchFragment = new SearchFragment();
+    private Fragment equalizerFragment = new EqualizerFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setItemIconTintList(null); // This line is needed to have gradient icons work
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_fragment_container, new LibraryFragment()).commit();
+                .replace(R.id.main_fragment_container, libraryFragment).commit();
     }
 
     private NavigationBarView.OnItemSelectedListener navListener = item -> {
@@ -32,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.bottom_nav_library:
-                selectedFragment = new LibraryFragment();
+                selectedFragment = libraryFragment;
                 break;
             case R.id.bottom_nav_search:
-                selectedFragment = new SearchFragment();
+                selectedFragment = searchFragment;
                 break;
             case R.id.bottom_nav_equalizer:
-                selectedFragment = new EqualizerFragment();
+                selectedFragment = equalizerFragment;
                 break;
         }
 

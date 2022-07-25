@@ -25,6 +25,13 @@ public class SearchFragment extends Fragment {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
 
+//    private SearchResultsFragment[] searchResultsFragments = new SearchResultsFragment[] {
+//            new SearchResultsFragment("Songs"),
+//            new SearchResultsFragment("Playlists"),
+//            new SearchResultsFragment("Albums"),
+//            new SearchResultsFragment("Artists")
+//    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,7 +52,7 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Set Up ViewPager2 + TabLayout
-        viewPager.setAdapter(new SearchResultsFragmentAdapter(this));
+        viewPager.setAdapter(new SearchResultsFragmentAdapter(this.requireActivity()));
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             String text = "";
             switch (position) {
@@ -67,14 +74,14 @@ public class SearchFragment extends Fragment {
     }
 
     private class SearchResultsFragmentAdapter extends FragmentStateAdapter {
+        public SearchResultsFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
+        }
         private SearchResultsFragment songSearchResultsFragment = new SearchResultsFragment("Songs");
         private SearchResultsFragment playlistSearchResultsFragment = new SearchResultsFragment("Playlists");
         private SearchResultsFragment albumSearchResultsFragment = new SearchResultsFragment("Albums");
         private SearchResultsFragment artistSearchResultsFragment = new SearchResultsFragment("Artists");
 
-        public SearchResultsFragmentAdapter(@NonNull Fragment fragment) {
-            super(fragment);
-        }
 
         @NonNull
         @Override
