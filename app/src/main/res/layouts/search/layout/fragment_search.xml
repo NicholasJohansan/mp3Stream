@@ -40,7 +40,14 @@
             android:layout_marginHorizontal="16dp"
             android:hint="Search">
 
-            <com.google.android.material.textfield.TextInputEditText
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/search_text_field"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:maxLines="1"-->
+<!--                android:inputType="text"/>-->
+
+            <AutoCompleteTextView
                 android:id="@+id/search_text_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
