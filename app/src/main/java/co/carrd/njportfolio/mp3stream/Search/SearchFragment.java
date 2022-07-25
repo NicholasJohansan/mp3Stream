@@ -1,15 +1,20 @@
 package co.carrd.njportfolio.mp3stream.Search;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,14 +39,15 @@ public class SearchFragment extends Fragment {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private AutoCompleteTextView searchEditText;
+    private TextInputLayout searchFieldLayout;
 
-    private MutableLiveData<String> searchQuery = new MutableLiveData<>("");
+    public String searchQuery = null;
 
     private SearchResultsFragment[] searchResultsFragments = new SearchResultsFragment[] {
-            new SearchResultsFragment("Songs"),
-            new SearchResultsFragment("Playlists"),
-            new SearchResultsFragment("Albums"),
-            new SearchResultsFragment("Artists")
+            new SearchResultsFragment("Songs", this),
+            new SearchResultsFragment("Playlists", this),
+            new SearchResultsFragment("Albums", this),
+            new SearchResultsFragment("Artists", this)
     };
 
     @Nullable
@@ -53,6 +59,7 @@ public class SearchFragment extends Fragment {
         viewPager = fragmentView.findViewById(R.id.search_view_pager);
         tabLayout = fragmentView.findViewById(R.id.search_tab_layout);
         searchEditText = fragmentView.findViewById(R.id.search_text_field);
+        searchFieldLayout = fragmentView.findViewById(R.id.search_field_layout);
 
         // Set Up Styles
         UiUtils.setToolbarGradientTitle(fragmentView);
@@ -86,11 +93,7 @@ public class SearchFragment extends Fragment {
         }).attach();
 
         // Set Up Search Edit Text
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,
-                new String[] {
-                        "ok"
-                });
-        searchEditText.setAdapter(arrayAdapter);
+        searchEditText.setText(searchQuery, false);
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -114,6 +117,27 @@ public class SearchFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
             }
+        });
+        searchEditText.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                // Stop Input
+                InputMethodManager in = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(textView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                searchEditText.dismissDropDown();
+                textView.clearFocus();
+
+                // Submit Input
+                String input = textView.getText().toString();
+                searchQuery = input;
+                for (SearchResultsFragment fragment : searchResultsFragments) {
+                    fragment.submitSearch(input);
+                }
+
+                return true;
+            }
+            return false;
         });
     }
 
