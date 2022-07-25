@@ -42,6 +42,8 @@ public class SearchFragment extends Fragment {
     private TextInputLayout searchFieldLayout;
 
     public String searchQuery = null;
+    private String latestSearchQuery = null;
+    private boolean searchOpened = false;
 
     private SearchResultsFragment[] searchResultsFragments = new SearchResultsFragment[] {
             new SearchResultsFragment("Songs", this),
@@ -101,14 +103,21 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Log.d("lel", charSequence.toString());
                 String newText = charSequence.toString();
+
+                if (searchQuery != null && searchQuery.equals(newText) && !searchOpened) return;
+
+                latestSearchQuery = newText;
+                searchOpened = true;
+
                 if (!newText.equals("")) {
                     MainApplication.getInstance().getSoundcloudApi()
                             .getSearchSuggestions(newText, data -> {
                                 getActivity().runOnUiThread(() -> {
-                                    searchEditText.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, data));
-                                    searchEditText.showDropDown();
+                                    if (latestSearchQuery.equals(newText) && searchOpened) {
+                                        searchEditText.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, data));
+                                        searchEditText.showDropDown();
+                                    }
                                 });
                             });
                 }
@@ -122,10 +131,14 @@ public class SearchFragment extends Fragment {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
+                // Clear Suggestions
+                searchEditText.dismissDropDown();
+                searchOpened = false;
+                searchEditText.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, new String[] {}));
+
                 // Stop Input
                 InputMethodManager in = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(textView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                searchEditText.dismissDropDown();
                 textView.clearFocus();
 
                 // Submit Input
