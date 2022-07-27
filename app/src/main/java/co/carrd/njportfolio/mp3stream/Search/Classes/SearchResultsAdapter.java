@@ -1,6 +1,10 @@
 package co.carrd.njportfolio.mp3stream.Search.Classes;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +12,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-//import com.bumptech.glide.Glide;
-//import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,11 +92,45 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 //        return BitmapFactory.decodeStream((new URL(imageUrl)).openConnection().getInputStream());
 //    }
 
+    private static void loadViewholderImage(View itemView, ImageView imageView, String imageUrl) {
+
+        // Create placeholder progressbar while loading image
+        CircularProgressDrawable progressDrawable = new CircularProgressDrawable(itemView.getContext());
+        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.gray, null));
+        progressDrawable.setColorFilter(ResourcesCompat.getColor(itemView.getResources(), R.color.orange, null), PorterDuff.Mode.SCREEN);
+        progressDrawable.setStrokeWidth(5f);
+        progressDrawable.setCenterRadius(40f);
+        progressDrawable.start();
+
+        // Load with glide
+        imageUrl = imageUrl == null ? "" : imageUrl;
+        Glide.with(itemView)
+                .load(imageUrl)
+                .error(R.drawable.ic_launcher_foreground)
+                .placeholder(progressDrawable)
+                .override(Target.SIZE_ORIGINAL)
+                .fitCenter()
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.light_gray, null));
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.light_gray, null));
+                        return false;
+                    }
+                })
+                .into(imageView);
+    }
+
     public class SongResultViewHolder extends RecyclerView.ViewHolder {
         private TextView songNameTextView;
         private TextView artistTextView;
         private TextView durationTextView;
-//        private ImageView ivCoverArt;
+        private ImageView coverImageView;
         private View itemView;
 
         public SongResultViewHolder(@NonNull View itemView) {
@@ -91,24 +138,19 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             songNameTextView = itemView.findViewById(R.id.song_result_item_name);
             artistTextView = itemView.findViewById(R.id.song_result_item_artist);
             durationTextView = itemView.findViewById(R.id.song_result_item_duration);
-//            ivCoverArt = itemView.findViewById(R.id.itemSongResultCoverImg);
+            coverImageView = itemView.findViewById(R.id.song_result_item_cover);
             this.itemView = itemView;
         }
 
         public void bindSong(Song song) {
+
             songNameTextView.setText(song.getTitle());
             artistTextView.setText(song.getArtist().getName());
             durationTextView.setText(song.getFriendlyDuration());
-//            String coverArtUrl = song.getCoverUrl();
-//            System.out.println(song.getTitle() + " " + coverArtUrl);
-//            coverArtUrl = coverArtUrl == null ? "" : coverArtUrl;
-//            Glide.with(itemView)
-//                    .load(coverArtUrl)
-//                    .error(R.drawable.ic_baseline_error_24)
-//                    .override(Target.SIZE_ORIGINAL)
-//                    .fitCenter()
-//                    .into(ivCoverArt);
-//            ivCoverArt.setImageResource(R.drawable.ic_launcher_foreground);
+
+            loadViewholderImage(itemView, coverImageView, song.getCoverUrl());
+
+
         }
     }
 }

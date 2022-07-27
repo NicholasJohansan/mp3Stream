@@ -100,6 +100,7 @@ public class SearchResultsFragment extends Fragment {
         else if (searchQuery != null) {
 
             if (searchQuery.equals("")) return;
+            recyclerView.smoothScrollToPosition(0);
             progressBar.setVisibility(View.VISIBLE);
             MainApplication.getInstance().getSoundcloudApi()
                     .searchTracks(searchQuery, songCol -> {
