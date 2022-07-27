@@ -135,6 +135,7 @@ public class ApiWrapper {
             int id = songData.getInt("id");
             String coverUrl = songData.getString("artwork_url").replace("large", "t500x500");
 
+            Log.d("Hello", bodyString);
             String partialStreamUrl = songData.getJSONObject("media")
                     .getJSONArray("transcodings")
                     .getJSONObject(1)

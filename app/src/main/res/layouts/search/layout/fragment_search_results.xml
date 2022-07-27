@@ -17,6 +17,29 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_results_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_song_result"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false"/>
+
+    <ProgressBar
+        android:id="@+id/search_endless_progress"
+        android:layout_width="wrap_content"
+        style="?android:progressBarStyle"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/orange"
+        android:indeterminateTintMode="src_atop"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <include
         layout="@layout/view_not_searched"
         android:id="@+id/view_not_searched"

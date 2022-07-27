@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -39,7 +40,6 @@ public class SearchFragment extends Fragment {
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
     private AutoCompleteTextView searchEditText;
-    private TextInputLayout searchFieldLayout;
 
     public String searchQuery = null;
     private String latestSearchQuery = null;
@@ -61,7 +61,6 @@ public class SearchFragment extends Fragment {
         viewPager = fragmentView.findViewById(R.id.search_view_pager);
         tabLayout = fragmentView.findViewById(R.id.search_tab_layout);
         searchEditText = fragmentView.findViewById(R.id.search_text_field);
-        searchFieldLayout = fragmentView.findViewById(R.id.search_field_layout);
 
         // Set Up Styles
         UiUtils.setToolbarGradientTitle(fragmentView);
