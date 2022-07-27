@@ -116,6 +116,13 @@ public class SearchResultsFragment extends Fragment {
     }
 
     public void setSearchResults(List<Object> searchResults, String nextUrl) {
+
+        if (searchResults.size() == 0) {
+            notSearchedView.setVisibility(View.GONE);
+            noResultsView.setVisibility(View.VISIBLE);
+            return;
+        }
+
         searchResultsAdapter.getSearchResults().setValue(searchResults);
         searchResultsAdapter.setNextUrl(nextUrl);
         searchResultsAdapter.notifyDataSetChanged();
