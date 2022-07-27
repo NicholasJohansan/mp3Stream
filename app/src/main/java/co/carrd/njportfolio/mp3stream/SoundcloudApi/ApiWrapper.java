@@ -20,6 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.SongCollection;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -39,6 +42,128 @@ public class ApiWrapper {
       client = new OkHttpClient();
       this.setClientId();
     }
+  }
+
+  public void searchTracks(String query, Consumer<SongCollection> consumer) {
+    // Construct endpoint url
+    query = Uri.encode(query);
+    String url = "https://api-v2.soundcloud.com/search/tracks?q=" + query + "&client_id=" + clientId
+            + "&limit=15";
+
+    // Fetch api response for songs
+    client.newCall(new Request.Builder().url(url).build()).enqueue(new Callback() {
+      @Override
+      public void onFailure(@NonNull Call call, @NonNull IOException e) {
+        e.printStackTrace();
+      }
+
+      @RequiresApi(api = Build.VERSION_CODES.N)
+      @Override
+      public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (!response.isSuccessful()) throw new IOException("Unexpected Code: " + response);
+          String bodyString = responseBody.string();
+
+          // Parse response into array of songs
+          JSONObject obj = new JSONObject(bodyString);
+          JSONArray songsDataArray = obj.getJSONArray("collection");
+          List<Song> songsArray = new ArrayList<>();
+          for (int i = 0; i < songsDataArray.length(); i++) {
+            JSONObject songData = (JSONObject) songsDataArray.get(i);
+            String title = songData.getString("title");
+            int duration = songData.getInt("duration");
+            int id = songData.getInt("id");
+            String coverUrl = songData.getString("artwork_url").replace("large", "t500x500");
+
+            String partialStreamUrl = songData.getJSONObject("media")
+                    .getJSONArray("transcodings")
+                    .getJSONObject(1)
+                    .getString("url");
+
+            JSONObject artistData = songData.getJSONObject("user");
+            String artistName = artistData.getString("username");
+            int artistId = artistData.getInt("id");
+            String artistAvatarUrl = artistData.getString("avatar_url");
+
+            songsArray.add(new Song(coverUrl, partialStreamUrl, title, duration, id,
+                    new PartialArtist(artistId, artistName, artistAvatarUrl)));
+          }
+
+          SongCollection searchedTracks = new SongCollection(
+                  songsArray,
+                  obj.getInt("total_results"),
+                  obj.has("next_href")
+                          ? obj.getString("next_href")
+                          : null
+          );
+
+
+          consumer.accept(searchedTracks);
+        } catch (JSONException e) {
+          e.printStackTrace();
+        }
+      }
+    });
+  }
+
+  public void getNextTracks(String nextUrl, Consumer<SongCollection> consumer) {
+    // Construct endpoint url
+    String url = nextUrl + "&client_id=" + clientId;
+
+    // Fetch api response for songs
+    client.newCall(new Request.Builder().url(url).build()).enqueue(new Callback() {
+      @Override
+      public void onFailure(@NonNull Call call, @NonNull IOException e) {
+        e.printStackTrace();
+      }
+
+      @RequiresApi(api = Build.VERSION_CODES.N)
+      @Override
+      public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+        try (ResponseBody responseBody = response.body()) {
+          if (!response.isSuccessful()) throw new IOException("Unexpected Code: " + response);
+          String bodyString = responseBody.string();
+
+          // Parse response into array of songs
+          JSONObject obj = new JSONObject(bodyString);
+          JSONArray songsDataArray = obj.getJSONArray("collection");
+          List<Song> songsArray = new ArrayList<>();
+          for (int i = 0; i < songsDataArray.length(); i++) {
+            JSONObject songData = (JSONObject) songsDataArray.get(i);
+            String title = songData.getString("title");
+            int duration = songData.getInt("duration");
+            int id = songData.getInt("id");
+            String coverUrl = songData.getString("artwork_url").replace("large", "t500x500");
+
+            String partialStreamUrl = songData.getJSONObject("media")
+                    .getJSONArray("transcodings")
+                    .getJSONObject(1)
+                    .getString("url");
+
+            JSONObject artistData = songData.getJSONObject("user");
+            String artistName = artistData.getString("username");
+            int artistId = artistData.getInt("id");
+            String artistAvatarUrl = artistData.getString("avatar_url");
+
+            songsArray.add(new Song(coverUrl, partialStreamUrl, title, duration, id,
+                    new PartialArtist(artistId, artistName, artistAvatarUrl)));
+          }
+
+          SongCollection searchedTracks = new SongCollection(
+                  songsArray,
+                  obj.getInt("total_results"),
+                  obj.has("next_href")
+                          ? obj.getString("next_href")
+                          : null
+          );
+
+
+          consumer.accept(searchedTracks);
+        } catch (JSONException e) {
+          e.printStackTrace();
+        }
+      }
+    });
   }
 
   /**
