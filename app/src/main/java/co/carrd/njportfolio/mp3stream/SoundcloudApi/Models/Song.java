@@ -20,27 +20,40 @@ public class Song {
   }
 
   public String getCoverUrl() {
-    return this.coverUrl;
+    return coverUrl;
   }
 
   public URI getPartialStreamUrl() {
-    return this.partialStreamUrl;
+    return partialStreamUrl;
   }
   
   public String getTitle() {
-    return this.title;
+    return title;
   }
 
   public int getDuration() {
-    return this.duration;
+    return duration;
+  }
+
+  public String getFriendlyDuration() {
+    int duration = this.duration / 1000;
+    int seconds = duration % 60;
+    int minutes = duration / 60;
+    if (minutes >= 60) {
+      int hours = minutes / 60;
+      minutes %= 60;
+      return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+    return String.format("%02d:%02d", minutes, seconds);
+
   }
 
   public int getId() {
-    return this.id;
+    return id;
   }
 
   public PartialArtist getArtist() {
-    return this.artist;
+    return artist;
   }
   
 }

@@ -12,5 +12,8 @@ public class PartialArtist {
     this.name = name;
     this.avatarUrl = URI.create(avatarUrl);
   }
-  
+
+  public String getName() {
+    return name;
+  }
 }

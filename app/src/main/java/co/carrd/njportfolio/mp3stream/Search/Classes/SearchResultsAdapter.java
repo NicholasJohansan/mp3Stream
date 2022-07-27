@@ -81,18 +81,24 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class SongResultViewHolder extends RecyclerView.ViewHolder {
         private TextView songNameTextView;
+        private TextView artistTextView;
+        private TextView durationTextView;
 //        private ImageView ivCoverArt;
         private View itemView;
 
         public SongResultViewHolder(@NonNull View itemView) {
             super(itemView);
             songNameTextView = itemView.findViewById(R.id.song_result_item_name);
+            artistTextView = itemView.findViewById(R.id.song_result_item_artist);
+            durationTextView = itemView.findViewById(R.id.song_result_item_duration);
 //            ivCoverArt = itemView.findViewById(R.id.itemSongResultCoverImg);
             this.itemView = itemView;
         }
 
         public void bindSong(Song song) {
             songNameTextView.setText(song.getTitle());
+            artistTextView.setText(song.getArtist().getName());
+            durationTextView.setText(song.getFriendlyDuration());
 //            String coverArtUrl = song.getCoverUrl();
 //            System.out.println(song.getTitle() + " " + coverArtUrl);
 //            coverArtUrl = coverArtUrl == null ? "" : coverArtUrl;

@@ -28,21 +28,64 @@
 <!--            app:layout_constraintTop_toTopOf="parent"-->
 <!--            tools:src="@drawable/ic_launcher_foreground" />-->
 
-        <TextView
-            android:id="@+id/song_result_item_name"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            android:ellipsize="end"
-            android:hyphenationFrequency="none"
-            android:maxLines="1"
-            android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Song Name nandsa da sd ads ads adads da  ad" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/song_result_item_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="40dp"
+                android:ellipsize="end"
+                android:hyphenationFrequency="none"
+                android:maxLines="1"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Song Name nandsa da sd ads ads adads da  ad" />
+
+            <TextView
+                android:id="@+id/song_result_item_artist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="40dp"
+                android:ellipsize="end"
+                android:hyphenationFrequency="none"
+                android:maxLines="1"
+                android:textSize="11sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/song_result_item_name"
+                tools:text="Artist" />
+
+            <TextView
+                android:id="@+id/song_result_item_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="40dp"
+                android:ellipsize="end"
+                android:hyphenationFrequency="none"
+                android:maxLines="1"
+                android:textSize="11sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/song_result_item_artist"
+                tools:text="1:31" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/song_result_item_separator_guideline"
