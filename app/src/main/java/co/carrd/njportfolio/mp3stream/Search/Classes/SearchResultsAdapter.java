@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -48,6 +49,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         Object searchResultClass = searchResults.getValue().get(position).getClass().getSimpleName();
         if (searchResultClass.equals(Song.class.getSimpleName())) {
             return 0;
+        } else if (searchResultClass.equals(Playlist.class.getSimpleName())) {
+            return 1;
         }
         return 0;
     }
@@ -57,10 +60,14 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View songResultView = inflater.inflate(R.layout.item_song_result, parent, false);
         if (viewType == 0) {
+            View songResultView = inflater.inflate(R.layout.item_song_result, parent, false);
             return new SongResultViewHolder(songResultView);
+        } else if (viewType == 1) {
+            View playlistResultView = inflater.inflate(R.layout.item_playlist_result, parent, false);
+            return new PlaylistResultViewHolder(playlistResultView);
         }
+        View songResultView = inflater.inflate(R.layout.item_song_result, parent, false);
         return new SongResultViewHolder(songResultView);
     }
 
@@ -71,6 +78,9 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (itemViewType == 0) {
             Song song = (Song) searchResults.getValue().get(position);
             ((SongResultViewHolder) holder).bindSong(song);
+        } else if (itemViewType == 1) {
+            Playlist playlist = (Playlist) searchResults.getValue().get(position);
+            ((PlaylistResultViewHolder) holder).bindPlaylist(playlist);
         }
     }
 
@@ -149,6 +159,34 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             durationTextView.setText(song.getFriendlyDuration());
 
             loadViewholderImage(itemView, coverImageView, song.getCoverUrl());
+
+
+        }
+    }
+
+    public class PlaylistResultViewHolder extends RecyclerView.ViewHolder {
+        private TextView playlistNameTextView;
+        private TextView songCountTextView;
+        private TextView durationTextView;
+        private ImageView coverImageView;
+        private View itemView;
+
+        public PlaylistResultViewHolder(@NonNull View itemView) {
+            super(itemView);
+            playlistNameTextView = itemView.findViewById(R.id.playlist_result_item_name);
+            songCountTextView = itemView.findViewById(R.id.playlist_result_item_track_count);
+            durationTextView = itemView.findViewById(R.id.playlist_result_item_duration);
+            coverImageView = itemView.findViewById(R.id.playlist_result_item_cover);
+            this.itemView = itemView;
+        }
+
+        public void bindPlaylist(Playlist playlist) {
+
+            playlistNameTextView.setText(playlist.getTitle());
+            songCountTextView.setText(String.valueOf(playlist.getSongCount()) + " Songs");
+            durationTextView.setText(playlist.getFriendlyDuration());
+
+            loadViewholderImage(itemView, coverImageView, playlist.getCoverUrl());
 
 
         }

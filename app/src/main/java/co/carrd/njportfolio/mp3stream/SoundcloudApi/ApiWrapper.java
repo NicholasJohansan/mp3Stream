@@ -78,7 +78,7 @@ public class ApiWrapper {
             int songCount = playlistData.getInt("track_count");
 
             // If playlist has no cover art
-            if (coverUrl.equals(null)) {
+            if (coverUrl.equals("null")) {
               // Use cover art of first track
               JSONArray playlistSongsDataArray = playlistData.getJSONArray("tracks");
               if (playlistSongsDataArray.length() > 0) {
@@ -148,7 +148,7 @@ public class ApiWrapper {
             int songCount = playlistData.getInt("track_count");
 
             // If playlist has no cover art
-            if (coverUrl.equals(null)) {
+            if (coverUrl.equals("null")) {
               // Use cover art of first track
               JSONArray playlistSongsDataArray = playlistData.getJSONArray("tracks");
               if (playlistSongsDataArray.length() > 0) {
@@ -239,7 +239,6 @@ public class ApiWrapper {
                           : null
           );
 
-
           consumer.accept(searchedTracks);
         } catch (JSONException e) {
           e.printStackTrace();
@@ -298,7 +297,6 @@ public class ApiWrapper {
                           ? obj.getString("next_href")
                           : null
           );
-
 
           consumer.accept(searchedTracks);
         } catch (JSONException e) {
