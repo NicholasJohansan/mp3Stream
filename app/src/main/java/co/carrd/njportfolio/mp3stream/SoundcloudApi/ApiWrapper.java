@@ -137,7 +137,7 @@ public class ApiWrapper {
 
             String partialStreamUrl = songData.getJSONObject("media")
                     .getJSONArray("transcodings")
-                    .getJSONObject(1)
+                    .getJSONObject(0)
                     .getString("url");
 
             JSONObject artistData = songData.getJSONObject("user");
