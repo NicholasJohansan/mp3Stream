@@ -31,13 +31,19 @@ public class ApiUtils {
         this.httpClient = httpClient;
     }
 
+    public void fetchPlaylistCollection(String url, Consumer<PlaylistCollection> playlistCollectionConsumer) {
+        fetchHttp(url, responseString -> {
+            PlaylistCollection searchedPlaylists = ApiParser.parsePlaylistCollection(responseString);
+            playlistCollectionConsumer.accept(searchedPlaylists);
+        });
+    }
+
     public void fetchSongCollection(String url, Consumer<SongCollection> songCollectionConsumer) {
         fetchHttp(url, responseString -> {
             SongCollection searchedTracks = ApiParser.parseSongCollection(responseString);
             songCollectionConsumer.accept(searchedTracks);
         });
     }
-
 
     public void fetchHttp(String url, Consumer<String> responseStringConsumer) {
         fetchHttp(url, responseStringConsumer, null);

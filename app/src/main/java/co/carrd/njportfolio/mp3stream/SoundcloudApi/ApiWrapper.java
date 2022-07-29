@@ -53,21 +53,12 @@ public class ApiWrapper {
     query = Uri.encode(query);
     String url = "https://api-v2.soundcloud.com/search/playlists_without_albums?q=" + query
             + "&client_id=" + clientId + "&limit=15";
-
-    apiUtils.fetchHttp(url, responseString -> {
-      PlaylistCollection searchedPlaylists = ApiParser.parsePlaylistCollection(responseString);
-      consumer.accept(searchedPlaylists);
-    });
+    apiUtils.fetchPlaylistCollection(url, consumer);
   }
 
   public void getNextPlaylists(String nextUrl, Consumer<PlaylistCollection> consumer) {
-    // Construct endpoint url
     String url = nextUrl + "&client_id=" + clientId;
-
-    apiUtils.fetchHttp(url, responseString -> {
-      PlaylistCollection searchedPlaylists = ApiParser.parsePlaylistCollection(responseString);
-      consumer.accept(searchedPlaylists);
-    });
+    apiUtils.fetchPlaylistCollection(url, consumer);
   }
 
   public void searchTracks(String query, Consumer<SongCollection> consumer) {
