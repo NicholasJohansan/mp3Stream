@@ -15,6 +15,8 @@ import java.util.function.Consumer;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PlaylistCollection;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.SongCollection;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -27,6 +29,13 @@ public class ApiUtils {
 
     public ApiUtils(OkHttpClient httpClient) {
         this.httpClient = httpClient;
+    }
+
+    public void fetchSongCollection(String url, Consumer<SongCollection> songCollectionConsumer) {
+        fetchHttp(url, responseString -> {
+            SongCollection searchedTracks = ApiParser.parseSongCollection(responseString);
+            songCollectionConsumer.accept(searchedTracks);
+        });
     }
 
 
@@ -64,6 +73,5 @@ public class ApiUtils {
             return String.format("%02d:%02d:%02d", hours, minutes, seconds);
         }
         return String.format("%02d:%02d", minutes, seconds);
-
     }
 }

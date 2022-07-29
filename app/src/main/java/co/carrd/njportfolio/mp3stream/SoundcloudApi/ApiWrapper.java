@@ -71,25 +71,15 @@ public class ApiWrapper {
   }
 
   public void searchTracks(String query, Consumer<SongCollection> consumer) {
-    // Construct endpoint url
     query = Uri.encode(query);
     String url = "https://api-v2.soundcloud.com/search/tracks?q=" + query + "&client_id=" + clientId
             + "&limit=15";
-
-    apiUtils.fetchHttp(url, responseString -> {
-      SongCollection searchedTracks = ApiParser.parseSongCollection(responseString);
-      consumer.accept(searchedTracks);
-    });
+    apiUtils.fetchSongCollection(url, consumer);
   }
 
   public void getNextTracks(String nextUrl, Consumer<SongCollection> consumer) {
-    // Construct endpoint url
     String url = nextUrl + "&client_id=" + clientId;
-
-    apiUtils.fetchHttp(url, responseString -> {
-      SongCollection searchedTracks = ApiParser.parseSongCollection(responseString);
-      consumer.accept(searchedTracks);
-    });
+    apiUtils.fetchSongCollection(url, consumer);
   }
 
   /**
