@@ -122,4 +122,19 @@ public class ApiParser {
         }
         return null;
     }
+
+    public static List<String> parseSearchSuggestions(String searchSuggestionsStringData) {
+        try {
+            List<String> searchSuggestions = new ArrayList<>();
+            JSONObject obj = new JSONObject(searchSuggestionsStringData);
+            JSONArray searchSuggestionsArray = obj.getJSONArray("collection");
+            for (int i = 0; i < searchSuggestionsArray.length(); i++) {
+                searchSuggestions.add((String) ((JSONObject) searchSuggestionsArray.get(i)).get("query"));
+            }
+            return searchSuggestions;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -104,20 +104,8 @@ public class ApiWrapper {
     String url = "https://api-v2.soundcloud.com/search/queries?q=" + query + "&client_id=" + clientId;
 
     apiUtils.fetchHttp(url, responseString -> {
-      try {
-        // Parse response into array of search suggestion
-        List<String> searchSuggestions = new ArrayList<>();
-        JSONObject obj = new JSONObject(responseString);
-        JSONArray searchSuggestionsArray = obj.getJSONArray("collection");
-        for (int i = 0; i < searchSuggestionsArray.length(); i++) {
-          searchSuggestions.add((String) ((JSONObject) searchSuggestionsArray.get(i)).get("query"));
-        }
-
-        // Execute callback with requested data
-        consumer.accept(searchSuggestions);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+      List<String> searchSuggestions = ApiParser.parseSearchSuggestions(responseString);
+      consumer.accept(searchSuggestions);
     });
   }
 
