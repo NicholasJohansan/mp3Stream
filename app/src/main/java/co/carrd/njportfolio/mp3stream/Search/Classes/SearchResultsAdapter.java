@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Artist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 
@@ -40,12 +41,13 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-
         Object searchResultClass = searchResults.getValue().get(position).getClass().getSimpleName();
         if (searchResultClass.equals(Song.class.getSimpleName())) {
             return 0;
         } else if (searchResultClass.equals(Playlist.class.getSimpleName())) {
             return 1;
+        } else if (searchResultClass.equals(Artist.class.getSimpleName())) {
+            return 2;
         }
         return 0;
     }
@@ -61,9 +63,11 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else if (viewType == 1) {
             View playlistResultView = inflater.inflate(R.layout.item_playlist_result, parent, false);
             return new PlaylistResultViewHolder(playlistResultView);
+        } else if (viewType == 2) {
+            View artistResultView = inflater.inflate(R.layout.item_artist_result, parent, false);
+            return new ArtistResultViewHolder(artistResultView);
         }
-        View songResultView = inflater.inflate(R.layout.item_song_result, parent, false);
-        return new SongResultViewHolder(songResultView);
+        return null;
     }
 
     @Override
@@ -76,6 +80,9 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else if (itemViewType == 1) {
             Playlist playlist = (Playlist) searchResults.getValue().get(position);
             ((PlaylistResultViewHolder) holder).bindPlaylist(playlist);
+        } else if (itemViewType == 2) {
+            Artist artist = (Artist) searchResults.getValue().get(position);
+            ((ArtistResultViewHolder) holder).bindArtist(artist);
         }
     }
 
@@ -178,6 +185,32 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             songsDurationTextView.setText(playlist.getSongCount() + " Songs ⋅ " + playlist.getFriendlyDuration());
 
             loadViewholderImage(itemView, coverImageView, playlist.getCoverUrl());
+
+
+        }
+    }
+
+    public class ArtistResultViewHolder extends RecyclerView.ViewHolder {
+        private TextView artistNameTextView;
+        private TextView songCountTextView;
+        private TextView playlistCountTextView;
+        private ImageView avatarImageView;
+
+        public ArtistResultViewHolder(@NonNull View itemView) {
+            super(itemView);
+            artistNameTextView = itemView.findViewById(R.id.artist_result_item_name);
+            songCountTextView = itemView.findViewById(R.id.artist_result_item_song_count);
+            playlistCountTextView = itemView.findViewById(R.id.artist_result_item_playlist_count);
+            avatarImageView = itemView.findViewById(R.id.artist_result_item_avatar);
+        }
+
+        public void bindArtist(Artist artist) {
+
+            artistNameTextView.setText(artist.getName());
+            songCountTextView.setText(artist.getSongCount() + " Songs");
+            playlistCountTextView.setText(artist.getPlaylistCount() + " Playlists");
+
+            loadViewholderImage(itemView, avatarImageView, artist.getAvatarUrl());
 
 
         }

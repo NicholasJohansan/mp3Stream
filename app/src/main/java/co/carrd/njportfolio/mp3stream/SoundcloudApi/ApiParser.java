@@ -47,14 +47,14 @@ public class ApiParser {
             String name = artistData.getString("username");
             int id = artistData.getInt("id");
             int songCount = artistData.getInt("track_count");
-            int playlistCount = artistData.getInt("artist_count");
+            int playlistCount = artistData.getInt("playlist_count");
 
             String avatarUrl = artistData.getString("avatar_url").replace("large", "t500x500");
             String bannerUrl = null;
-            if (artistData.has("visuals")) {
+            if (!artistData.getString("visuals").equals("null")) {
                 JSONObject artistVisualsData = artistData.getJSONObject("visuals");
                 JSONArray visualsDataArray = artistVisualsData.getJSONArray("visuals");
-                JSONObject visualData = visualsDataArray.getJSONObject(0);
+                JSONObject visualData = (JSONObject) visualsDataArray.get(0);
                 bannerUrl = visualData.getString("visual_url");
             }
 

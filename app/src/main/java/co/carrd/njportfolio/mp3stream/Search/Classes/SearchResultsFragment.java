@@ -92,12 +92,11 @@ public class SearchResultsFragment extends Fragment {
                                 addNewSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
                             });
                         });
-                    } else {
-                        // Temporary so that results will be displayed for artists/albums
-                        soundcloudApi.getNextPlaylists(searchResultsAdapter.getNextUrl(), playlistCol -> {
+                    } else if (label.equals("Artists")) {
+                        soundcloudApi.getNextArtists(searchResultsAdapter.getNextUrl(), artistCol -> {
                             getActivity().runOnUiThread(() -> {
-                                List<? extends Object> castedResults = playlistCol.getPlaylists();
-                                addNewSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
+                                List<? extends Object> castedResults = artistCol.getArtists();
+                                addNewSearchResults((List<Object>) castedResults, artistCol.getNextUrl());
                             });
                         });
                     }
@@ -128,6 +127,7 @@ public class SearchResultsFragment extends Fragment {
             if (searchQuery.equals("")) return;
             recyclerView.smoothScrollToPosition(0);
             progressBar.setVisibility(View.VISIBLE);
+
             ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
             if (label.equals("Songs")) {
                 soundcloudApi.searchTracks(searchQuery, songCol -> {
@@ -136,7 +136,7 @@ public class SearchResultsFragment extends Fragment {
                         setSearchResults((List<Object>) castedResults, songCol.getNextUrl());
                     });
                 });
-            } else if (label.equals("Playlist")) {
+            } else if (label.equals("Playlists")) {
                 soundcloudApi.searchPlaylists(searchQuery, playlistCol -> {
                     getActivity().runOnUiThread(() -> {
                         List<? extends Object> castedResults = playlistCol.getPlaylists();
@@ -150,12 +150,11 @@ public class SearchResultsFragment extends Fragment {
                         setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
                     });
                 });
-            } else {
-                // Temporary so that results will be displayed for artists/albums
-                soundcloudApi.searchPlaylists(searchQuery, playlistCol -> {
+            } else if (label.equals("Artists")) {
+                soundcloudApi.searchArtists(searchQuery, artistCol -> {
                     getActivity().runOnUiThread(() -> {
-                        List<? extends Object> castedResults = playlistCol.getPlaylists();
-                        setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
+                        List<? extends Object> castedResults = artistCol.getArtists();
+                        setSearchResults((List<Object>) castedResults, artistCol.getNextUrl());
                     });
                 });
             }
