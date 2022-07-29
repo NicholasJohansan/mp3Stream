@@ -44,7 +44,7 @@ public class ApiWrapper {
     if (client == null) {
       client = new OkHttpClient();
       apiUtils = new ApiUtils(client);
-      this.setClientId();
+      initialiseClientId();
     }
   }
 
@@ -122,11 +122,10 @@ public class ApiWrapper {
   }
 
   /**
-   * Get Client ID for Soundcloud API based on discovered pattern
-   * 
-   * @return Soundcloud API Client ID
+   * Initialise the client id for Soundcloud API by finding one on Soundcloud Site
+   * This finds the client id based on discovered pattern and initialises it
    */
-  private void setClientId() {
+  private void initialiseClientId() {
     // Fetch Soundcloud home page
     apiUtils.fetchHttp("https://soundcloud.com", responseString -> {
       // Get all the js file URLs found that contains the file URL with the Client ID
