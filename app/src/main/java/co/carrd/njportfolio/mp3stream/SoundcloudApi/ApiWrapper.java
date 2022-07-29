@@ -167,28 +167,8 @@ public class ApiWrapper {
             + "&limit=15";
 
     apiUtils.fetchHttp(url, responseString -> {
-      try {
-        // Parse response into array of songs
-        JSONObject obj = new JSONObject(responseString);
-        JSONArray songsDataArray = obj.getJSONArray("collection");
-        List<Song> songsArray = new ArrayList<>();
-        for (int i = 0; i < songsDataArray.length(); i++) {
-          JSONObject songData = (JSONObject) songsDataArray.get(i);
-          songsArray.add(ApiParser.parseSong(songData));
-        }
-
-        SongCollection searchedTracks = new SongCollection(
-                songsArray,
-                obj.getInt("total_results"),
-                obj.has("next_href")
-                        ? obj.getString("next_href")
-                        : null
-        );
-
-        consumer.accept(searchedTracks);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+      SongCollection searchedTracks = ApiParser.parseSongCollection(responseString);
+      consumer.accept(searchedTracks);
     });
   }
 
@@ -197,28 +177,8 @@ public class ApiWrapper {
     String url = nextUrl + "&client_id=" + clientId;
 
     apiUtils.fetchHttp(url, responseString -> {
-      try  {
-        // Parse response into array of songs
-        JSONObject obj = new JSONObject(responseString);
-        JSONArray songsDataArray = obj.getJSONArray("collection");
-        List<Song> songsArray = new ArrayList<>();
-        for (int i = 0; i < songsDataArray.length(); i++) {
-          JSONObject songData = (JSONObject) songsDataArray.get(i);
-          songsArray.add(ApiParser.parseSong(songData));
-        }
-
-        SongCollection searchedTracks = new SongCollection(
-                songsArray,
-                obj.getInt("total_results"),
-                obj.has("next_href")
-                        ? obj.getString("next_href")
-                        : null
-        );
-
-        consumer.accept(searchedTracks);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+      SongCollection searchedTracks = ApiParser.parseSongCollection(responseString);
+      consumer.accept(searchedTracks);
     });
   }
 
