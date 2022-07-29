@@ -56,7 +56,7 @@ public class ApiWrapper {
     apiUtils.fetchPlaylistCollection(url, consumer);
   }
 
-  public void searchNextAlbums(String nextUrl, Consumer<PlaylistCollection> consumer) {
+  public void getNextAlbums(String nextUrl, Consumer<PlaylistCollection> consumer) {
     String url = nextUrl + "&client_id=" + clientId;
     // Albums are just playlists
     apiUtils.fetchPlaylistCollection(url, consumer);

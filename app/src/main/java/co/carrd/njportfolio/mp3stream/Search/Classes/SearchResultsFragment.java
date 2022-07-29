@@ -71,15 +71,22 @@ public class SearchResultsFragment extends Fragment {
                 if (searchResultsAdapter.getNextUrl() != null) {
                     progressBar.setVisibility(View.VISIBLE);
                     ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
-                    if (label == "Songs") {
+                    if (label.equals("Songs")) {
                         soundcloudApi.getNextTracks(searchResultsAdapter.getNextUrl(), songCol -> {
                             getActivity().runOnUiThread(() -> {
                                 List<? extends Object> castedResults = songCol.getSongs();
                                 addNewSearchResults((List<Object>) castedResults, songCol.getNextUrl());
                             });
                         });
-                    } else if (label == "Playlists") {
+                    } else if (label.equals("Playlists")) {
                         soundcloudApi.getNextPlaylists(searchResultsAdapter.getNextUrl(), playlistCol -> {
+                            getActivity().runOnUiThread(() -> {
+                                List<? extends Object> castedResults = playlistCol.getPlaylists();
+                                addNewSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
+                            });
+                        });
+                    } else if (label.equals("Albums")) {
+                        soundcloudApi.getNextAlbums(searchResultsAdapter.getNextUrl(), playlistCol -> {
                             getActivity().runOnUiThread(() -> {
                                 List<? extends Object> castedResults = playlistCol.getPlaylists();
                                 addNewSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
@@ -122,15 +129,22 @@ public class SearchResultsFragment extends Fragment {
             recyclerView.smoothScrollToPosition(0);
             progressBar.setVisibility(View.VISIBLE);
             ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
-            if (label == "Songs") {
+            if (label.equals("Songs")) {
                 soundcloudApi.searchTracks(searchQuery, songCol -> {
                     getActivity().runOnUiThread(() -> {
                         List<? extends Object> castedResults = songCol.getSongs();
                         setSearchResults((List<Object>) castedResults, songCol.getNextUrl());
                     });
                 });
-            } else if (label == "Playlists") {
+            } else if (label.equals("Playlist")) {
                 soundcloudApi.searchPlaylists(searchQuery, playlistCol -> {
+                    getActivity().runOnUiThread(() -> {
+                        List<? extends Object> castedResults = playlistCol.getPlaylists();
+                        setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
+                    });
+                });
+            } else if (label.equals("Albums")) {
+                soundcloudApi.searchAlbums(searchQuery, playlistCol -> {
                     getActivity().runOnUiThread(() -> {
                         List<? extends Object> castedResults = playlistCol.getPlaylists();
                         setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
