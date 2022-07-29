@@ -55,28 +55,8 @@ public class ApiWrapper {
             + "&client_id=" + clientId + "&limit=15";
 
     apiUtils.fetchHttp(url, responseString -> {
-      try {
-        // Parse response into array of playlists
-        JSONObject obj = new JSONObject(responseString);
-        JSONArray playlistsDataArray = obj.getJSONArray("collection");
-        List<Playlist> playlistsArray = new ArrayList<>();
-        for (int i = 0; i < playlistsDataArray.length(); i++) {
-          JSONObject playlistData = (JSONObject) playlistsDataArray.get(i);
-          playlistsArray.add(ApiParser.parsePlaylist(playlistData));
-        }
-
-        PlaylistCollection searchedPlaylists = new PlaylistCollection(
-                playlistsArray,
-                obj.getInt("total_results"),
-                obj.has("next_href")
-                        ? obj.getString("next_href")
-                        : null
-        );
-
-        consumer.accept(searchedPlaylists);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+      PlaylistCollection searchedPlaylists = ApiParser.parsePlaylistCollection(responseString);
+      consumer.accept(searchedPlaylists);
     });
   }
 
@@ -85,28 +65,8 @@ public class ApiWrapper {
     String url = nextUrl + "&client_id=" + clientId;
 
     apiUtils.fetchHttp(url, responseString -> {
-      try {
-        // Parse response into array of playlists
-        JSONObject obj = new JSONObject(responseString);
-        JSONArray playlistsDataArray = obj.getJSONArray("collection");
-        List<Playlist> playlistsArray = new ArrayList<>();
-        for (int i = 0; i < playlistsDataArray.length(); i++) {
-          JSONObject playlistData = (JSONObject) playlistsDataArray.get(i);
-          playlistsArray.add(ApiParser.parsePlaylist(playlistData));
-        }
-
-        PlaylistCollection searchedPlaylists = new PlaylistCollection(
-                playlistsArray,
-                obj.getInt("total_results"),
-                obj.has("next_href")
-                        ? obj.getString("next_href")
-                        : null
-        );
-
-        consumer.accept(searchedPlaylists);
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+      PlaylistCollection searchedPlaylists = ApiParser.parsePlaylistCollection(responseString);
+      consumer.accept(searchedPlaylists);
     });
   }
 

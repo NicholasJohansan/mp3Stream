@@ -9,10 +9,34 @@ import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PlaylistCollection;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.SongCollection;
 
 public class ApiParser {
+
+    public static PlaylistCollection parsePlaylistCollection(String playlistCollectionStringData) {
+        try {
+            JSONObject obj = new JSONObject(playlistCollectionStringData);
+            JSONArray playlistsDataArray = obj.getJSONArray("collection");
+            List<Playlist> playlistsArray = new ArrayList<>();
+            for (int i = 0; i < playlistsDataArray.length(); i++) {
+                JSONObject playlistData = (JSONObject) playlistsDataArray.get(i);
+                playlistsArray.add(ApiParser.parsePlaylist(playlistData));
+            }
+
+            return new PlaylistCollection(
+                    playlistsArray,
+                    obj.getInt("total_results"),
+                    obj.has("next_href")
+                            ? obj.getString("next_href")
+                            : null
+            );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static Playlist parsePlaylist(JSONObject playlistData) {
         try {
