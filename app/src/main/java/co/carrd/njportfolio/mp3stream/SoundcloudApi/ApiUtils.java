@@ -53,4 +53,17 @@ public class ApiUtils {
             }
         });
     }
+
+    public static String getFriendlyDuration(int duration) {
+        duration /= 100;
+        int seconds = duration % 60;
+        int minutes = duration / 60;
+        if (minutes >= 60) {
+            int hours = minutes / 60;
+            minutes %= 60;
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        }
+        return String.format("%02d:%02d", minutes, seconds);
+
+    }
 }

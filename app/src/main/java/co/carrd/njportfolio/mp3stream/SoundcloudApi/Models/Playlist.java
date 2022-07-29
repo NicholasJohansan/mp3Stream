@@ -2,6 +2,8 @@ package co.carrd.njportfolio.mp3stream.SoundcloudApi.Models;
 
 import java.net.URI;
 
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
+
 public class Playlist {
     private String coverUrl;
     private String title;
@@ -32,16 +34,7 @@ public class Playlist {
     }
 
     public String getFriendlyDuration() {
-        int duration = this.duration / 1000;
-        int seconds = duration % 60;
-        int minutes = duration / 60;
-        if (minutes >= 60) {
-            int hours = minutes / 60;
-            minutes %= 60;
-            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        }
-        return String.format("%02d:%02d", minutes, seconds);
-
+        return ApiUtils.getFriendlyDuration(duration);
     }
 
     public int getSongCount() {
