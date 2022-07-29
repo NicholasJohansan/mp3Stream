@@ -56,6 +56,11 @@ public class ApiWrapper {
     apiUtils.fetchArtistCollection(url, consumer);
   }
 
+  public void getNextArtists(String nextUrl, Consumer<ArtistCollection> consumer) {
+    String url = nextUrl + "&client_id=" + clientId;
+    apiUtils.fetchArtistCollection(url, consumer);
+  }
+
   public void searchAlbums(String query, Consumer<PlaylistCollection> consumer) {
     query = Uri.encode(query);
     String url = "https://api-v2.soundcloud.com/search/albums?q=" + query
