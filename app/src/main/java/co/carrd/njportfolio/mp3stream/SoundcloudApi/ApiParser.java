@@ -14,6 +14,35 @@ import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.SongCollection;
 
 public class ApiParser {
 
+    public static Playlist parsePlaylist(JSONObject playlistData) {
+        try {
+            String title = playlistData.getString("title");
+            int duration = playlistData.getInt("duration");
+            int id = playlistData.getInt("id");
+            String coverUrl = playlistData.getString("artwork_url");
+            int songCount = playlistData.getInt("track_count");
+
+            // If playlist has no cover art
+            if (coverUrl.equals("null")) {
+                // Use cover art of first track
+                JSONArray playlistSongsDataArray = playlistData.getJSONArray("tracks");
+                if (playlistSongsDataArray.length() > 0) {
+                    JSONObject firstSong = (JSONObject) playlistSongsDataArray.get(0);
+                    coverUrl = firstSong.getString("artwork_url");
+                }
+            }
+
+            // Get alternate resolution image
+            coverUrl = coverUrl.replace("large", "t500x500");
+            PartialArtist partialArtist = parsePartialArtist(playlistData.getJSONObject("user"));
+
+            return new Playlist(coverUrl, title, duration, songCount, id, partialArtist);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static SongCollection parseSongCollection(String songCollectionDataString) {
         try {
             JSONObject obj = new JSONObject(songCollectionDataString);
