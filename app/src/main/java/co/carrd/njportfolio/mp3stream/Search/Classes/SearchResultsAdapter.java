@@ -1,8 +1,6 @@
 package co.carrd.njportfolio.mp3stream.Search.Classes;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +19,8 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +136,6 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView artistTextView;
         private TextView durationTextView;
         private ImageView coverImageView;
-        private View itemView;
 
         public SongResultViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -149,7 +143,6 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             artistTextView = itemView.findViewById(R.id.song_result_item_artist);
             durationTextView = itemView.findViewById(R.id.song_result_item_duration);
             coverImageView = itemView.findViewById(R.id.song_result_item_cover);
-            this.itemView = itemView;
         }
 
         public void bindSong(Song song) {
@@ -166,25 +159,23 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class PlaylistResultViewHolder extends RecyclerView.ViewHolder {
         private TextView playlistNameTextView;
-        private TextView songCountTextView;
-        private TextView durationTextView;
+        private TextView artistTextView;
+        private TextView songsDurationTextView;
         private ImageView coverImageView;
-        private View itemView;
 
         public PlaylistResultViewHolder(@NonNull View itemView) {
             super(itemView);
             playlistNameTextView = itemView.findViewById(R.id.playlist_result_item_name);
-            songCountTextView = itemView.findViewById(R.id.playlist_result_item_track_count);
-            durationTextView = itemView.findViewById(R.id.playlist_result_item_duration);
+            artistTextView = itemView.findViewById(R.id.playlist_result_item_artist);
+            songsDurationTextView = itemView.findViewById(R.id.playlist_result_item_songs_duration);
             coverImageView = itemView.findViewById(R.id.playlist_result_item_cover);
-            this.itemView = itemView;
         }
 
         public void bindPlaylist(Playlist playlist) {
 
             playlistNameTextView.setText(playlist.getTitle());
-            songCountTextView.setText(String.valueOf(playlist.getSongCount()) + " Songs");
-            durationTextView.setText(playlist.getFriendlyDuration());
+            artistTextView.setText(playlist.getArtist().getName());
+            songsDurationTextView.setText(playlist.getSongCount() + " Songs ⋅ " + playlist.getFriendlyDuration());
 
             loadViewholderImage(itemView, coverImageView, playlist.getCoverUrl());
 

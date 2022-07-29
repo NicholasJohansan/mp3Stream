@@ -49,7 +49,7 @@
                 tools:text="Playlist Name nandsa da sd ads ads adads da  ad" />
 
             <TextView
-                android:id="@+id/playlist_result_item_track_count"
+                android:id="@+id/playlist_result_item_artist"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -62,10 +62,10 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/playlist_result_item_name"
-                tools:text="10 Tracks" />
+                tools:text="Artist" />
 
             <TextView
-                android:id="@+id/playlist_result_item_duration"
+                android:id="@+id/playlist_result_item_songs_duration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -77,8 +77,8 @@
                 android:textSize="11sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/playlist_result_item_track_count"
-                tools:text="1:31" />
+                app:layout_constraintTop_toBottomOf="@id/playlist_result_item_artist"
+                tools:text="1 Songs ⋅ 1:31" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
