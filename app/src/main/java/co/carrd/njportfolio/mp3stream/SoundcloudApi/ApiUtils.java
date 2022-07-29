@@ -70,7 +70,7 @@ public class ApiUtils {
     }
 
     public static String getFriendlyDuration(int duration) {
-        duration /= 100;
+        duration /= 1000;
         int seconds = duration % 60;
         int minutes = duration / 60;
         if (minutes >= 60) {
