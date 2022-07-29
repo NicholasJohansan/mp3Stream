@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Artist;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.ArtistCollection;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PlaylistCollection;
@@ -16,6 +18,52 @@ import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.SongCollection;
 
 public class ApiParser {
+
+    public static ArtistCollection parseArtistCollection(String artistCollectionStringData) {
+        try {
+            JSONObject obj = new JSONObject(artistCollectionStringData);
+            JSONArray artistsDataArray = obj.getJSONArray("collection");
+            List<Artist> artistsArray = new ArrayList<>();
+            for (int i = 0; i < artistsDataArray.length(); i++) {
+                JSONObject artistData = (JSONObject) artistsDataArray.get(i);
+                artistsArray.add(ApiParser.parseArtist(artistData));
+            }
+
+            return new ArtistCollection(
+                    artistsArray,
+                    obj.getInt("total_results"),
+                    obj.has("next_href")
+                            ? obj.getString("next_href")
+                            : null
+            );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Artist parseArtist(JSONObject artistData) {
+        try {
+            String name = artistData.getString("username");
+            int id = artistData.getInt("id");
+            int songCount = artistData.getInt("track_count");
+            int playlistCount = artistData.getInt("artist_count");
+
+            String avatarUrl = artistData.getString("avatar_url").replace("large", "t500x500");
+            String bannerUrl = null;
+            if (artistData.has("visuals")) {
+                JSONObject artistVisualsData = artistData.getJSONObject("visuals");
+                JSONArray visualsDataArray = artistVisualsData.getJSONArray("visuals");
+                JSONObject visualData = visualsDataArray.getJSONObject(0);
+                bannerUrl = visualData.getString("visual_url");
+            }
+
+            return new Artist(id, name, bannerUrl, avatarUrl, songCount, playlistCount);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static PlaylistCollection parsePlaylistCollection(String playlistCollectionStringData) {
         try {

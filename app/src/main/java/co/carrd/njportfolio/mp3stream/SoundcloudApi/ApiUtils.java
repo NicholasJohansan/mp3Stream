@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.ArtistCollection;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PlaylistCollection;
@@ -29,6 +30,13 @@ public class ApiUtils {
 
     public ApiUtils(OkHttpClient httpClient) {
         this.httpClient = httpClient;
+    }
+
+    public void fetchArtistCollection(String url, Consumer<ArtistCollection> artistCollectionConsumer) {
+        fetchHttp(url, responseString -> {
+            ArtistCollection searchedArtists = ApiParser.parseArtistCollection(responseString);
+            artistCollectionConsumer.accept(searchedArtists);
+        });
     }
 
     public void fetchPlaylistCollection(String url, Consumer<PlaylistCollection> playlistCollectionConsumer) {

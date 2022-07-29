@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.ArtistCollection;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PlaylistCollection;
@@ -46,6 +47,13 @@ public class ApiWrapper {
       apiUtils = new ApiUtils(client);
       initialiseClientId();
     }
+  }
+
+  public void searchArtists(String query, Consumer<ArtistCollection> consumer) {
+    query = Uri.encode(query);
+    String url = "https://api-v2.soundcloud.com/search/users?q=" + query
+            + "&client_id=" + clientId + "&limit=15";
+    apiUtils.fetchArtistCollection(url, consumer);
   }
 
   public void searchAlbums(String query, Consumer<PlaylistCollection> consumer) {
