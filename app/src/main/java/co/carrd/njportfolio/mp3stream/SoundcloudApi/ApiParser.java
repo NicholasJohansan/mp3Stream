@@ -54,7 +54,9 @@ public class ApiParser {
                 JSONArray playlistSongsDataArray = playlistData.getJSONArray("tracks");
                 if (playlistSongsDataArray.length() > 0) {
                     JSONObject firstSong = (JSONObject) playlistSongsDataArray.get(0);
-                    coverUrl = firstSong.getString("artwork_url");
+                    if (firstSong.has("artwork_url")) {
+                        coverUrl = firstSong.getString("artwork_url");
+                    }
                 }
             }
 
