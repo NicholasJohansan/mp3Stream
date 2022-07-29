@@ -174,23 +174,7 @@ public class ApiWrapper {
         List<Song> songsArray = new ArrayList<>();
         for (int i = 0; i < songsDataArray.length(); i++) {
           JSONObject songData = (JSONObject) songsDataArray.get(i);
-          String title = songData.getString("title");
-          int duration = songData.getInt("duration");
-          int id = songData.getInt("id");
-          String coverUrl = songData.getString("artwork_url").replace("large", "t500x500");
-
-          String partialStreamUrl = songData.getJSONObject("media")
-                  .getJSONArray("transcodings")
-                  .getJSONObject(0)
-                  .getString("url");
-
-          JSONObject artistData = songData.getJSONObject("user");
-          String artistName = artistData.getString("username");
-          int artistId = artistData.getInt("id");
-          String artistAvatarUrl = artistData.getString("avatar_url");
-
-          songsArray.add(new Song(coverUrl, partialStreamUrl, title, duration, id,
-                  new PartialArtist(artistId, artistName, artistAvatarUrl)));
+          songsArray.add(ApiParser.parseSong(songData));
         }
 
         SongCollection searchedTracks = new SongCollection(
@@ -220,23 +204,7 @@ public class ApiWrapper {
         List<Song> songsArray = new ArrayList<>();
         for (int i = 0; i < songsDataArray.length(); i++) {
           JSONObject songData = (JSONObject) songsDataArray.get(i);
-          String title = songData.getString("title");
-          int duration = songData.getInt("duration");
-          int id = songData.getInt("id");
-          String coverUrl = songData.getString("artwork_url").replace("large", "t500x500");
-
-          String partialStreamUrl = songData.getJSONObject("media")
-                  .getJSONArray("transcodings")
-                  .getJSONObject(0)
-                  .getString("url");
-
-          JSONObject artistData = songData.getJSONObject("user");
-          String artistName = artistData.getString("username");
-          int artistId = artistData.getInt("id");
-          String artistAvatarUrl = artistData.getString("avatar_url");
-
-          songsArray.add(new Song(coverUrl, partialStreamUrl, title, duration, id,
-                  new PartialArtist(artistId, artistName, artistAvatarUrl)));
+          songsArray.add(ApiParser.parseSong(songData));
         }
 
         SongCollection searchedTracks = new SongCollection(
