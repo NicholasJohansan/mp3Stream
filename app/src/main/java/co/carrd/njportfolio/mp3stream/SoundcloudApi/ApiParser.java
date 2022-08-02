@@ -95,11 +95,11 @@ public class ApiParser {
             int id = playlistData.getInt("id");
             String coverUrl = playlistData.getString("artwork_url");
             int songCount = playlistData.getInt("track_count");
+            JSONArray playlistSongsDataArray = playlistData.getJSONArray("tracks");
 
             // If playlist has no cover art
             if (coverUrl.equals("null")) {
                 // Use cover art of first track
-                JSONArray playlistSongsDataArray = playlistData.getJSONArray("tracks");
                 if (playlistSongsDataArray.length() > 0) {
                     JSONObject firstSong = (JSONObject) playlistSongsDataArray.get(0);
                     if (firstSong.has("artwork_url")) {
@@ -110,9 +110,18 @@ public class ApiParser {
 
             // Get alternate resolution image
             coverUrl = coverUrl.replace("large", "t500x500");
+
             PartialArtist partialArtist = parsePartialArtist(playlistData.getJSONObject("user"));
 
-            return new Playlist(coverUrl, title, duration, songCount, id, partialArtist);
+            // Get track ids
+            List<Integer> trackIdsList = new ArrayList<>();
+            for (int i = 0; i < playlistSongsDataArray.length(); i++) {
+                JSONObject track = playlistSongsDataArray.getJSONObject(i);
+                trackIdsList.add(track.getInt("id"));
+            }
+            int[] trackIds = trackIdsList.stream().mapToInt(e -> (int) e).toArray();
+
+            return new Playlist(coverUrl, title, duration, songCount, id, partialArtist, trackIds);
         } catch (JSONException e) {
             e.printStackTrace();
         }

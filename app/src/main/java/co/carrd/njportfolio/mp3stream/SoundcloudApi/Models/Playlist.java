@@ -15,13 +15,16 @@ public class Playlist implements Parcelable {
     private int id;
     private PartialArtist artist;
 
-    public Playlist(String coverUrl, String title, int duration, int songCount, int id, PartialArtist artist) {
+    private int[] trackIds;
+
+    public Playlist(String coverUrl, String title, int duration, int songCount, int id, PartialArtist artist, int[] trackIds) {
         this.coverUrl = coverUrl;
         this.title = title;
         this.duration = duration;
         this.songCount = songCount;
         this.id = id;
         this.artist = artist;
+        this.trackIds = trackIds;
     }
 
     public String getCoverUrl() {
@@ -60,6 +63,7 @@ public class Playlist implements Parcelable {
         songCount = in.readInt();
         id = in.readInt();
         artist = in.readParcelable(PartialArtist.class.getClassLoader());
+        trackIds = in.createIntArray();
     }
 
     public static final Creator<Playlist> CREATOR = new Creator<Playlist>() {
@@ -87,5 +91,6 @@ public class Playlist implements Parcelable {
         parcel.writeInt(songCount);
         parcel.writeInt(id);
         parcel.writeParcelable(artist, i);
+        parcel.writeIntArray(trackIds);
     }
 }
