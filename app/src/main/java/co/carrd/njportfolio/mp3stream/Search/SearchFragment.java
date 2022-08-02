@@ -210,20 +210,16 @@ public class SearchFragment extends Fragment {
     }
 
     public void addToBackStack(Fragment fragment) {
-        if (getParentFragmentManager().getBackStackEntryCount() > 1) {
-            getParentFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.main_fragment_container, fragment)
-                    .addToBackStack(null)
-                    .commit();
-        } else {
-            getParentFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-//                    .setPrimaryNavigationFragment(this)
-                    .replace(R.id.main_fragment_container, fragment)
-                    .addToBackStack("SEARCH_FRAGMENT")
-                    .commit();
+        FragmentManager fm = getParentFragmentManager();
+        String backStackTag = "SEARCH_FRAGMENT";
+        if (fm.getBackStackEntryCount() > 1) {
+            backStackTag = null;
         }
+        fm.beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.main_fragment_container, fragment)
+                .addToBackStack(backStackTag)
+                .commit();
         getParentFragmentManager().executePendingTransactions();
     }
 
