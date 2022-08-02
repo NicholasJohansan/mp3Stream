@@ -30,67 +30,24 @@ public class MainActivity extends AppCompatActivity {
     private Fragment searchFragment = SearchFragment.getInstance();
     private Fragment equalizerFragment = new EqualizerFragment();
 
-    private LinearLayout miniPlayer;
-    private RelativeLayout mainLayout;
-
-    private int convertToPixels(int dp) {
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics()));
-    }
+    private BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
-        float screenHeight = getResources().getDisplayMetrics().heightPixels;
+        // Link UI
+        bottomNav = findViewById(R.id.bottom_navigation);
 
-        mainLayout = findViewById(R.id.main_layout);
-        ConstraintLayout miniPlayerView = findViewById(R.id.mini_player_view);
-        float targetHeight = getResources().getDisplayMetrics().heightPixels - convertToPixels(48);
-        float startHeight = convertToPixels(0);
-        miniPlayer = findViewById(R.id.mini_player);
-        miniPlayer.setY(targetHeight);
-        OnSwipeTouchListener swipeTouchListener = new OnSwipeTouchListener();
-        SwipeAction swipeAction = new SwipeAction();
-        swipeAction.setDirection(SwipeAction.DragDirection.Up);
-        swipeAction.setSteps(new float[]{targetHeight - convertToPixels(64), startHeight});
-        swipeAction.setDragThreshold(0.2f);
-        swipeAction.setSwipeActionListener(new SwipeActionListener() {
-            @Override
-            public void onDragStart(float v, float v1) {
+        // Set up player swipe
+        setUpPlayerSwipe();
 
-            }
-
-            @Override
-            public void onDrag(float v, float v1) {
-                miniPlayer.setY(v);
-                bottomNav.setY(screenHeight - ((convertToPixels(48)) * (v/targetHeight)));
-                Log.d("DRAG_END_",  " " + v + " " + (double) (v/targetHeight) + " " + 1792.0/1792.0 + " " + 1792/1792);
-                bottomNav.setAlpha((float) (1.0 * (v/targetHeight)));
-            }
-
-            @Override
-            public void onDragEnd(float v, float v1) {
-                Log.d("DRAG_END", String.valueOf(v));
-                // 0.0 -> expanded
-                if (v == 0.0) {
-                    bottomNav.setAlpha(0);
-                    bottomNav.setY(screenHeight);
-                } else {
-                    bottomNav.setAlpha(1);
-                    bottomNav.setY(screenHeight - convertToPixels(48));
-                }
-            }
-        });
-        swipeTouchListener.addAction(swipeAction);
-        swipeTouchListener.attachToView(miniPlayerView);
-        swipeAction.collapse();
-
-
+        // Set up bottom nav
         bottomNav.setOnItemSelectedListener(navListener);
         bottomNav.setItemIconTintList(null); // This line is needed to have gradient icons work
 
+        // Open library fragment as first fragment
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.main_fragment_container, libraryFragment).commit();
@@ -130,14 +87,80 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-//        getSupportFragmentManager().executePendingTransactions();
-
-//        try {
-//            getSupportFragmentManager().restoreBackStack(backStackName);
-//        } catch (Exception e) {
-//
-//        }
-
         return true;
     };
+
+    /**
+     * Converts dp to px
+     *
+     * @param dp
+     * @return equivalent in px
+     */
+    private int convertToPixels(int dp) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics()));
+    }
+
+    /**
+     * Sets up swiping for miniplayer
+     */
+    private void setUpPlayerSwipe() {
+
+        // Initialise views involved
+        ConstraintLayout miniPlayerLayout = findViewById(R.id.mini_player);
+        ConstraintLayout miniPlayerView = findViewById(R.id.mini_player_view);
+        ConstraintLayout maximimisedPlayer = findViewById(R.id.maximised_player_view);
+
+        // Set up constants
+        float screenHeight = getResources().getDisplayMetrics().heightPixels;
+        float miniPlayerHeight = convertToPixels(64); // miniPlayerView.getMeasuredHeight();
+        float bottomNavHeight = convertToPixels(48); // bottomNav.getMeasuredHeight();
+
+        float startY = screenHeight - bottomNavHeight - miniPlayerHeight;
+        float targetY = convertToPixels(0);
+
+        // Initial setup
+        miniPlayerLayout.setY(startY);
+
+        // Set up swipe action
+        SwipeAction swipeAction = new SwipeAction();
+        swipeAction.setDirection(SwipeAction.DragDirection.Up);
+        swipeAction.setSteps(new float[]{startY, targetY});
+        swipeAction.setDragThreshold(0.2f);
+        swipeAction.setSwipeActionListener(new SwipeActionListener() {
+            @Override
+            public void onDragStart(float y, float friction) { }
+
+            @Override
+            public void onDrag(float y, float friction) {
+                // Make mini player change in y
+                miniPlayerLayout.setY(y);
+
+                // Progress Gauge
+                float gauge = y / startY; // expanded -> 0.0, collapsed -> 1.0
+                float inverseGauge = 1 - gauge; // expanded -> 1.0, collapsed -> 0.0
+
+                // Invisible when expanded
+                miniPlayerView.setAlpha(gauge);
+
+                bottomNav.setAlpha(gauge);
+                bottomNav.setY(screenHeight - (bottomNavHeight * gauge));
+
+                // Visible when expanded
+                maximimisedPlayer.setAlpha(inverseGauge);
+//                Log.d("DRAG_END_",  " " + v + " " + alpha);
+            }
+
+            @Override
+            public void onDragEnd(float v, float v1) {
+            }
+        });
+
+        // Set up swipe touch listener
+        OnSwipeTouchListener swipeTouchListener = new OnSwipeTouchListener();
+        swipeTouchListener.addAction(swipeAction);
+        swipeTouchListener.attachToView(miniPlayerView);
+
+        // Ensure mini player is collapsed
+        swipeAction.collapse();
+    }
 }
