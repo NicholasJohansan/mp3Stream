@@ -30,44 +30,9 @@
         android:layout_height="64dp"
         android:layout_above="@id/bottom_navigation"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mini_player"
+    <androidx.fragment.app.FragmentContainerView
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_gray"
-        android:clickable="true">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/dark_gray"
-            android:id="@+id/mini_player_view"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MiniPlayer"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/maximised_player_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dark_gray"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MaximisedPlayer"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/player_fragment_container"/>
 </RelativeLayout>

@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
         // Link UI
         bottomNav = findViewById(R.id.bottom_navigation);
 
-        // Set up player swipe
-        setUpPlayerSwipe();
-
         // Set up bottom nav
         bottomNav.setOnItemSelectedListener(navListener);
         bottomNav.setItemIconTintList(null); // This line is needed to have gradient icons work
@@ -51,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.main_fragment_container, libraryFragment).commit();
+
+        // Insert player fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.player_fragment_container, new PlayerFragment())
+                .commitNow();
+
+        // Set up player swipe
+//        setUpPlayerSwipe();
     }
 
     private NavigationBarView.OnItemSelectedListener navListener = item -> {
@@ -89,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     };
+
+    public BottomNavigationView getBottomNav() {
+        return bottomNav;
+    }
 
     /**
      * Converts dp to px
