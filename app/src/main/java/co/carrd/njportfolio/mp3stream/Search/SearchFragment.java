@@ -20,6 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentContainer;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -29,6 +33,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
@@ -36,6 +43,8 @@ import co.carrd.njportfolio.mp3stream.Search.Classes.SearchResultsFragment;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class SearchFragment extends Fragment {
+
+    private static SearchFragment instance;
 
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
@@ -51,6 +60,13 @@ public class SearchFragment extends Fragment {
             new SearchResultsFragment("Albums", this),
             new SearchResultsFragment("Artists", this)
     };
+
+    public static SearchFragment getInstance() {
+        if (instance == null) {
+            instance = new SearchFragment();
+        }
+        return instance;
+    }
 
     @Nullable
     @Override
@@ -73,7 +89,8 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Set Up ViewPager2 + TabLayout
-        viewPager.setAdapter(new SearchResultsFragmentAdapter(this.requireActivity()));
+        viewPager.setAdapter(new SearchResultsFragmentAdapter(requireActivity()));
+        viewPager.setOffscreenPageLimit(4);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             String text = "";
             switch (position) {
@@ -151,6 +168,23 @@ public class SearchFragment extends Fragment {
             }
             return false;
         });
+
+        // Set Up Fragment Manager
+        getParentFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+//
+//
+//                Log.d("HEJ", "back stack changed original: " + backStack.getValue().size() + " new: " + getParentFragmentManager().getBackStackEntryCount());
+//                if (getParentFragmentManager().getBackStackEntryCount() == backStack.getValue().size() && !backStackBeingCleared) {
+//                    // Back Stack was popped
+//
+//                    Log.d("HEJ", "remove");
+//                    backStack.getValue().remove(backStack.getValue().size()-1);
+//                    Log.d("HEJ", "removed size " + backStack.getValue().size());
+//                }
+            }
+        });
     }
 
     private class SearchResultsFragmentAdapter extends FragmentStateAdapter {
@@ -169,5 +203,31 @@ public class SearchFragment extends Fragment {
         public int getItemCount() {
             return searchResultsFragments.length;
         }
+    }
+
+    public void addFragmentToBackStack(Fragment fragment) {
+        addToBackStack(fragment);
+    }
+
+    public void addToBackStack(Fragment fragment) {
+        if (getParentFragmentManager().getBackStackEntryCount() > 1) {
+            getParentFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.main_fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            getParentFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+//                    .setPrimaryNavigationFragment(this)
+                    .replace(R.id.main_fragment_container, fragment)
+                    .addToBackStack("SEARCH_FRAGMENT")
+                    .commit();
+        }
+        getParentFragmentManager().executePendingTransactions();
+    }
+
+    public void popBackStack() {
+        getActivity().onBackPressed();
     }
 }

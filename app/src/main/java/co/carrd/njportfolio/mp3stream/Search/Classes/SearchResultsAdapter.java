@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
+import co.carrd.njportfolio.mp3stream.Search.TestFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Artist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
@@ -157,6 +159,10 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             songNameTextView.setText(song.getTitle());
             artistTextView.setText(song.getArtist().getName());
             durationTextView.setText(song.getFriendlyDuration());
+
+            itemView.setOnClickListener(view -> {
+                SearchFragment.getInstance().addToBackStack(new TestFragment(1));
+            });
 
             loadViewholderImage(itemView, coverImageView, song.getCoverUrl());
 
