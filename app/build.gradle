@@ -48,6 +48,8 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    implementation 'com.github.colorgreen:swipe-touch-listener:v1.3'
+
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'androidx.fragment:fragment:1.5.1'
 //    implementation 'com.google.android.material:material:1.6.1'
