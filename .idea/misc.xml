@@ -25,7 +25,10 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_bottom_nav_search.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_bottom_nav_search_selected.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_nav_back.xml" value="0.137" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_player_more.xml" value="0.137" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_player_more_24.xml" value="0.137" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_player_play.xml" value="0.137" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_player_share_24.xml" value="0.137" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_search.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_search_color.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/icon_search_selector.xml" value="0.177" />
@@ -36,6 +39,7 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/drawable/preset_dropdown_background.xml" value="0.177" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/font/interstate.xml" value="0.11979166666666667" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/activity_main.xml" value="0.2436923148431724" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_artist_details.xml" value="0.14030769642485683" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_equalizer.xml" value="0.18795289855072464" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_library.xml" value="0.14030769642485683" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layout/fragment_playlist_details.xml" value="0.18461539003270633" />
