@@ -21,13 +21,20 @@ public class UiUtils {
         MaterialToolbar toolbar = fragmentView.findViewById(R.id.toolbar);
         // TextView which title resides in is known to be first child
         TextView titleTextView = (TextView) toolbar.getChildAt(0);
-        TextPaint titleTextPaint = titleTextView.getPaint();
-        float textWidth = titleTextPaint.measureText(titleTextView.getText().toString());
-        float textHeight = titleTextView.getTextSize();
+        setGradientText(titleTextView);
+    }
+
+    /**
+     * Sets text color of given textview to gradient
+     */
+    public static void setGradientText(TextView textView) {
+        TextPaint textPaint = textView.getPaint();
+        float textWidth = textPaint.measureText(textView.getText().toString());
+        float textHeight = textView.getTextSize();
         Shader shader = new LinearGradient(0f, 0f, textWidth, textHeight, new int[] {
-                ContextCompat.getColor(toolbar.getContext(), R.color.dark_orange),
-                ContextCompat.getColor(toolbar.getContext(), R.color.orange)
+                ContextCompat.getColor(textView.getContext(), R.color.dark_orange),
+                ContextCompat.getColor(textView.getContext(), R.color.orange)
         }, null, Shader.TileMode.REPEAT);
-        titleTextPaint.setShader(shader);
+        textPaint.setShader(shader);
     }
 }
