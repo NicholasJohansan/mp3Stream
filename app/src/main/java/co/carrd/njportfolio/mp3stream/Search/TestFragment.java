@@ -1,6 +1,7 @@
 package co.carrd.njportfolio.mp3stream.Search;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +14,26 @@ import androidx.fragment.app.Fragment;
 import co.carrd.njportfolio.mp3stream.R;
 
 public class TestFragment extends Fragment {
-    private int num = 0;
+    private int num;
 
     public TestFragment() {}
 
-    public TestFragment(int num) {
-        this.num = num;
-    }
+//    public TestFragment(int num) {
+//        this.num = num;
+//    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        if (savedInstanceState != null) {
-            num = savedInstanceState.getInt("num");
-        }
+//        if (savedInstanceState != null) {
+//            num = savedInstanceState.getInt("num");
+//            Log.d("RESTOR", "restore " + num);
+//        }
+
+        Bundle args = getArguments();
+        num = args.getInt("num");
+
 
         return inflater.inflate(R.layout.fragment_test, container, false);
     }
@@ -35,7 +41,8 @@ public class TestFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("num", num);
+//        outState.putInt("num", num);
+//        Log.d("RESTOR", "save " + num);
     }
 
     @Override
@@ -48,7 +55,11 @@ public class TestFragment extends Fragment {
         });
         ((Button) view.findViewById(R.id.open_fragment_button)).setText("Open " + num);
         view.findViewById(R.id.open_fragment_button).setOnClickListener(v -> {
-            SearchFragment.getInstance().addFragmentToBackStack(new TestFragment(num + 1));
+            Fragment newFragment = new TestFragment();
+            Bundle args = new Bundle();
+            args.putInt("num", num + 1);
+            newFragment.setArguments(args);
+            SearchFragment.getInstance().addFragmentToBackStack(newFragment);
         });
     }
 }

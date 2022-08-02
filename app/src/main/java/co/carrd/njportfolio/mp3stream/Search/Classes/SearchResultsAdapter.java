@@ -3,6 +3,7 @@ package co.carrd.njportfolio.mp3stream.Search.Classes;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
@@ -161,7 +163,11 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             durationTextView.setText(song.getFriendlyDuration());
 
             itemView.setOnClickListener(view -> {
-                SearchFragment.getInstance().addToBackStack(new TestFragment(1));
+                Fragment newFragment = new TestFragment();
+                Bundle args = new Bundle();
+                args.putInt("num", 1);
+                newFragment.setArguments(args);
+                SearchFragment.getInstance().addFragmentToBackStack(newFragment);
             });
 
             loadViewholderImage(itemView, coverImageView, song.getCoverUrl());
