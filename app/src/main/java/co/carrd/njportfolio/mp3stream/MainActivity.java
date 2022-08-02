@@ -82,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .replace(R.id.main_fragment_container, selectedFragment).commit();
 
-        getSupportFragmentManager().executePendingTransactions();
-
         if (selectedFragment.equals(searchFragment)) {
             try {
                 getSupportFragmentManager().restoreBackStack("SEARCH_FRAGMENT");

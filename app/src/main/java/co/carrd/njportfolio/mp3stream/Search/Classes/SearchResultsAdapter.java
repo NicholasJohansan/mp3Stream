@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.Search.PlaylistDetailsFragment;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 import co.carrd.njportfolio.mp3stream.Search.TestFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Artist;
@@ -198,6 +199,13 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             loadViewholderImage(itemView, coverImageView, playlist.getCoverUrl());
 
+            itemView.setOnClickListener(view -> {
+                Fragment playlistDetailsFragment = new PlaylistDetailsFragment();
+                Bundle args = new Bundle();
+                args.putParcelable("playlist", playlist);
+                playlistDetailsFragment.setArguments(args);
+                SearchFragment.getInstance().addFragmentToBackStack(playlistDetailsFragment);
+            });
 
         }
     }
