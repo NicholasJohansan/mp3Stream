@@ -1,10 +1,13 @@
 package co.carrd.njportfolio.mp3stream.SoundcloudApi.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.net.URI;
 
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 
-public class Playlist {
+public class Playlist implements Parcelable {
     private String coverUrl;
     private String title;
     private int duration;
@@ -47,5 +50,42 @@ public class Playlist {
 
     public PartialArtist getArtist() {
         return artist;
+    }
+
+    // Parcelable implementation
+    protected Playlist(Parcel in) {
+        coverUrl = in.readString();
+        title = in.readString();
+        duration = in.readInt();
+        songCount = in.readInt();
+        id = in.readInt();
+        artist = in.readParcelable(PartialArtist.class.getClassLoader());
+    }
+
+    public static final Creator<Playlist> CREATOR = new Creator<Playlist>() {
+        @Override
+        public Playlist createFromParcel(Parcel in) {
+            return new Playlist(in);
+        }
+
+        @Override
+        public Playlist[] newArray(int size) {
+            return new Playlist[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(coverUrl);
+        parcel.writeString(title);
+        parcel.writeInt(duration);
+        parcel.writeInt(songCount);
+        parcel.writeInt(id);
+        parcel.writeParcelable(artist, i);
     }
 }
