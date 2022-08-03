@@ -108,6 +108,27 @@ public class ApiWrapper {
     apiUtils.fetchPlaylistTracksList(url, consumer);
   }
 
+  public void getArtistTracks(int artistId, Consumer<SongCollection> consumer) {
+    String url = "https://api-v2.soundcloud.com/users/" + artistId + "/tracks"
+            + "?client_id=" + clientId
+            + "&limit=15";
+    apiUtils.fetchSongCollection(url, consumer);;
+  }
+
+  public void getArtistPlaylists(int artistId, Consumer<PlaylistCollection> consumer) {
+    String url = "https://api-v2.soundcloud.com/users/" + artistId + "/playlists_without_albums"
+            + "?client_id=" + clientId
+            + "&limit=15";
+    apiUtils.fetchPlaylistCollection(url, consumer);;
+  }
+
+  public void getArtistAlbums(int artistId, Consumer<PlaylistCollection> consumer) {
+    String url = "https://api-v2.soundcloud.com/users/" + artistId + "/albums"
+            + "?client_id=" + clientId
+            + "&limit=15";
+    apiUtils.fetchPlaylistCollection(url, consumer);;
+  }
+
   /**
    * get search suggestions for a given query
    *
