@@ -11,27 +11,53 @@
 
     <ImageView
         android:id="@+id/mini_player_song_cover"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:padding="1dp"
-        android:layout_marginLeft="5dp"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="7dp"
         android:background="@color/light_gray"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="1dp"
+        android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/ic_launcher_background"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="No Song Playing"
+        android:layout_marginHorizontal="8dp"
         android:background="@android:color/transparent"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/mini_player_song_cover"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintRight_toLeftOf="@id/mini_player_play_pause_button">
+
+        <TextView
+            android:id="@+id/mini_player_song_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Song"
+            android:textSize="18sp"
+            android:ellipsize="marquee"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/mini_player_artist_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Artist"
+            android:textSize="12sp"
+            android:ellipsize="marquee"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mini_player_song_name"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <ImageButton
+        android:id="@+id/mini_player_play_pause_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
