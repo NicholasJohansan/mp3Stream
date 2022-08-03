@@ -188,6 +188,9 @@ public class ApiParser {
                 partialStreamUrl = transcodings.getJSONObject(0).getString("url");
             }
 
+            String policy = songData.getString("policy");
+            if (policy.equals("SNIP")) partialStreamUrl = null;
+
             PartialArtist partialArtist = parsePartialArtist(songData.getJSONObject("user"));
 
             return new Song(coverUrl, partialStreamUrl, title, duration, id, partialArtist);
