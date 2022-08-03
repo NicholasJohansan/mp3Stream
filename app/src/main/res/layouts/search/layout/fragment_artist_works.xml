@@ -24,15 +24,14 @@
         tools:listitem="@layout/item_song_result"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:paddingBottom="50dp"
-        android:clipToPadding="false"
-        android:visibility="gone"/>
+        android:clipToPadding="false"/>
 
     <ProgressBar
         android:id="@+id/artist_works_endless_progress"
         android:layout_width="wrap_content"
         style="?android:progressBarStyle"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:indeterminate="true"
         android:indeterminateTint="@color/orange"
         android:indeterminateTintMode="src_atop"

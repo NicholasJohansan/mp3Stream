@@ -37,6 +37,9 @@ public class Artist implements Parcelable {
   public String getBannerUrl() {
     return bannerUrl;
   }
+  public int getId() {
+    return id;
+  }
 
   // Parcelable implementation
   protected Artist(Parcel in) {

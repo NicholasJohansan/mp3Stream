@@ -31,7 +31,9 @@ public class ApiParser {
 
             return new ArtistCollection(
                     artistsArray,
-                    obj.getInt("total_results"),
+                    obj.has("total_results")
+                            ? obj.getInt("total_results")
+                            : 0,
                     obj.has("next_href")
                             ? obj.getString("next_href")
                             : null
@@ -77,7 +79,9 @@ public class ApiParser {
 
             return new PlaylistCollection(
                     playlistsArray,
-                    obj.getInt("total_results"),
+                    obj.has("total_results")
+                            ? obj.getInt("total_results")
+                            : 0,
                     obj.has("next_href")
                             ? obj.getString("next_href")
                             : null
@@ -158,7 +162,9 @@ public class ApiParser {
 
             return new SongCollection(
                     songsArray,
-                    obj.getInt("total_results"),
+                    obj.has("total_results")
+                            ? obj.getInt("total_results")
+                            : 0,
                     obj.has("next_href")
                             ? obj.getString("next_href")
                             : null

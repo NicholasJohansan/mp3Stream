@@ -1,6 +1,7 @@
 package co.carrd.njportfolio.mp3stream.Search.Details;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class ArtistWorksFragment extends Fragment {
     private WorkType workType;
+    private ArtistDetailsFragment artistDetailsFragment;
 
     private TextView labelTextView;
     private RecyclerView recyclerView;
@@ -47,8 +49,9 @@ public class ArtistWorksFragment extends Fragment {
         }
     }
 
-    public ArtistWorksFragment(WorkType workType) {
+    public ArtistWorksFragment(WorkType workType, ArtistDetailsFragment artistDetailsFragment) {
         this.workType = workType;
+        this.artistDetailsFragment = artistDetailsFragment;
     }
 
     @Nullable
@@ -83,36 +86,36 @@ public class ArtistWorksFragment extends Fragment {
         recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(recyclerViewLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//                if (searchResultsAdapter.getNextUrl() != null) {
-//                    progressBar.setVisibility(View.VISIBLE);
-//                    ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
-//                    switch (workType) {
-//                        case SONG:
-//                            soundcloudApi.getNextTracks(searchResultsAdapter.getNextUrl(), songCol -> {
-//                                UiUtils.runOnUiThread(getActivity(), () -> {
-//                                    List<? extends Object> castedResults = songCol.getSongs();
-//                                    addNewSearchResults((List<Object>) castedResults, songCol.getNextUrl());
-//                                });
-//                            });
-//                            break;
-//                        case PLAYLIST:
-//                            soundcloudApi.getNextPlaylists(searchResultsAdapter.getNextUrl(), playlistCol -> {
-//                                UiUtils.runOnUiThread(getActivity(), () -> {
-//                                    List<? extends Object> castedResults = playlistCol.getPlaylists();
-//                                    addNewSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
-//                                });
-//                            });
-//                            break;
-//                        case ALBUM:
-//                            soundcloudApi.getNextAlbums(searchResultsAdapter.getNextUrl(), playlistCol -> {
-//                                UiUtils.runOnUiThread(getActivity(), () -> {
-//                                    List<? extends Object> castedResults = playlistCol.getPlaylists();
-//                                    addNewSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
-//                                });
-//                            });
-//                            break;
-//                    }
-//                }
+                if (searchResultsAdapter.getNextUrl() != null && !searchResultsAdapter.getNextUrl().equals("null")) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
+                    switch (workType) {
+                        case SONG:
+                            soundcloudApi.getNextTracks(searchResultsAdapter.getNextUrl(), songCol -> {
+                                UiUtils.runOnUiThread(getActivity(), () -> {
+                                    List<? extends Object> castedResults = songCol.getSongs();
+                                    addNewSearchResults((List<Object>) castedResults, songCol.getNextUrl());
+                                });
+                            });
+                            break;
+                        case PLAYLIST:
+                            soundcloudApi.getNextPlaylists(searchResultsAdapter.getNextUrl(), playlistCol -> {
+                                UiUtils.runOnUiThread(getActivity(), () -> {
+                                    List<? extends Object> castedResults = playlistCol.getPlaylists();
+                                    addNewSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
+                                });
+                            });
+                            break;
+                        case ALBUM:
+                            soundcloudApi.getNextAlbums(searchResultsAdapter.getNextUrl(), playlistCol -> {
+                                UiUtils.runOnUiThread(getActivity(), () -> {
+                                    List<? extends Object> castedResults = playlistCol.getPlaylists();
+                                    addNewSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
+                                });
+                            });
+                            break;
+                    }
+                }
             }
         });
 
@@ -121,35 +124,36 @@ public class ArtistWorksFragment extends Fragment {
 
     public void getInitialData() {
 
-//        progressBar.setVisibility(View.VISIBLE);
-//        ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
-//
-//        switch (workType) {
-//            case SONG:
-//                soundcloudApi.searchTracks(searchQuery, songCol -> {
-//                    UiUtils.runOnUiThread(getActivity(), () -> {
-//                        List<? extends Object> castedResults = songCol.getSongs();
-//                        setSearchResults((List<Object>) castedResults, songCol.getNextUrl());
-//                    });
-//                });
-//                break;
-//            case PLAYLIST:
-//                soundcloudApi.searchPlaylists(searchQuery, playlistCol -> {
-//                    UiUtils.runOnUiThread(getActivity(), () -> {
-//                        List<? extends Object> castedResults = playlistCol.getPlaylists();
-//                        setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
-//                    });
-//                });
-//                break;
-//            case ALBUM:
-//                soundcloudApi.searchAlbums(searchQuery, playlistCol -> {
-//                    UiUtils.runOnUiThread(getActivity(), () -> {
-//                        List<? extends Object> castedResults = playlistCol.getPlaylists();
-//                        setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
-//                    });
-//                });
-//                break;
-//        }
+        progressBar.setVisibility(View.VISIBLE);
+        int artistId = artistDetailsFragment.getArtistId();
+        ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
+
+        switch (workType) {
+            case SONG:
+                soundcloudApi.getArtistTracks(artistId, songCol -> {
+                    UiUtils.runOnUiThread(getActivity(), () -> {
+                        List<? extends Object> castedResults = songCol.getSongs();
+                        setSearchResults((List<Object>) castedResults, songCol.getNextUrl());
+                    });
+                });
+                break;
+            case PLAYLIST:
+                soundcloudApi.getArtistPlaylists(artistId, playlistCol -> {
+                    UiUtils.runOnUiThread(getActivity(), () -> {
+                        List<? extends Object> castedResults = playlistCol.getPlaylists();
+                        setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
+                    });
+                });
+                break;
+            case ALBUM:
+                soundcloudApi.getArtistAlbums(artistId, playlistCol -> {
+                    UiUtils.runOnUiThread(getActivity(), () -> {
+                        List<? extends Object> castedResults = playlistCol.getPlaylists();
+                        setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
+                    });
+                });
+                break;
+        }
     }
 
     public void setSearchResults(List<Object> searchResults, String nextUrl) {

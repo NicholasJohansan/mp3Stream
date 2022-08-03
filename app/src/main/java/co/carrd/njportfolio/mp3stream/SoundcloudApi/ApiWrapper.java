@@ -111,7 +111,7 @@ public class ApiWrapper {
   public void getArtistTracks(int artistId, Consumer<SongCollection> consumer) {
     String url = "https://api-v2.soundcloud.com/users/" + artistId + "/tracks"
             + "?client_id=" + clientId
-            + "&limit=15";
+            + "&limit=20";
     apiUtils.fetchSongCollection(url, consumer);;
   }
 

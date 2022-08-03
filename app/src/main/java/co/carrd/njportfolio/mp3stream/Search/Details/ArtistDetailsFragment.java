@@ -36,9 +36,9 @@ public class ArtistDetailsFragment extends Fragment {
     private TabLayout tabLayout;
 
     private ArtistWorksFragment[] artistWorksFragments = new ArtistWorksFragment[] {
-            new ArtistWorksFragment(ArtistWorksFragment.WorkType.SONG),
-            new ArtistWorksFragment(ArtistWorksFragment.WorkType.PLAYLIST),
-            new ArtistWorksFragment(ArtistWorksFragment.WorkType.ALBUM)
+            new ArtistWorksFragment(ArtistWorksFragment.WorkType.SONG, this),
+            new ArtistWorksFragment(ArtistWorksFragment.WorkType.PLAYLIST, this),
+            new ArtistWorksFragment(ArtistWorksFragment.WorkType.ALBUM, this)
     };
 
     @Nullable
@@ -113,5 +113,9 @@ public class ArtistDetailsFragment extends Fragment {
         public int getItemCount() {
             return artistWorksFragments.length;
         }
+    }
+
+    public int getArtistId() {
+        return artist.getId();
     }
 }
