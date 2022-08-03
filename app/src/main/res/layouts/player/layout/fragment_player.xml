@@ -193,6 +193,28 @@
                 app:layout_constraintBottom_toBottomOf="@id/player_play_pause_button"
                 app:layout_constraintRight_toLeftOf="@id/player_play_pause_button" />
 
+            <ImageButton
+                android:id="@+id/player_shuffle_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_player_shuffle_inactive"
+                app:layout_constraintTop_toTopOf="@id/player_play_pause_button"
+                app:layout_constraintBottom_toBottomOf="@id/player_play_pause_button"
+                app:layout_constraintRight_toLeftOf="@id/player_skip_previous_button"/>
+
+            <ImageButton
+                android:id="@+id/player_loop_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_player_loop_inactive"
+                app:layout_constraintTop_toTopOf="@id/player_play_pause_button"
+                app:layout_constraintBottom_toBottomOf="@id/player_play_pause_button"
+                app:layout_constraintLeft_toRightOf="@id/player_skip_next_button"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
