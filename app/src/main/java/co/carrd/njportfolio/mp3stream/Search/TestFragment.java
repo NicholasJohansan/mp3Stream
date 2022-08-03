@@ -59,7 +59,7 @@ public class TestFragment extends Fragment {
             Bundle args = new Bundle();
             args.putInt("num", num + 1);
             newFragment.setArguments(args);
-            SearchFragment.getInstance().addFragmentToBackStack(newFragment);
+            SearchFragment.getInstance().addToBackStack(newFragment);
         });
     }
 }

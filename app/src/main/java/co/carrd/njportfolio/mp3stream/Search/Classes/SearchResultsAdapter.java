@@ -145,7 +145,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 Bundle args = new Bundle();
                 args.putInt("num", 1);
                 newFragment.setArguments(args);
-                SearchFragment.getInstance().addFragmentToBackStack(newFragment);
+                SearchFragment.getInstance().addToBackStack(newFragment);
             });
 
             UiUtils.loadImage(coverImageView, song.getCoverUrl());
@@ -181,7 +181,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 Bundle args = new Bundle();
                 args.putParcelable("playlist", playlist);
                 playlistDetailsFragment.setArguments(args);
-                SearchFragment.getInstance().addFragmentToBackStack(playlistDetailsFragment);
+                SearchFragment.getInstance().addToBackStack(playlistDetailsFragment);
             });
 
         }
@@ -214,7 +214,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 Bundle args = new Bundle();
                 args.putParcelable("artist", artist);
                 artistDetailsFragment.setArguments(args);
-                SearchFragment.getInstance().addFragmentToBackStack(artistDetailsFragment);
+                SearchFragment.getInstance().addToBackStack(artistDetailsFragment);
             });
 
         }

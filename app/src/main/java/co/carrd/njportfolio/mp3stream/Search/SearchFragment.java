@@ -205,10 +205,6 @@ public class SearchFragment extends Fragment {
         }
     }
 
-    public void addFragmentToBackStack(Fragment fragment) {
-        addToBackStack(fragment);
-    }
-
     public void addToBackStack(Fragment fragment) {
         FragmentManager fm = getParentFragmentManager();
         String backStackTag = "SEARCH_FRAGMENT";
