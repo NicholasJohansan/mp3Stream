@@ -160,12 +160,27 @@
             android:id="@+id/playlist_details_songs_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginVertical="16dp"
-            android:layout_marginHorizontal="0dp"
+            android:layout_marginTop="16dp"
             tools:listitem="@layout/item_song_result"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:paddingBottom="50dp"
             app:layout_constraintTop_toBottomOf="@id/playlist_details_view"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:clipToPadding="false"/>
+
+        <ProgressBar
+            android:id="@+id/playlist_details_endless_progress"
+            android:layout_width="wrap_content"
+            style="?android:progressBarStyle"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/orange"
+            android:indeterminateTintMode="src_atop"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

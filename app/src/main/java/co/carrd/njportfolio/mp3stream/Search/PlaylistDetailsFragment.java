@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class PlaylistDetailsFragment extends Fragment {
     private TextView topbarTitleTextView;
     private RecyclerView songsRecyclerView;
     private SearchResultsAdapter songsRecyclerViewAdapter;
+    private ProgressBar progressBar;
 
     private int songsPage;
 
@@ -71,6 +73,7 @@ public class PlaylistDetailsFragment extends Fragment {
         durationTextView = fragmentView.findViewById(R.id.playlist_details_duration_text_view);
         topbarTitleTextView = fragmentView.findViewById(R.id.playlist_details_topbar_title);
         songsRecyclerView = fragmentView.findViewById(R.id.playlist_details_songs_recycler_view);
+        progressBar = fragmentView.findViewById(R.id.playlist_details_endless_progress);
 
         return fragmentView;
     }
@@ -104,14 +107,14 @@ public class PlaylistDetailsFragment extends Fragment {
                 int[] paginatedTrackIds = ApiUtils.paginateIds(songsPage, playlist.getTrackIds());
                 if (paginatedTrackIds != null) {
                     songsPage++;
-//                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
                     ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
                     soundcloudApi.getPlaylistTracks(paginatedTrackIds, playlistTracks -> {
                         List<? extends Object> castedResults = playlistTracks;
                         getActivity().runOnUiThread(() -> {
                             songsRecyclerViewAdapter.getSearchResults().getValue().addAll((List<Object>) castedResults);
                             songsRecyclerViewAdapter.notifyDataSetChanged();
-//            progressBar.setVisibility(View.INVISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
                         });
                     });
                 }
@@ -140,7 +143,7 @@ public class PlaylistDetailsFragment extends Fragment {
             getActivity().runOnUiThread(() -> {
                 songsRecyclerViewAdapter.getSearchResults().setValue((List<Object>) castedResults);
                 songsRecyclerViewAdapter.notifyDataSetChanged();
-//            progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             });
         });
 //        recyclerView.smoothScrollToPosition(0);
