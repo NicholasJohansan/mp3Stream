@@ -22,6 +22,9 @@ import co.carrd.njportfolio.mp3stream.Search.Details.ArtistDetailsFragment;
 import co.carrd.njportfolio.mp3stream.Search.Details.PlaylistDetailsFragment;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 import co.carrd.njportfolio.mp3stream.Search.Details.TestFragment;
+import co.carrd.njportfolio.mp3stream.Search.ViewHolders.ArtistResultViewHolder;
+import co.carrd.njportfolio.mp3stream.Search.ViewHolders.PlaylistResultViewHolder;
+import co.carrd.njportfolio.mp3stream.Search.ViewHolders.SongResultViewHolder;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Artist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
@@ -96,116 +99,4 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
     public String getNextUrl() { return nextUrl; };
     public void setNextUrl(String nextUrl) { this.nextUrl = nextUrl; }
-
-//    private Bitmap getBitmap(String imageUrl) {
-//        return BitmapFactory.decodeStream((new URL(imageUrl)).openConnection().getInputStream());
-//    }
-
-    public class SongResultViewHolder extends RecyclerView.ViewHolder {
-        private TextView songNameTextView;
-        private TextView artistTextView;
-        private TextView durationTextView;
-        private ImageView coverImageView;
-        private ConstraintLayout georestrictedView;
-
-        public SongResultViewHolder(@NonNull View itemView) {
-            super(itemView);
-            songNameTextView = itemView.findViewById(R.id.song_result_item_name);
-            artistTextView = itemView.findViewById(R.id.song_result_item_artist);
-            durationTextView = itemView.findViewById(R.id.song_result_item_duration);
-            coverImageView = itemView.findViewById(R.id.song_result_item_cover);
-            georestrictedView = itemView.findViewById(R.id.song_result_georestricted_view);
-        }
-
-        public void bindSong(Song song) {
-
-            songNameTextView.setText(song.getTitle());
-            artistTextView.setText(song.getArtist().getName());
-            durationTextView.setText(song.getFriendlyDuration());
-
-            if (song.getPartialStreamUrl() == null) {
-                georestrictedView.setVisibility(View.VISIBLE);
-            } else {
-                georestrictedView.setVisibility(View.GONE);
-            }
-
-            itemView.setOnClickListener(view -> {
-                Fragment newFragment = new TestFragment();
-                Bundle args = new Bundle();
-                args.putInt("num", 1);
-                newFragment.setArguments(args);
-                SearchFragment.getInstance().addToBackStack(newFragment);
-            });
-
-            UiUtils.loadImage(coverImageView, song.getCoverUrl());
-
-
-        }
-    }
-
-    public class PlaylistResultViewHolder extends RecyclerView.ViewHolder {
-        private TextView playlistNameTextView;
-        private TextView artistTextView;
-        private TextView songsDurationTextView;
-        private ImageView coverImageView;
-
-        public PlaylistResultViewHolder(@NonNull View itemView) {
-            super(itemView);
-            playlistNameTextView = itemView.findViewById(R.id.playlist_result_item_name);
-            artistTextView = itemView.findViewById(R.id.playlist_result_item_artist);
-            songsDurationTextView = itemView.findViewById(R.id.playlist_result_item_songs_duration);
-            coverImageView = itemView.findViewById(R.id.playlist_result_item_cover);
-        }
-
-        public void bindPlaylist(Playlist playlist) {
-
-            playlistNameTextView.setText(playlist.getTitle());
-            artistTextView.setText(playlist.getArtist().getName());
-            songsDurationTextView.setText(playlist.getSongCount() + " Songs ⋅ " + playlist.getFriendlyDuration());
-
-            UiUtils.loadImage(coverImageView, playlist.getCoverUrl());
-
-            itemView.setOnClickListener(view -> {
-                Fragment playlistDetailsFragment = new PlaylistDetailsFragment();
-                Bundle args = new Bundle();
-                args.putParcelable("playlist", playlist);
-                playlistDetailsFragment.setArguments(args);
-                SearchFragment.getInstance().addToBackStack(playlistDetailsFragment);
-            });
-
-        }
-    }
-
-    public class ArtistResultViewHolder extends RecyclerView.ViewHolder {
-        private TextView artistNameTextView;
-        private TextView songCountTextView;
-        private TextView playlistCountTextView;
-        private ImageView avatarImageView;
-
-        public ArtistResultViewHolder(@NonNull View itemView) {
-            super(itemView);
-            artistNameTextView = itemView.findViewById(R.id.artist_result_item_name);
-            songCountTextView = itemView.findViewById(R.id.artist_result_item_song_count);
-            playlistCountTextView = itemView.findViewById(R.id.artist_result_item_playlist_count);
-            avatarImageView = itemView.findViewById(R.id.artist_result_item_avatar);
-        }
-
-        public void bindArtist(Artist artist) {
-
-            artistNameTextView.setText(artist.getName());
-            songCountTextView.setText(artist.getSongCount() + " Songs");
-            playlistCountTextView.setText(artist.getPlaylistCount() + " Playlists");
-
-            UiUtils.loadImage(avatarImageView, artist.getAvatarUrl());
-
-            itemView.setOnClickListener(view -> {
-                Fragment artistDetailsFragment = new ArtistDetailsFragment();
-                Bundle args = new Bundle();
-                args.putParcelable("artist", artist);
-                artistDetailsFragment.setArguments(args);
-                SearchFragment.getInstance().addToBackStack(artistDetailsFragment);
-            });
-
-        }
-    }
 }
