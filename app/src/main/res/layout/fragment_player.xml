@@ -15,12 +15,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
 
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="MiniPlayer"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"/>-->
+
+        <ImageView
+            android:id="@+id/mini_player_song_cover"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:padding="1dp"
+            android:layout_marginLeft="5dp"
+            android:background="@color/light_gray"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/ic_launcher_background"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MiniPlayer"
+            android:text="No Song Playing"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintLeft_toRightOf="@id/mini_player_song_cover"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_player_play"
+            android:layout_marginRight="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +62,8 @@
         android:layout_height="match_parent"
         android:background="@color/dark_gray"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
