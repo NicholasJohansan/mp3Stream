@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.colorgreen.swiper.OnSwipeTouchListener;
 import com.colorgreen.swiper.SwipeAction;
@@ -26,6 +27,8 @@ public class PlayerFragment extends Fragment {
     private MiniPlayerFragment miniPlayerFragment = new MiniPlayerFragment();
     private ImageButton minimizeButton;
     private SwipeAction swipeAction;
+
+    private PlayerViewModel playerViewModel;
 
     @Nullable
     @Override
@@ -62,6 +65,9 @@ public class PlayerFragment extends Fragment {
 
         // Set Up Minimize Button
         minimizeButton.setOnClickListener(v -> swipeAction.collapse());
+
+        // Instantiate PlayerViewModel
+        playerViewModel = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
     }
 
     public void setUpSwipeAction() {
