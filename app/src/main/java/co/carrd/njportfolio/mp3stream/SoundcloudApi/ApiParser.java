@@ -129,6 +129,23 @@ public class ApiParser {
         return null;
     }
 
+    public static List<Song> parseSongList(String songListDataString) {
+        try {
+            JSONArray array = new JSONArray(songListDataString);
+
+            List<Song> songList = new ArrayList<>();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject songData = array.getJSONObject(i);
+                songList.add(ApiParser.parseSong(songData));
+            }
+
+            return songList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static SongCollection parseSongCollection(String songCollectionDataString) {
         try {
             JSONObject obj = new JSONObject(songCollectionDataString);

@@ -11,8 +11,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.ArtistCollection;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
@@ -29,9 +31,17 @@ import okhttp3.ResponseBody;
 
 public class ApiUtils {
     private static OkHttpClient httpClient;
+    public static int PAGE_SIZE = 15;
 
     public ApiUtils(OkHttpClient httpClient) {
         this.httpClient = httpClient;
+    }
+
+    public void fetchPlaylistTracksList(String url, Consumer<List<Song>> playlistTracksListConsumer) {
+        fetchHttp(url, responseString -> {
+            List<Song> playlistSongs = ApiParser.parseSongList(responseString);
+            playlistTracksListConsumer.accept(playlistSongs);
+        });
     }
 
     public void fetchArtistCollection(String url, Consumer<ArtistCollection> artistCollectionConsumer) {
@@ -77,6 +87,14 @@ public class ApiUtils {
                 responseStringConsumer.accept(bodyString);
             }
         });
+    }
+
+    public static int[] paginateIds(int page, int[] ids) {
+        page -= 1;
+        int startIndex = page * PAGE_SIZE;
+        if (startIndex >= ids.length) return null;
+        int endIndex = Math.min(startIndex + PAGE_SIZE, ids.length);
+        return Arrays.copyOfRange(ids, startIndex, endIndex);
     }
 
     public static String getFriendlyDuration(int duration) {

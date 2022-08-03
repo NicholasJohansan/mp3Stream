@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -97,6 +98,15 @@ public class ApiWrapper {
   public void getNextTracks(String nextUrl, Consumer<SongCollection> consumer) {
     String url = nextUrl + "&client_id=" + clientId;
     apiUtils.fetchSongCollection(url, consumer);
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  public void getPlaylistTracks(int[] trackIds, Consumer<List<Song>> consumer) {
+    String trackIdsParam = String.join(",", Arrays.stream(trackIds).mapToObj(String::valueOf).toArray(String[]::new));
+    String url = "https://api-v2.soundcloud.com/tracks?ids="
+            + Uri.encode(trackIdsParam)
+            + "&client_id=" + clientId;
+    apiUtils.fetchPlaylistTracksList(url, consumer);
   }
 
   /**
