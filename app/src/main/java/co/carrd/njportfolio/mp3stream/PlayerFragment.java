@@ -5,6 +5,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,12 +20,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class PlayerFragment extends Fragment {
 
-    MiniPlayerFragment miniPlayerFragment = new MiniPlayerFragment();
+    private MiniPlayerFragment miniPlayerFragment = new MiniPlayerFragment();
+    private ImageButton minimizeButton;
+    private SwipeAction swipeAction;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_player, container, false);
+
+        // Link UI
+        minimizeButton = fragmentView.findViewById(R.id.player_minimize_button);
+
         return fragmentView;
     }
 
@@ -42,16 +49,25 @@ public class PlayerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialise views involved
-        ConstraintLayout miniPlayerLayout = view.findViewById(R.id.mini_player);
-        FragmentContainerView miniPlayerView = view.findViewById(R.id.mini_player_fragment_view);
-        ConstraintLayout maximimisedPlayer = view.findViewById(R.id.maximised_player_view);
-        BottomNavigationView bottomNav = ((MainActivity) getActivity()).getBottomNav();
-
         // inflate Mini Player Fragment
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.mini_player_fragment_view, miniPlayerFragment)
                 .commit();
+
+        // Set Up Swipe Action
+        setUpSwipeAction();
+
+        // Set Up Minimize Button
+        minimizeButton.setOnClickListener(v -> swipeAction.collapse());
+    }
+
+    public void setUpSwipeAction() {
+        // Initialise views involved
+        View view = getView();
+        ConstraintLayout miniPlayerLayout = view.findViewById(R.id.mini_player);
+        FragmentContainerView miniPlayerView = view.findViewById(R.id.mini_player_fragment_view);
+        ConstraintLayout maximimisedPlayer = view.findViewById(R.id.maximised_player_view);
+        BottomNavigationView bottomNav = ((MainActivity) getActivity()).getBottomNav();
 
         // Set up constants
         float screenHeight = getResources().getDisplayMetrics().heightPixels;
@@ -65,7 +81,7 @@ public class PlayerFragment extends Fragment {
         miniPlayerLayout.setY(startY);
 
         // Set up swipe action
-        SwipeAction swipeAction = new SwipeAction();
+        swipeAction = new SwipeAction();
         swipeAction.setDirection(SwipeAction.DragDirection.Up);
         swipeAction.setSteps(new float[]{startY, targetY});
         swipeAction.setDragThreshold(0.1f);
