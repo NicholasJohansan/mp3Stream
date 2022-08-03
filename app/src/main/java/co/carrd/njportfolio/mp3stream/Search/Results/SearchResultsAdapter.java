@@ -125,6 +125,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             if (song.getPartialStreamUrl() == null) {
                 georestrictedView.setVisibility(View.VISIBLE);
+            } else {
+                georestrictedView.setVisibility(View.GONE);
             }
 
             itemView.setOnClickListener(view -> {
