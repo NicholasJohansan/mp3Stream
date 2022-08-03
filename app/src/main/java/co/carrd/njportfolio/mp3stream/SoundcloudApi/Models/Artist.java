@@ -34,6 +34,9 @@ public class Artist implements Parcelable {
   public int getPlaylistCount() {
     return playlistCount;
   }
+  public String getBannerUrl() {
+    return bannerUrl;
+  }
 
   // Parcelable implementation
   protected Artist(Parcel in) {

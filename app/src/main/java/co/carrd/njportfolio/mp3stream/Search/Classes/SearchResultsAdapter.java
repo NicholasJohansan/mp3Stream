@@ -3,6 +3,7 @@ package co.carrd.njportfolio.mp3stream.Search.Classes;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.Search.ArtistDetailsFragment;
 import co.carrd.njportfolio.mp3stream.Search.PlaylistDetailsFragment;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 import co.carrd.njportfolio.mp3stream.Search.TestFragment;
@@ -37,6 +40,7 @@ import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private MutableLiveData<List<Object>> searchResults;
     private String nextUrl;
@@ -206,6 +210,13 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             UiUtils.loadImage(avatarImageView, artist.getAvatarUrl());
 
+            itemView.setOnClickListener(view -> {
+                Fragment artistDetailsFragment = new ArtistDetailsFragment();
+                Bundle args = new Bundle();
+                args.putParcelable("artist", artist);
+                artistDetailsFragment.setArguments(args);
+                SearchFragment.getInstance().addFragmentToBackStack(artistDetailsFragment);
+            });
 
         }
     }
