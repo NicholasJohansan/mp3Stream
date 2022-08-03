@@ -40,7 +40,6 @@ import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private MutableLiveData<List<Object>> searchResults;
     private String nextUrl;

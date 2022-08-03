@@ -100,7 +100,6 @@ public class ApiWrapper {
     apiUtils.fetchSongCollection(url, consumer);
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.O)
   public void getPlaylistTracks(int[] trackIds, Consumer<List<Song>> consumer) {
     String trackIdsParam = String.join(",", Arrays.stream(trackIds).mapToObj(String::valueOf).toArray(String[]::new));
     String url = "https://api-v2.soundcloud.com/tracks?ids="

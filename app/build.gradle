@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "co.carrd.njportfolio.mp3stream"
-        minSdk 24
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"

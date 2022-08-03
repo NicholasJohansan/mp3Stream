@@ -40,7 +40,6 @@ import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class PlaylistDetailsFragment extends Fragment {
     private Playlist playlist;
 
