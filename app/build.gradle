@@ -29,11 +29,12 @@ android {
     sourceSets {
         main {
             res.srcDirs = [
-                    'src/main/res',
                     'src/main/res/layouts/equalizer',
                     'src/main/res/layouts/library',
                     'src/main/res/layouts/search',
-                    'src/main/res/layouts/bottom_nav'
+                    'src/main/res/layouts/bottom_nav',
+                    'src/main/res/layouts/player',
+                    'src/main/res'
             ]
         }
     }

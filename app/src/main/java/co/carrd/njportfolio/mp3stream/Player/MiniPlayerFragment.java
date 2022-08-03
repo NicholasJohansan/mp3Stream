@@ -1,4 +1,4 @@
-package co.carrd.njportfolio.mp3stream;
+package co.carrd.njportfolio.mp3stream.Player;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import co.carrd.njportfolio.mp3stream.R;
 
 public class MiniPlayerFragment extends Fragment {
     @Nullable

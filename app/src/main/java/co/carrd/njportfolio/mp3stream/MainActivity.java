@@ -1,18 +1,11 @@
 package co.carrd.njportfolio.mp3stream;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.colorgreen.swiper.OnSwipeTouchListener;
 import com.colorgreen.swiper.SwipeAction;
@@ -22,6 +15,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerFragment;
 import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
+import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package co.carrd.njportfolio.mp3stream;
+package co.carrd.njportfolio.mp3stream.Player;
 
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -17,6 +17,9 @@ import com.colorgreen.swiper.OnSwipeTouchListener;
 import com.colorgreen.swiper.SwipeAction;
 import com.colorgreen.swiper.SwipeActionListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import co.carrd.njportfolio.mp3stream.MainActivity;
+import co.carrd.njportfolio.mp3stream.R;
 
 public class PlayerFragment extends Fragment {
 
