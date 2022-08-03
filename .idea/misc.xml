@@ -78,13 +78,14 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/drawable/icon_player_skip_previous.xml" value="0.137" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/layout/fragment_player.xml" value="0.18461539003270633" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/drawable/tab_indicator.xml" value="0.177" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/fragment_artist_works.xml" value="0.11799914493373237" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/fragment_search.xml" value="0.18461539003270633" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/fragment_search_results.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/item_artisst_result.xml" value="0.15625" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/item_artist_result.xml" value="0.36923078006541266" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/item_playlist_result.xml" value="0.6646154041177428" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/item_song_result.xml" value="0.2436923148431724" />
-        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/view_no_results.xml" value="0.12553846522224033" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/view_no_results.xml" value="0.16246154322878156" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/search/layout/view_not_searched.xml" value="0.2436923148431724" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/menu/bottom_navigation.xml" value="0.1" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.177" />

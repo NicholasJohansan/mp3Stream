@@ -11,6 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
@@ -25,6 +31,15 @@ public class ArtistDetailsFragment extends Fragment {
     private ImageView avatarImageView;
     private TextView artistNameTextView;
     private TextView songCountTextView;
+
+    private ViewPager2 viewPager;
+    private TabLayout tabLayout;
+
+    private ArtistWorksFragment[] artistWorksFragments = new ArtistWorksFragment[] {
+            new ArtistWorksFragment(ArtistWorksFragment.WorkType.SONG),
+            new ArtistWorksFragment(ArtistWorksFragment.WorkType.PLAYLIST),
+            new ArtistWorksFragment(ArtistWorksFragment.WorkType.ALBUM)
+    };
 
     @Nullable
     @Override
@@ -41,6 +56,8 @@ public class ArtistDetailsFragment extends Fragment {
         avatarImageView = fragmentView.findViewById(R.id.artist_details_avatar);
         artistNameTextView = fragmentView.findViewById(R.id.artist_details_name_text_view);
         songCountTextView = fragmentView.findViewById(R.id.artist_details_song_count_text_view);
+        viewPager = fragmentView.findViewById(R.id.artist_details_view_pager);
+        tabLayout = fragmentView.findViewById(R.id.artist_details_tab_layout);
 
         return fragmentView;
     }
@@ -59,5 +76,42 @@ public class ArtistDetailsFragment extends Fragment {
 
         // Set up nav back button
         navBackButton.setOnClickListener(v -> SearchFragment.getInstance().popBackStack());
+
+        // Set up ViewPager2 + TabLayout
+        viewPager.setAdapter(new ArtistWorksFragmentAdapter(requireActivity()));
+        viewPager.setOffscreenPageLimit(4);
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            String text = "";
+            switch (position) {
+                case 0:
+                    text = "Songs";
+                    break;
+                case 1:
+                    text = "Playlists";
+                    break;
+                case 2:
+                    text = "Albums";
+                    break;
+            }
+            tab.setText(text);
+        }).attach();
+    }
+
+    private class ArtistWorksFragmentAdapter extends FragmentStateAdapter {
+
+        public ArtistWorksFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            return artistWorksFragments[position];
+        }
+
+        @Override
+        public int getItemCount() {
+            return artistWorksFragments.length;
+        }
     }
 }
