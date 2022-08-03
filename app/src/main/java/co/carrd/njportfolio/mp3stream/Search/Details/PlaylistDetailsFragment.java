@@ -1,8 +1,5 @@
-package co.carrd.njportfolio.mp3stream.Search;
+package co.carrd.njportfolio.mp3stream.Search.Details;
 
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,18 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +22,8 @@ import java.util.List;
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Search.Classes.EndlessRecyclerViewScrollListener;
-import co.carrd.njportfolio.mp3stream.Search.Classes.SearchResultsAdapter;
+import co.carrd.njportfolio.mp3stream.Search.Results.SearchResultsAdapter;
+import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;

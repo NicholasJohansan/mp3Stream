@@ -1,7 +1,6 @@
-package co.carrd.njportfolio.mp3stream.Search.Classes;
+package co.carrd.njportfolio.mp3stream.Search.Results;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,9 @@ import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.Search.Classes.EndlessRecyclerViewScrollListener;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
-import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.SongCollection;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class SearchResultsFragment extends Fragment {
