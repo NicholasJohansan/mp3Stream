@@ -3,6 +3,7 @@ package co.carrd.njportfolio.mp3stream;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -54,11 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
     private NavigationBarView.OnItemSelectedListener navListener = item -> {
         Fragment selectedFragment = null;
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-//        getSupportFragmentManager().saveBackStack("SEARCH_FRAGMENT");
-//        getSupportFragmentManager().saveBackStack("LIBRARY_FRAGMENT");
-//        getSupportFragmentManager().saveBackStack("EQUALIZER_FRAGMENT");
-        getSupportFragmentManager().saveBackStack("SEARCH_FRAGMENT");
+        fragmentManager.saveBackStack("SEARCH_FRAGMENT");
 
         switch (item.getItemId()) {
             case R.id.bottom_nav_library:
@@ -72,13 +71,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        getSupportFragmentManager().beginTransaction()
+        fragmentManager.beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.main_fragment_container, selectedFragment).commit();
 
         if (selectedFragment.equals(searchFragment)) {
             try {
-                getSupportFragmentManager().restoreBackStack("SEARCH_FRAGMENT");
+                fragmentManager.restoreBackStack("SEARCH_FRAGMENT");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -163,5 +162,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Ensure mini player is collapsed
         swipeAction.collapse();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            super.onBackPressed();
+        } else {
+            this.moveTaskToBack(true);
+        }
     }
 }
