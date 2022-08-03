@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -115,6 +116,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView artistTextView;
         private TextView durationTextView;
         private ImageView coverImageView;
+        private ConstraintLayout georestrictedView;
 
         public SongResultViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -122,6 +124,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             artistTextView = itemView.findViewById(R.id.song_result_item_artist);
             durationTextView = itemView.findViewById(R.id.song_result_item_duration);
             coverImageView = itemView.findViewById(R.id.song_result_item_cover);
+            georestrictedView = itemView.findViewById(R.id.song_result_georestricted_view);
         }
 
         public void bindSong(Song song) {
@@ -129,6 +132,10 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             songNameTextView.setText(song.getTitle());
             artistTextView.setText(song.getArtist().getName());
             durationTextView.setText(song.getFriendlyDuration());
+
+            if (song.getPartialStreamUrl() == null) {
+                georestrictedView.setVisibility(View.VISIBLE);
+            }
 
             itemView.setOnClickListener(view -> {
                 Fragment newFragment = new TestFragment();
