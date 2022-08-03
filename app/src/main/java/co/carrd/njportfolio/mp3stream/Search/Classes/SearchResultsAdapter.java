@@ -34,6 +34,7 @@ import co.carrd.njportfolio.mp3stream.Search.TestFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Artist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
+import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private MutableLiveData<List<Object>> searchResults;
@@ -109,40 +110,6 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
 //        return BitmapFactory.decodeStream((new URL(imageUrl)).openConnection().getInputStream());
 //    }
 
-    private static void loadViewholderImage(View itemView, ImageView imageView, String imageUrl) {
-
-        // Create placeholder progressbar while loading image
-        CircularProgressDrawable progressDrawable = new CircularProgressDrawable(itemView.getContext());
-        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.gray, null));
-        progressDrawable.setColorFilter(ResourcesCompat.getColor(itemView.getResources(), R.color.orange, null), PorterDuff.Mode.SCREEN);
-        progressDrawable.setStrokeWidth(5f);
-        progressDrawable.setCenterRadius(40f);
-        progressDrawable.start();
-
-        // Load with glide
-        imageUrl = imageUrl == null ? "" : imageUrl;
-        Glide.with(itemView)
-                .load(imageUrl)
-                .error(R.drawable.ic_launcher_foreground)
-                .placeholder(progressDrawable)
-                .override(Target.SIZE_ORIGINAL)
-                .fitCenter()
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.light_gray, null));
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.light_gray, null));
-                        return false;
-                    }
-                })
-                .into(imageView);
-    }
-
     public class SongResultViewHolder extends RecyclerView.ViewHolder {
         private TextView songNameTextView;
         private TextView artistTextView;
@@ -171,7 +138,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 SearchFragment.getInstance().addFragmentToBackStack(newFragment);
             });
 
-            loadViewholderImage(itemView, coverImageView, song.getCoverUrl());
+            UiUtils.loadImage(coverImageView, song.getCoverUrl());
 
 
         }
@@ -197,7 +164,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             artistTextView.setText(playlist.getArtist().getName());
             songsDurationTextView.setText(playlist.getSongCount() + " Songs ⋅ " + playlist.getFriendlyDuration());
 
-            loadViewholderImage(itemView, coverImageView, playlist.getCoverUrl());
+            UiUtils.loadImage(coverImageView, playlist.getCoverUrl());
 
             itemView.setOnClickListener(view -> {
                 Fragment playlistDetailsFragment = new PlaylistDetailsFragment();
@@ -230,7 +197,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
             songCountTextView.setText(artist.getSongCount() + " Songs");
             playlistCountTextView.setText(artist.getPlaylistCount() + " Playlists");
 
-            loadViewholderImage(itemView, avatarImageView, artist.getAvatarUrl());
+            UiUtils.loadImage(avatarImageView, artist.getAvatarUrl());
 
 
         }

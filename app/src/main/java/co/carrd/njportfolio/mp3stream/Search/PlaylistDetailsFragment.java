@@ -24,6 +24,7 @@ import com.bumptech.glide.request.target.Target;
 
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
+import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class PlaylistDetailsFragment extends Fragment {
     private Playlist playlist;
@@ -63,7 +64,7 @@ public class PlaylistDetailsFragment extends Fragment {
         navBackButton.setOnClickListener(v -> SearchFragment.getInstance().popBackStack());
 
         // Load cover image
-        loadImage(view, coverImageView, playlist.getCoverUrl());
+        UiUtils.loadImage(coverImageView, playlist.getCoverUrl());
 
         // Load playlist metadata
         playlistNameTextView.setText(playlist.getTitle());
@@ -71,39 +72,5 @@ public class PlaylistDetailsFragment extends Fragment {
         durationTextView.setText(playlist.getFriendlyDuration());
         topbarTitleTextView.setText(playlist.isAlbum() ? "Album" : "Playlist");
 
-    }
-
-    private void loadImage(View itemView, ImageView imageView, String imageUrl) {
-
-        // Create placeholder progressbar while loading image
-        CircularProgressDrawable progressDrawable = new CircularProgressDrawable(itemView.getContext());
-        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.gray, null));
-        progressDrawable.setColorFilter(ResourcesCompat.getColor(itemView.getResources(), R.color.orange, null), PorterDuff.Mode.SCREEN);
-        progressDrawable.setStrokeWidth(5f);
-        progressDrawable.setCenterRadius(40f);
-        progressDrawable.start();
-
-        // Load with glide
-        imageUrl = imageUrl == null ? "" : imageUrl;
-        Glide.with(itemView)
-                .load(imageUrl)
-                .error(R.drawable.ic_launcher_foreground)
-                .placeholder(progressDrawable)
-                .override(Target.SIZE_ORIGINAL)
-                .fitCenter()
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.light_gray, null));
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        imageView.setBackgroundColor(ResourcesCompat.getColor(itemView.getResources(), R.color.light_gray, null));
-                        return false;
-                    }
-                })
-                .into(imageView);
     }
 }
