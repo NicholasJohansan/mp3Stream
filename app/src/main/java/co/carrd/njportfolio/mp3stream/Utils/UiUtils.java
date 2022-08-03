@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
@@ -96,5 +97,17 @@ public class UiUtils {
      */
     public static void loadImage(ImageView imageView, String imageUrl) {
         loadImage(imageView, imageUrl, R.drawable.ic_launcher_foreground);
+    }
+
+    /**
+     * Runs a runnable on a UI thread
+     * Checks if activity exists beforehand to prevent error
+     * @param activity getActivity()
+     * @param runnable runnable to run
+     */
+    public static void runOnUiThread(FragmentActivity activity, Runnable runnable) {
+        if (activity != null) {
+            activity.runOnUiThread(runnable);
+        }
     }
 }

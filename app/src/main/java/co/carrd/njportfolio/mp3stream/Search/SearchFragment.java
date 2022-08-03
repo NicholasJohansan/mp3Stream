@@ -129,7 +129,7 @@ public class SearchFragment extends Fragment {
                 if (!newText.equals("")) {
                     MainApplication.getInstance().getSoundcloudApi()
                             .getSearchSuggestions(newText, data -> {
-                                getActivity().runOnUiThread(() -> {
+                                UiUtils.runOnUiThread(getActivity(), () -> {
                                     if (latestSearchQuery.equals(newText) && searchOpened) {
                                         searchEditText.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, data));
                                         searchEditText.showDropDown();

@@ -110,7 +110,7 @@ public class PlaylistDetailsFragment extends Fragment {
                     ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
                     soundcloudApi.getPlaylistTracks(paginatedTrackIds, playlistTracks -> {
                         List<? extends Object> castedResults = playlistTracks;
-                        getActivity().runOnUiThread(() -> {
+                        UiUtils.runOnUiThread(getActivity(), () -> {
                             songsRecyclerViewAdapter.getSearchResults().getValue().addAll((List<Object>) castedResults);
                             songsRecyclerViewAdapter.notifyDataSetChanged();
                             progressBar.setVisibility(View.INVISIBLE);
@@ -139,7 +139,7 @@ public class PlaylistDetailsFragment extends Fragment {
         ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
         soundcloudApi.getPlaylistTracks(paginatedTrackIds, playlistTracks -> {
             List<? extends Object> castedResults = playlistTracks;
-            getActivity().runOnUiThread(() -> {
+            UiUtils.runOnUiThread(getActivity(), () -> {
                 songsRecyclerViewAdapter.getSearchResults().setValue((List<Object>) castedResults);
                 songsRecyclerViewAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.INVISIBLE);
@@ -150,7 +150,7 @@ public class PlaylistDetailsFragment extends Fragment {
 //
 //        ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
 //        soundcloudApi.searchPlaylists(searchQuery, playlistCol -> {
-//            getActivity().runOnUiThread(() -> {
+//            UiUtils.runOnUiThread(getActivity(), () -> {
 //                List<? extends Object> castedResults = playlistCol.getPlaylists();
 //                setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
 //            });
