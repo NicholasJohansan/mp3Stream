@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 public class ArtistDetailsFragment extends Fragment {
     private Artist artist;
 
+    private ImageButton navBackButton;
     private ImageView bannerImageView;
     private ImageView avatarImageView;
     private TextView artistNameTextView;
@@ -33,6 +35,7 @@ public class ArtistDetailsFragment extends Fragment {
         artist = args.getParcelable("artist");
 
         // Link UI
+        navBackButton = fragmentView.findViewById(R.id.nav_back_button);
         bannerImageView = fragmentView.findViewById(R.id.artist_details_banner);
         avatarImageView = fragmentView.findViewById(R.id.artist_details_avatar);
         artistNameTextView = fragmentView.findViewById(R.id.artist_details_name_text_view);
@@ -52,5 +55,8 @@ public class ArtistDetailsFragment extends Fragment {
         // Load artist metadata
         artistNameTextView.setText(artist.getName());
         songCountTextView.setText(artist.getSongCount() + " Songs");
+
+        // Set up nav back button
+        navBackButton.setOnClickListener(v -> SearchFragment.getInstance().popBackStack());
     }
 }
