@@ -95,6 +95,7 @@ public class ApiParser {
             int id = playlistData.getInt("id");
             String coverUrl = playlistData.getString("artwork_url");
             int songCount = playlistData.getInt("track_count");
+            boolean isAlbum = playlistData.getBoolean("is_album");
             JSONArray playlistSongsDataArray = playlistData.getJSONArray("tracks");
 
             // If playlist has no cover art
@@ -121,7 +122,7 @@ public class ApiParser {
             }
             int[] trackIds = trackIdsList.stream().mapToInt(e -> (int) e).toArray();
 
-            return new Playlist(coverUrl, title, duration, songCount, id, partialArtist, trackIds);
+            return new Playlist(coverUrl, title, duration, songCount, id, partialArtist, trackIds, isAlbum);
         } catch (JSONException e) {
             e.printStackTrace();
         }
