@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.colorgreen.swiper.OnSwipeTouchListener;
 import com.colorgreen.swiper.SwipeAction;
@@ -17,6 +18,8 @@ import com.colorgreen.swiper.SwipeActionListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class PlayerFragment extends Fragment {
+
+    MiniPlayerFragment miniPlayerFragment = new MiniPlayerFragment();
 
     @Nullable
     @Override
@@ -41,9 +44,14 @@ public class PlayerFragment extends Fragment {
 
         // Initialise views involved
         ConstraintLayout miniPlayerLayout = view.findViewById(R.id.mini_player);
-        ConstraintLayout miniPlayerView = view.findViewById(R.id.mini_player_view);
+        FragmentContainerView miniPlayerView = view.findViewById(R.id.mini_player_fragment_view);
         ConstraintLayout maximimisedPlayer = view.findViewById(R.id.maximised_player_view);
         BottomNavigationView bottomNav = ((MainActivity) getActivity()).getBottomNav();
+
+        // inflate Mini Player Fragment
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.mini_player_fragment_view, miniPlayerFragment)
+                .commit();
 
         // Set up constants
         float screenHeight = getResources().getDisplayMetrics().heightPixels;
@@ -60,7 +68,7 @@ public class PlayerFragment extends Fragment {
         SwipeAction swipeAction = new SwipeAction();
         swipeAction.setDirection(SwipeAction.DragDirection.Up);
         swipeAction.setSteps(new float[]{startY, targetY});
-        swipeAction.setDragThreshold(0.2f);
+        swipeAction.setDragThreshold(0.1f);
         swipeAction.setSwipeActionListener(new SwipeActionListener() {
             @Override
             public void onDragStart(float y, float friction) { }
