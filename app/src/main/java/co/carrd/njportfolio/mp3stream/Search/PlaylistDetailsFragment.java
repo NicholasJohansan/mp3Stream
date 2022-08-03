@@ -33,6 +33,7 @@ public class PlaylistDetailsFragment extends Fragment {
     private TextView playlistNameTextView;
     private TextView songCountTextView;
     private TextView durationTextView;
+    private TextView topbarTitleTextView;
 
     @Nullable
     @Override
@@ -49,6 +50,7 @@ public class PlaylistDetailsFragment extends Fragment {
         playlistNameTextView = fragmentView.findViewById(R.id.playlist_details_name_text_view);
         songCountTextView = fragmentView.findViewById(R.id.playlist_details_song_count_text_view);
         durationTextView = fragmentView.findViewById(R.id.playlist_details_duration_text_view);
+        topbarTitleTextView = fragmentView.findViewById(R.id.playlist_details_topbar_title);
 
         return fragmentView;
     }
@@ -67,6 +69,7 @@ public class PlaylistDetailsFragment extends Fragment {
         playlistNameTextView.setText(playlist.getTitle());
         songCountTextView.setText(playlist.getSongCount() + " Songs");
         durationTextView.setText(playlist.getFriendlyDuration());
+        topbarTitleTextView.setText(playlist.isAlbum() ? "Album" : "Playlist");
 
     }
 

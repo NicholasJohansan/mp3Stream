@@ -66,6 +66,14 @@ public class Playlist implements Parcelable {
         return artist;
     }
 
+    public boolean isAlbum() {
+        return isAlbum;
+    }
+
+    public int[] getTrackIds() {
+        return trackIds;
+    }
+
     // Parcelable implementation
     protected Playlist(Parcel in) {
         coverUrl = in.readString();
