@@ -176,10 +176,11 @@ public class ApiParser {
             int id = songData.getInt("id");
             String coverUrl = songData.getString("artwork_url").replace("large", "t500x500");
 
-            String partialStreamUrl = songData.getJSONObject("media")
-                    .getJSONArray("transcodings")
-                    .getJSONObject(0)
-                    .getString("url");
+            String partialStreamUrl = null;
+            JSONArray transcodings = songData.getJSONObject("media").getJSONArray("transcodings");
+            if (transcodings.length() > 0) {
+                partialStreamUrl = transcodings.getJSONObject(0).getString("url");
+            }
 
             PartialArtist partialArtist = parsePartialArtist(songData.getJSONObject("user"));
 

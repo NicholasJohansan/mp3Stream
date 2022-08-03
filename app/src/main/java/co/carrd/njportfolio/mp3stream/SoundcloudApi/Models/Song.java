@@ -6,7 +6,7 @@ import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 
 public class Song {
   private String coverUrl;
-  private URI partialStreamUrl;
+  private String partialStreamUrl;
   private String title;
   private int duration;
   private int id;
@@ -14,7 +14,7 @@ public class Song {
 
   public Song(String coverUrl, String partialStreamUrl, String title, int duration, int id, PartialArtist artist) {
     this.coverUrl = coverUrl;
-    this.partialStreamUrl = URI.create(partialStreamUrl);
+    this.partialStreamUrl = partialStreamUrl;
     this.title = title;
     this.duration = duration;
     this.id = id;
@@ -25,7 +25,7 @@ public class Song {
     return coverUrl;
   }
 
-  public URI getPartialStreamUrl() {
+  public String getPartialStreamUrl() {
     return partialStreamUrl;
   }
   
