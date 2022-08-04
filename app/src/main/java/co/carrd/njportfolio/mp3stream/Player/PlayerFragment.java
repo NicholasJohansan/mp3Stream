@@ -25,6 +25,7 @@ import com.colorgreen.swiper.SwipeActionListener;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import co.carrd.njportfolio.mp3stream.MainActivity;
@@ -123,6 +124,11 @@ public class PlayerFragment extends Fragment {
                 playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_player_play, null));
             }
         });
+        playerViewModel.getIsLoading().observeForever(isLoading -> {
+            if (isLoading) {
+
+            }
+        });
 
         // Set up play/pause button on click listener
         playPauseButton.setOnClickListener(v -> playPause());
@@ -132,6 +138,20 @@ public class PlayerFragment extends Fragment {
             @Override
             public void onIsPlayingChanged(boolean isPlaying) {
                 playerViewModel.getIsPlaying().setValue(isPlaying);
+            }
+
+            @Override
+            public void onPlaybackStateChanged(int playbackState) {
+                if (playbackState == Player.STATE_BUFFERING) {
+                    playerViewModel.getIsLoading().setValue(true);
+                } else {
+                    playerViewModel.getIsLoading().setValue(false);
+                }
+            }
+
+            @Override
+            public void onTimelineChanged(Timeline timeline, int reason) {
+                Player.Listener.super.onTimelineChanged(timeline, reason);
             }
         });
     }

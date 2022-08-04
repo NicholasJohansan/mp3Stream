@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class MiniPlayerFragment extends Fragment {
@@ -25,8 +27,8 @@ public class MiniPlayerFragment extends Fragment {
     private TextView songNameTextView;
     private TextView artistNameTextView;
     private ImageButton playPauseButton;
+    private ProgressBar loadingView;
     private TextView noSongLabel;
-    private View viewBounds;
 
     private PlayerFragment playerFragment;
 
@@ -40,8 +42,8 @@ public class MiniPlayerFragment extends Fragment {
         songNameTextView = fragmentView.findViewById(R.id.mini_player_song_name);
         artistNameTextView = fragmentView.findViewById(R.id.mini_player_artist_name);
         playPauseButton = fragmentView.findViewById(R.id.mini_player_play_pause_button);
+        loadingView = fragmentView.findViewById(R.id.mini_player_loading_view);
         noSongLabel = fragmentView.findViewById(R.id.mini_player_no_song_label);
-        viewBounds = fragmentView.findViewById(R.id.mini_player_view_bounds);
 
         // Link player fragment
         playerFragment = PlayerFragment.getInstance();
@@ -83,6 +85,18 @@ public class MiniPlayerFragment extends Fragment {
                 playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_player_pause, null));
             } else {
                 playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_player_play, null));
+            }
+        });
+        playerViewModel.getIsLoading().observeForever(isLoading -> {
+            Song currentSong = playerViewModel.getCurrentSong().getValue();
+            if (isLoading) {
+                loadingView.setVisibility(View.VISIBLE);
+                playPauseButton.setVisibility(View.GONE);
+            } else {
+                loadingView.setVisibility(View.GONE);
+                if (playerViewModel.getCurrentSong().getValue() != null) {
+                    playPauseButton.setVisibility(View.VISIBLE);
+                }
             }
         });
 
