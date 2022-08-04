@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
@@ -39,6 +40,7 @@ public class PlayerFragment extends Fragment {
     private TextView artistNameTextView;
     private TextView elapsedTimeTextView;
     private SwipeAction swipeAction;
+    private ImageView playPauseButton;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
@@ -63,6 +65,7 @@ public class PlayerFragment extends Fragment {
         songNameTextView = fragmentView.findViewById(R.id.player_song_name);
         artistNameTextView = fragmentView.findViewById(R.id.player_artist_name);
         elapsedTimeTextView = fragmentView.findViewById(R.id.player_elapsed_time_text_view);
+        playPauseButton = fragmentView.findViewById(R.id.player_play_pause_button);
 
         // Get exoplayer
 
@@ -110,6 +113,28 @@ public class PlayerFragment extends Fragment {
                 elapsedTimeTextView.setText(song.getFriendlyDuration());
             }
         });
+        playerViewModel.getIsPlaying().observeForever(isPlaying -> {
+            if (isPlaying) {
+                playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_player_pause, null));
+            } else {
+                playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_player_play, null));
+            }
+        });
+
+        // Set up play/pause button on click listener
+        playPauseButton.setOnClickListener(v -> playPause());
+    }
+
+    public void playPause() {
+        if(playerViewModel.getIsPlaying().getValue()) {
+            // if it is playing then pause
+            playerViewModel.getIsPlaying().setValue(false);
+            player.pause();
+        } else {
+            // if paused then play
+            playerViewModel.getIsPlaying().setValue(true);
+            player.play();
+        }
     }
 
     public void setSong(Song song) {
@@ -121,6 +146,7 @@ public class PlayerFragment extends Fragment {
                 player.setMediaItem(MediaItem.fromUri(streamUrl));
                 player.prepare();
                 player.play();
+                playerViewModel.getIsPlaying().setValue(true);
             });
         });
     }
@@ -175,6 +201,14 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public void onDragEnd(float v, float v1) {
+                if (v == 0.0) {
+                    // expanded
+                    maximimisedPlayer.setZ(10);
+                    miniPlayerView.setZ(5);
+                } else {
+                    maximimisedPlayer.setZ(5);
+                    miniPlayerView.setZ(10);
+                }
             }
         });
 

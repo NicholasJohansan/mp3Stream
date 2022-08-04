@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,9 @@ public class MiniPlayerFragment extends Fragment {
     private ImageView songCoverImageView;
     private TextView songNameTextView;
     private TextView artistNameTextView;
+    private ImageButton playPauseButton;
+
+    private PlayerFragment playerFragment;
 
     @Nullable
     @Override
@@ -33,6 +37,10 @@ public class MiniPlayerFragment extends Fragment {
         songCoverImageView = fragmentView.findViewById(R.id.mini_player_song_cover);
         songNameTextView = fragmentView.findViewById(R.id.mini_player_song_name);
         artistNameTextView = fragmentView.findViewById(R.id.mini_player_artist_name);
+        playPauseButton = fragmentView.findViewById(R.id.mini_player_play_pause_button);
+
+        // Link player fragment
+        playerFragment = PlayerFragment.getInstance();
 
         return fragmentView;
     }
@@ -58,5 +66,15 @@ public class MiniPlayerFragment extends Fragment {
                 artistNameTextView.setVisibility(View.VISIBLE);
             }
         });
+        playerViewModel.getIsPlaying().observeForever(isPlaying -> {
+            if (isPlaying) {
+                playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_player_pause, null));
+            } else {
+                playPauseButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.icon_player_play, null));
+            }
+        });
+
+        // Set up play/pause button
+        playPauseButton.setOnClickListener(v -> playerFragment.playPause());
     }
 }

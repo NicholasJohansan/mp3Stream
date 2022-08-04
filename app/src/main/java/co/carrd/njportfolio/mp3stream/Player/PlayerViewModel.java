@@ -16,9 +16,14 @@ import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 public class PlayerViewModel extends ViewModel {
     private MutableLiveData<List<Song>> playerQueue = new MutableLiveData<>(new ArrayList<>());
     private MutableLiveData<Song> currentSong = new MutableLiveData<>(null);
+    private MutableLiveData<Boolean> isPlaying = new MutableLiveData<>(false);
 
     public MutableLiveData<Song> getCurrentSong() {
         return currentSong;
+    }
+
+    public MutableLiveData<Boolean> getIsPlaying() {
+        return isPlaying;
     }
 
     public void setCurrentSong(Song song) {
