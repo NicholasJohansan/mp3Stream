@@ -29,5 +29,10 @@ public class MiniPlayerFragment extends Fragment {
 
         // Instantiate PlayerViewModel
         playerViewModel = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
+
+        // Set up observer
+        playerViewModel.getCurrentSong().observeForever(song -> {
+            // TODO: bind song
+        });
     }
 }

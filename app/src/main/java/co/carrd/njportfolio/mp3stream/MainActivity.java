@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private Fragment searchFragment = SearchFragment.getInstance();
     private Fragment equalizerFragment = new EqualizerFragment();
 
+    private Fragment playerFragment = PlayerFragment.getInstance();
+
     private BottomNavigationView bottomNav;
 
     @Override
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Insert player fragment
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.player_fragment_container, new PlayerFragment())
+                .replace(R.id.player_fragment_container, playerFragment)
                 .commitNow();
 
         // Set up player swipe

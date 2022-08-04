@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 
 public class PlayerFragment extends Fragment {
 
@@ -28,7 +29,15 @@ public class PlayerFragment extends Fragment {
     private ImageButton minimizeButton;
     private SwipeAction swipeAction;
 
+    private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
+
+    public static PlayerFragment getInstance() {
+        if (instance == null) {
+            instance = new PlayerFragment();
+        }
+        return instance;
+    }
 
     @Nullable
     @Override
@@ -68,6 +77,15 @@ public class PlayerFragment extends Fragment {
 
         // Instantiate PlayerViewModel
         playerViewModel = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
+
+        // Set up observer
+        playerViewModel.getCurrentSong().observeForever(song -> {
+            // TODO: bind song
+        });
+    }
+
+    public void setSong(Song song) {
+        playerViewModel.getCurrentSong().setValue(song);
     }
 
     public void setUpSwipeAction() {
