@@ -4,22 +4,36 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class MiniPlayerFragment extends Fragment {
 
     private PlayerViewModel playerViewModel;
 
+    private ImageView songCoverImageView;
+    private TextView songNameTextView;
+    private TextView artistNameTextView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_mini_player, container, false);
+
+        // Link UI
+        songCoverImageView = fragmentView.findViewById(R.id.mini_player_song_cover);
+        songNameTextView = fragmentView.findViewById(R.id.mini_player_song_name);
+        artistNameTextView = fragmentView.findViewById(R.id.mini_player_artist_name);
+
         return fragmentView;
     }
 
@@ -32,7 +46,17 @@ public class MiniPlayerFragment extends Fragment {
 
         // Set up observer
         playerViewModel.getCurrentSong().observeForever(song -> {
-            // TODO: bind song
+            if (song == null) {
+                songCoverImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_launcher_background, null));
+                songNameTextView.setText("No Song Selected");
+                artistNameTextView.setVisibility(View.GONE);
+            } else {
+                UiUtils.loadImage(songCoverImageView, song.getCoverUrl());
+                songNameTextView.setText(song.getTitle());
+                songNameTextView.setSelected(true);
+                artistNameTextView.setText(song.getArtist().getName());
+                artistNameTextView.setVisibility(View.VISIBLE);
+            }
         });
     }
 }
