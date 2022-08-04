@@ -19,9 +19,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.colorgreen.swiper.OnSwipeTouchListener;
 import com.colorgreen.swiper.SwipeAction;
 import com.colorgreen.swiper.SwipeActionListener;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import co.carrd.njportfolio.mp3stream.MainActivity;
+import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
@@ -57,6 +59,8 @@ public class PlayerFragment extends Fragment {
         songNameTextView = fragmentView.findViewById(R.id.player_song_name);
         artistNameTextView = fragmentView.findViewById(R.id.player_artist_name);
         elapsedTimeTextView = fragmentView.findViewById(R.id.player_elapsed_time_text_view);
+
+        // Get exoplayer
 
         return fragmentView;
     }
@@ -106,6 +110,7 @@ public class PlayerFragment extends Fragment {
 
     public void setSong(Song song) {
         playerViewModel.getCurrentSong().setValue(song);
+        playerViewModel.playSong();
     }
 
     public void setUpSwipeAction() {
