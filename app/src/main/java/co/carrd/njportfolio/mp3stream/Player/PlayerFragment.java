@@ -1,6 +1,7 @@
 package co.carrd.njportfolio.mp3stream.Player;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
@@ -48,9 +51,11 @@ public class PlayerFragment extends Fragment {
     private SwipeAction swipeAction;
     private ImageView playPauseButton;
     private ProgressBar loadingView;
+    private SeekBar seekBar;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
+    private Handler seekBarHandler;
     private ExoPlayer player = MainApplication.getInstance().getPlayer();
     private ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
 
@@ -75,20 +80,11 @@ public class PlayerFragment extends Fragment {
         durationTextView = fragmentView.findViewById(R.id.player_total_time_text_view);
         playPauseButton = fragmentView.findViewById(R.id.player_play_pause_button);
         loadingView = fragmentView.findViewById(R.id.player_loading_view);
+        seekBar = fragmentView.findViewById(R.id.player_seekbar);
 
         // Get exoplayer
 
         return fragmentView;
-    }
-
-    /**
-     * Converts dp to px
-     *
-     * @param dp
-     * @return equivalent in px
-     */
-    private int convertToPixels(int dp) {
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics()));
     }
 
     @Override
@@ -99,6 +95,9 @@ public class PlayerFragment extends Fragment {
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.mini_player_fragment_view, miniPlayerFragment)
                 .commit();
+
+        // Set up handler for seekbar
+        seekBarHandler = new Handler();
 
         // Set Up Swipe Action
         setUpSwipeAction();
@@ -155,14 +154,10 @@ public class PlayerFragment extends Fragment {
             public void onPlaybackStateChanged(int playbackState) {
                 if (playbackState == Player.STATE_BUFFERING) {
                     playerViewModel.getIsLoading().setValue(true);
+                    updateProgress();
                 } else {
                     playerViewModel.getIsLoading().setValue(false);
                 }
-            }
-
-            @Override
-            public void onTimelineChanged(Timeline timeline, int reason) {
-                Player.Listener.super.onTimelineChanged(timeline, reason);
             }
         });
     }
@@ -188,6 +183,51 @@ public class PlayerFragment extends Fragment {
                 player.play();
             });
         });
+    }
+
+    private void updateProgress() {
+        int elapsedTime = (int) player.getCurrentPosition();
+        int duration = (int) player.getDuration();
+        int bufferedDuration = (int) player.getBufferedPosition();
+        seekBar.setMax(duration);
+        seekBar.setProgress(elapsedTime);
+        seekBar.setSecondaryProgress(bufferedDuration);
+        elapsedTimeTextView.setText(ApiUtils.getFriendlyDuration(elapsedTime));
+        seekBarHandler.removeCallbacks(updateProgressRunnable);
+
+        int playbackState = player.getPlaybackState();
+        if (!(playbackState == Player.STATE_IDLE || playbackState == Player.STATE_ENDED)) {
+            int delayMs;
+            if (player.getPlayWhenReady() && playbackState == Player.STATE_READY) {
+                delayMs = 1000 - (elapsedTime % 1000);
+                if (delayMs < 200) {
+                    delayMs += 1000;
+                }
+            } else {
+                delayMs = 1000;
+            }
+            seekBarHandler.postDelayed(updateProgressRunnable, delayMs);
+        }
+
+    }
+
+    private Runnable updateProgressRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateProgress();
+        }
+    };
+
+    // Code below is for player swipe gesture
+
+    /**
+     * Converts dp to px
+     *
+     * @param dp
+     * @return equivalent in px
+     */
+    private int convertToPixels(int dp) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics()));
     }
 
     public void setUpSwipeAction() {
