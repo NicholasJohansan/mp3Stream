@@ -25,6 +25,7 @@ public class MiniPlayerFragment extends Fragment {
     private TextView songNameTextView;
     private TextView artistNameTextView;
     private ImageButton playPauseButton;
+    private TextView noSongLabel;
 
     private PlayerFragment playerFragment;
 
@@ -38,6 +39,7 @@ public class MiniPlayerFragment extends Fragment {
         songNameTextView = fragmentView.findViewById(R.id.mini_player_song_name);
         artistNameTextView = fragmentView.findViewById(R.id.mini_player_artist_name);
         playPauseButton = fragmentView.findViewById(R.id.mini_player_play_pause_button);
+        noSongLabel = fragmentView.findViewById(R.id.mini_player_no_song_label);
 
         // Link player fragment
         playerFragment = PlayerFragment.getInstance();
@@ -55,15 +57,23 @@ public class MiniPlayerFragment extends Fragment {
         // Set up observer
         playerViewModel.getCurrentSong().observeForever(song -> {
             if (song == null) {
-                songCoverImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_launcher_background, null));
-                songNameTextView.setText("No Song Selected");
+                noSongLabel.setVisibility(View.VISIBLE);
+                playPauseButton.setVisibility(View.GONE);
+                songCoverImageView.setVisibility(View.GONE);
+                songNameTextView.setVisibility(View.GONE);
                 artistNameTextView.setVisibility(View.GONE);
             } else {
                 UiUtils.loadImage(songCoverImageView, song.getCoverUrl());
                 songNameTextView.setText(song.getTitle());
-                songNameTextView.setSelected(true);
                 artistNameTextView.setText(song.getArtist().getName());
+
+                noSongLabel.setVisibility(View.GONE);
+                playPauseButton.setVisibility(View.VISIBLE);
+                songCoverImageView.setVisibility(View.VISIBLE);
+                songNameTextView.setVisibility(View.VISIBLE);
                 artistNameTextView.setVisibility(View.VISIBLE);
+
+                songNameTextView.setSelected(true); // Makes sure that marquee effect works
             }
         });
         playerViewModel.getIsPlaying().observeForever(isPlaying -> {
