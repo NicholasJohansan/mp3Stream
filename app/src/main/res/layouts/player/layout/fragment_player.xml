@@ -173,6 +173,21 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 
+            <ProgressBar
+                android:id="@+id/player_loading_view"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                style="?android:progressBarStyle"
+                android:visibility="gone"
+                android:background="@android:color/transparent"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/orange"
+                android:indeterminateTintMode="src_atop"
+                android:src="@drawable/icon_player_play"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
             <ImageButton
                 android:id="@+id/player_skip_next_button"
                 android:layout_width="64dp"

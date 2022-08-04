@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,7 @@ public class PlayerFragment extends Fragment {
     private TextView elapsedTimeTextView;
     private SwipeAction swipeAction;
     private ImageView playPauseButton;
+    private ProgressBar loadingView;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
@@ -70,6 +72,7 @@ public class PlayerFragment extends Fragment {
         artistNameTextView = fragmentView.findViewById(R.id.player_artist_name);
         elapsedTimeTextView = fragmentView.findViewById(R.id.player_elapsed_time_text_view);
         playPauseButton = fragmentView.findViewById(R.id.player_play_pause_button);
+        loadingView = fragmentView.findViewById(R.id.player_loading_view);
 
         // Get exoplayer
 
@@ -126,7 +129,13 @@ public class PlayerFragment extends Fragment {
         });
         playerViewModel.getIsLoading().observeForever(isLoading -> {
             if (isLoading) {
-
+                loadingView.setVisibility(View.VISIBLE);
+                playPauseButton.setVisibility(View.INVISIBLE);
+            } else {
+                loadingView.setVisibility(View.GONE);
+                if (playerViewModel.getCurrentSong().getValue() != null) {
+                    playPauseButton.setVisibility(View.VISIBLE);
+                }
             }
         });
 
