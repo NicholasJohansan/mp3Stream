@@ -2,7 +2,9 @@ package co.carrd.njportfolio.mp3stream.Player;
 
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -171,7 +173,7 @@ public class PlayerFragment extends Fragment {
         miniPlayerLayout.setY(startY);
 
         // Set up swipe action
-        swipeAction = new SwipeAction();
+        swipeAction = new PlayerSwipeAction(new GestureDetector(getContext(), new SingleTapGesture()));
         swipeAction.setDirection(SwipeAction.DragDirection.Up);
         swipeAction.setSteps(new float[]{startY, targetY});
         swipeAction.setDragThreshold(0.2f);
@@ -219,5 +221,29 @@ public class PlayerFragment extends Fragment {
 
         // Ensure mini player is collapsed
         swipeAction.collapse();
+    }
+
+    private class PlayerSwipeAction extends SwipeAction {
+        private GestureDetector gestureDetector;
+
+        public PlayerSwipeAction(GestureDetector gestureDetector) {
+            super();
+            this.gestureDetector = gestureDetector;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (gestureDetector.onTouchEvent(event) && !isExtended()) {
+                expand();
+            }
+            return super.onTouch(v, event);
+        }
+    }
+
+    private class SingleTapGesture extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onSingleTapUp(MotionEvent event) {
+            return true;
+        }
     }
 }

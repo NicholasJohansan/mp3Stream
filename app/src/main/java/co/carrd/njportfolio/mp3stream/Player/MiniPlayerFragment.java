@@ -26,6 +26,7 @@ public class MiniPlayerFragment extends Fragment {
     private TextView artistNameTextView;
     private ImageButton playPauseButton;
     private TextView noSongLabel;
+    private View viewBounds;
 
     private PlayerFragment playerFragment;
 
@@ -40,6 +41,7 @@ public class MiniPlayerFragment extends Fragment {
         artistNameTextView = fragmentView.findViewById(R.id.mini_player_artist_name);
         playPauseButton = fragmentView.findViewById(R.id.mini_player_play_pause_button);
         noSongLabel = fragmentView.findViewById(R.id.mini_player_no_song_label);
+        viewBounds = fragmentView.findViewById(R.id.mini_player_view_bounds);
 
         // Link player fragment
         playerFragment = PlayerFragment.getInstance();
