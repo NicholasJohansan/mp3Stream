@@ -129,6 +129,14 @@ public class ApiWrapper {
     apiUtils.fetchPlaylistCollection(url, consumer);;
   }
 
+  public void getSongStreamUrl(Song song, Consumer<String> consumer) {
+    String url = song.getPartialStreamUrl();
+    apiUtils.fetchHttp(url, responseString -> {
+      String streamUrl = ApiParser.parseStreamUrl(responseString);
+      consumer.accept(streamUrl);
+    });
+  }
+
   /**
    * get search suggestions for a given query
    *

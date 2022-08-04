@@ -212,6 +212,17 @@ public class ApiParser {
         return null;
     }
 
+    public static String parseStreamUrl(String streamUrlStringData) {
+        try {
+            JSONObject obj = new JSONObject(streamUrlStringData);
+            String streamUrl = obj.getString("url");
+            return streamUrl;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static List<String> parseSearchSuggestions(String searchSuggestionsStringData) {
         try {
             List<String> searchSuggestions = new ArrayList<>();
