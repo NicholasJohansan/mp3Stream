@@ -130,7 +130,7 @@ public class ApiWrapper {
   }
 
   public void getSongStreamUrl(Song song, Consumer<String> consumer) {
-    String url = song.getPartialStreamUrl();
+    String url = song.getPartialStreamUrl() + "?client_id=" + clientId;
     apiUtils.fetchHttp(url, responseString -> {
       String streamUrl = ApiParser.parseStreamUrl(responseString);
       consumer.accept(streamUrl);

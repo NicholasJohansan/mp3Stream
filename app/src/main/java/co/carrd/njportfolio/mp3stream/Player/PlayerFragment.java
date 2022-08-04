@@ -20,11 +20,13 @@ import com.colorgreen.swiper.OnSwipeTouchListener;
 import com.colorgreen.swiper.SwipeAction;
 import com.colorgreen.swiper.SwipeActionListener;
 import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
@@ -40,6 +42,8 @@ public class PlayerFragment extends Fragment {
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
+    private ExoPlayer player = MainApplication.getInstance().getPlayer();
+    private ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
 
     public static PlayerFragment getInstance() {
         if (instance == null) {
@@ -110,7 +114,15 @@ public class PlayerFragment extends Fragment {
 
     public void setSong(Song song) {
         playerViewModel.getCurrentSong().setValue(song);
-        playerViewModel.playSong();
+        player.stop();
+        player.clearMediaItems();
+        soundcloudApi.getSongStreamUrl(playerViewModel.getCurrentSong().getValue(), streamUrl -> {
+            UiUtils.runOnUiThread(getActivity(), () -> {
+                player.setMediaItem(MediaItem.fromUri(streamUrl));
+                player.prepare();
+                player.play();
+            });
+        });
     }
 
     public void setUpSwipeAction() {

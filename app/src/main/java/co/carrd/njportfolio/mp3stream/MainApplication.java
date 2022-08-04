@@ -24,6 +24,13 @@ public class MainApplication extends Application {
                 .build();
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        player.release();
+        player = null;
+    }
+
     public ApiWrapper getSoundcloudApi() {
         return soundcloudApi;
     }

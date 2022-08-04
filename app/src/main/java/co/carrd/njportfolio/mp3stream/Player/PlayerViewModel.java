@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.MainApplication;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 
 public class PlayerViewModel extends ViewModel {
     private MutableLiveData<List<Song>> playerQueue = new MutableLiveData<>(new ArrayList<>());
     private MutableLiveData<Song> currentSong = new MutableLiveData<>(null);
-    private ExoPlayer player = MainApplication.getInstance().getPlayer();
 
     public MutableLiveData<Song> getCurrentSong() {
         return currentSong;
@@ -23,9 +23,5 @@ public class PlayerViewModel extends ViewModel {
 
     public void setCurrentSong(Song song) {
         currentSong.setValue(song);
-    }
-
-    public void playSong() {
-//        player.setMediaItem(MediaItem.fromUri());
     }
 }
