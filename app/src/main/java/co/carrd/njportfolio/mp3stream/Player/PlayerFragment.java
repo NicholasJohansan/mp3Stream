@@ -44,6 +44,7 @@ public class PlayerFragment extends Fragment {
     private TextView songNameTextView;
     private TextView artistNameTextView;
     private TextView elapsedTimeTextView;
+    private TextView durationTextView;
     private SwipeAction swipeAction;
     private ImageView playPauseButton;
     private ProgressBar loadingView;
@@ -71,6 +72,7 @@ public class PlayerFragment extends Fragment {
         songNameTextView = fragmentView.findViewById(R.id.player_song_name);
         artistNameTextView = fragmentView.findViewById(R.id.player_artist_name);
         elapsedTimeTextView = fragmentView.findViewById(R.id.player_elapsed_time_text_view);
+        durationTextView = fragmentView.findViewById(R.id.player_total_time_text_view);
         playPauseButton = fragmentView.findViewById(R.id.player_play_pause_button);
         loadingView = fragmentView.findViewById(R.id.player_loading_view);
 
@@ -117,7 +119,7 @@ public class PlayerFragment extends Fragment {
                 songNameTextView.setText(song.getTitle());
                 songNameTextView.setSelected(true);
                 artistNameTextView.setText(song.getArtist().getName());
-                elapsedTimeTextView.setText(song.getFriendlyDuration());
+                durationTextView.setText(song.getFriendlyDuration());
             }
         });
         playerViewModel.getIsPlaying().observeForever(isPlaying -> {
