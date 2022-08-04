@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import co.carrd.njportfolio.mp3stream.MainActivity;
+import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
@@ -26,7 +27,7 @@ public class EqualizerFragment extends Fragment {
         setUpStyles(fragmentView);
 
         AutoCompleteTextView presetTextView = fragmentView.findViewById(R.id.preset_text_field);
-        Equalizer equalizer = new Equalizer(0, new MediaPlayer().getAudioSessionId());
+        Equalizer equalizer = new Equalizer(0, MainApplication.getInstance().getPlayer().getAudioSessionId());
         String[] presets = new String[equalizer.getNumberOfPresets()];
         for (short i = 0; i < presets.length; i++) {
             presets[i] = equalizer.getPresetName(i);
