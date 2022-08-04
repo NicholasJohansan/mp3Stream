@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,11 +24,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
+import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class PlayerFragment extends Fragment {
 
     private MiniPlayerFragment miniPlayerFragment = new MiniPlayerFragment();
     private ImageButton minimizeButton;
+    private ImageView songCoverImageView;
+    private TextView songNameTextView;
+    private TextView artistNameTextView;
+    private TextView elapsedTimeTextView;
     private SwipeAction swipeAction;
 
     private static PlayerFragment instance;
@@ -46,6 +53,10 @@ public class PlayerFragment extends Fragment {
 
         // Link UI
         minimizeButton = fragmentView.findViewById(R.id.player_minimize_button);
+        songCoverImageView = fragmentView.findViewById(R.id.player_song_cover);
+        songNameTextView = fragmentView.findViewById(R.id.player_song_name);
+        artistNameTextView = fragmentView.findViewById(R.id.player_artist_name);
+        elapsedTimeTextView = fragmentView.findViewById(R.id.player_elapsed_time_text_view);
 
         return fragmentView;
     }
@@ -80,7 +91,16 @@ public class PlayerFragment extends Fragment {
 
         // Set up observer
         playerViewModel.getCurrentSong().observeForever(song -> {
-            // TODO: bind song
+            if (song == null) {
+                swipeAction.setBlocked(true);
+            } else {
+                swipeAction.setBlocked(false);
+                UiUtils.loadImage(songCoverImageView, song.getCoverUrl());
+                songNameTextView.setText(song.getTitle());
+                songNameTextView.setSelected(true);
+                artistNameTextView.setText(song.getArtist().getName());
+                elapsedTimeTextView.setText(song.getFriendlyDuration());
+            }
         });
     }
 
@@ -111,7 +131,7 @@ public class PlayerFragment extends Fragment {
         swipeAction = new SwipeAction();
         swipeAction.setDirection(SwipeAction.DragDirection.Up);
         swipeAction.setSteps(new float[]{startY, targetY});
-        swipeAction.setDragThreshold(0.1f);
+        swipeAction.setDragThreshold(0.2f);
         swipeAction.setSwipeActionListener(new SwipeActionListener() {
             @Override
             public void onDragStart(float y, float friction) { }
