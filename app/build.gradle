@@ -42,19 +42,29 @@ android {
 
 dependencies {
 
+    // For HTTP Requests
     implementation "com.squareup.okhttp3:okhttp:4.9.3"
 
+    // For Image Loading
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
+    // For CircularProgressDrawable (loading drawable)
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    // For Mini Player Swiping
     implementation 'com.github.colorgreen:swipe-touch-listener:v1.3'
 
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    // For ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
+
+    // For Latest Fragment Implementation
     implementation 'androidx.fragment:fragment:1.5.1'
-//    implementation 'com.google.android.material:material:1.6.1'
+
+    // For MaterialUI
     implementation 'com.google.android.material:material:1.7.0-alpha02'
+
+    implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
