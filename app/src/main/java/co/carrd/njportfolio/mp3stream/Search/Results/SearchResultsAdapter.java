@@ -34,7 +34,10 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
     private MutableLiveData<List<Object>> searchResults;
     private String nextUrl;
 
-    public SearchResultsAdapter() {
+    private Fragment parentFragment;
+
+    public SearchResultsAdapter(Fragment parent) {
+        parentFragment = parent;
         searchResults = new MutableLiveData<>();
         searchResults.setValue(new ArrayList<>());
     }
@@ -59,7 +62,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         LayoutInflater inflater = LayoutInflater.from(context);
         if (viewType == 0) {
             View songResultView = inflater.inflate(R.layout.item_song_result, parent, false);
-            return new SongResultViewHolder(songResultView);
+            return new SongResultViewHolder(songResultView, parentFragment);
         } else if (viewType == 1) {
             View playlistResultView = inflater.inflate(R.layout.item_playlist_result, parent, false);
             return new PlaylistResultViewHolder(playlistResultView);

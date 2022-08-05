@@ -85,7 +85,7 @@ public class PlaylistDetailsFragment extends Fragment {
         topbarTitleTextView.setText(playlist.isAlbum() ? "Album" : "Playlist");
 
         // Set up recycler view
-        songsRecyclerViewAdapter = new SearchResultsAdapter();
+        songsRecyclerViewAdapter = new SearchResultsAdapter(this);
         songsRecyclerView.setAdapter(songsRecyclerViewAdapter);
         LinearLayoutManager recyclerViewLayoutManager = new LinearLayoutManager(getContext());
         songsRecyclerView.setLayoutManager(recyclerViewLayoutManager);

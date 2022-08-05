@@ -61,7 +61,7 @@ public class SearchResultsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Set up recycler view
-        searchResultsAdapter = new SearchResultsAdapter();
+        searchResultsAdapter = new SearchResultsAdapter(this);
         recyclerView.setAdapter(searchResultsAdapter);
         LinearLayoutManager recyclerViewLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(recyclerViewLayoutManager);

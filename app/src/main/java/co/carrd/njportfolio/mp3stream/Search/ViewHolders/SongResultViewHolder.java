@@ -1,6 +1,7 @@
 package co.carrd.njportfolio.mp3stream.Search.ViewHolders;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,7 +29,9 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
     private ConstraintLayout georestrictedView;
     private ImageButton playButton;
 
-    public SongResultViewHolder(@NonNull View itemView) {
+    private Fragment parentFragment;
+
+    public SongResultViewHolder(@NonNull View itemView, @NonNull Fragment parentFragment) {
         super(itemView);
         songNameTextView = itemView.findViewById(R.id.song_result_item_name);
         artistTextView = itemView.findViewById(R.id.song_result_item_artist);
@@ -36,6 +39,7 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
         coverImageView = itemView.findViewById(R.id.song_result_item_cover);
         georestrictedView = itemView.findViewById(R.id.song_result_georestricted_view);
         playButton = itemView.findViewById(R.id.song_result_play_button);
+        this.parentFragment = parentFragment;
     }
 
     public void bindSong(Song song) {
