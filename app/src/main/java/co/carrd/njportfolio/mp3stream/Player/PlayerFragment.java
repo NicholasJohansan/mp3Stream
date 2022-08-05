@@ -287,13 +287,13 @@ public class PlayerFragment extends Fragment {
         seekBar.setProgress(elapsedTime);
         seekBar.setSecondaryProgress(bufferedDuration);
         elapsedTimeTextView.setText(ApiUtils.getFriendlyDuration(elapsedTime));
+        miniPlayerFragment.updateProgress(player);
         seekBarHandler.removeCallbacks(updateProgressRunnable);
 
         int playbackState = player.getPlaybackState();
         if (!(playbackState == Player.STATE_IDLE || playbackState == Player.STATE_ENDED)) {
             seekBarHandler.postDelayed(updateProgressRunnable, 500);
         }
-
     }
 
     private Runnable updateProgressRunnable = () -> updateProgress();

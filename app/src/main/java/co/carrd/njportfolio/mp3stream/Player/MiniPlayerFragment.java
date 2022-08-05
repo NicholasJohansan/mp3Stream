@@ -15,7 +15,10 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.exoplayer2.ExoPlayer;
+
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
@@ -28,6 +31,7 @@ public class MiniPlayerFragment extends Fragment {
     private TextView artistNameTextView;
     private ImageButton playPauseButton;
     private ProgressBar loadingView;
+    private ProgressBar progressBar;
     private TextView noSongLabel;
 
     private PlayerFragment playerFragment;
@@ -43,6 +47,7 @@ public class MiniPlayerFragment extends Fragment {
         artistNameTextView = fragmentView.findViewById(R.id.mini_player_artist_name);
         playPauseButton = fragmentView.findViewById(R.id.mini_player_play_pause_button);
         loadingView = fragmentView.findViewById(R.id.mini_player_loading_view);
+        progressBar = fragmentView.findViewById(R.id.mini_player_progress_bar);
         noSongLabel = fragmentView.findViewById(R.id.mini_player_no_song_label);
 
         // Link player fragment
@@ -102,5 +107,14 @@ public class MiniPlayerFragment extends Fragment {
 
         // Set up play/pause button
         playPauseButton.setOnClickListener(v -> playerFragment.playPause());
+    }
+
+    public void updateProgress(ExoPlayer player) {
+        int elapsedTime = (int) player.getCurrentPosition();
+        int duration = (int) player.getDuration();
+        int bufferedDuration = (int) player.getBufferedPosition();
+        progressBar.setMax(duration);
+        progressBar.setProgress(elapsedTime);
+        progressBar.setSecondaryProgress(bufferedDuration);
     }
 }
