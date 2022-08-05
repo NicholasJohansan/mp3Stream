@@ -228,16 +228,7 @@ public class PlayerFragment extends Fragment {
 
         int playbackState = player.getPlaybackState();
         if (!(playbackState == Player.STATE_IDLE || playbackState == Player.STATE_ENDED)) {
-            int delayMs;
-            if (player.getPlayWhenReady() && playbackState == Player.STATE_READY) {
-                delayMs = 1000 - (elapsedTime % 1000);
-                if (delayMs < 200) {
-                    delayMs += 1000;
-                }
-            } else {
-                delayMs = 1000;
-            }
-            seekBarHandler.postDelayed(updateProgressRunnable, delayMs);
+            seekBarHandler.postDelayed(updateProgressRunnable, 500);
         }
 
     }
