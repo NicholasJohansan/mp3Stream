@@ -161,15 +161,19 @@ public class PlayerFragment extends Fragment {
                 } else {
                     playerViewModel.getIsLoading().setValue(false);
                 }
+
+                if (playbackState == Player.STATE_ENDED) {
+                    player.pause();
+                }
             }
         });
 
+        // Set up seekbar seeking
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             private boolean startedTouch = false;
             private int progress;
 
-            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (startedTouch && fromUser) {
@@ -199,6 +203,9 @@ public class PlayerFragment extends Fragment {
             player.pause();
         } else {
             // if paused then play
+            if (player.getCurrentPosition() >= player.getDuration()) {
+                player.seekTo(0);
+            }
             player.play();
         }
     }
@@ -233,12 +240,7 @@ public class PlayerFragment extends Fragment {
 
     }
 
-    private Runnable updateProgressRunnable = new Runnable() {
-        @Override
-        public void run() {
-            updateProgress();
-        }
-    };
+    private Runnable updateProgressRunnable = () -> updateProgress();
 
     // Code below is for player swipe gesture
 
