@@ -1,5 +1,7 @@
 package co.carrd.njportfolio.mp3stream.Equalizer;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;
@@ -62,6 +64,10 @@ public class EqualizerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        // Sync equalizer to stored data
+        equalizerViewModel.syncEqualizer(equalizer);
+
         // Fetch all presets
         String[] presets = new String[equalizer.getNumberOfPresets()];
         for (short i = 0; i < presets.length; i++) {
@@ -69,6 +75,8 @@ public class EqualizerFragment extends Fragment {
         }
         // Configure preset dropdown menu with fetched presets
         presetDropdown.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, presets) {
+            int s = Log.d("EQUALIZER", "hi");
+
             // Disable filtering for the autocompletetextview
             @Override
             public Filter getFilter() {
@@ -85,12 +93,23 @@ public class EqualizerFragment extends Fragment {
                 };
             }
         });
-        // Set preset to be Normal (preset number 0) by default
-        equalizerViewModel.usePreset(equalizer, (short) 0);
-        presetDropdown.setText(presets[0], false);
+
+        // Set preset dropdown to observe selected preset index
+        equalizerViewModel.getSelectedPresetIndex().observe(this, selectedIndex -> {
+            if (selectedIndex != -1) {
+                // Valid preset was selected
+                equalizerViewModel.usePreset(equalizer, (short) (int) selectedIndex);
+                presetDropdown.setText(presets[selectedIndex], false);
+            } else {
+                // Custom (not a preset)
+                presetDropdown.clearListSelection();
+                presetDropdown.setText("Custom", false);
+            }
+        });
+
         // Configure preset to be set when selected from preset dropdown menu
         presetDropdown.setOnItemClickListener((adapterView, itemView, position, id) -> {
-            equalizerViewModel.usePreset(equalizer, (short) position);
+            equalizerViewModel.getSelectedPresetIndex().setValue(position);
         });
 
         // Set up equalizer band recycler view

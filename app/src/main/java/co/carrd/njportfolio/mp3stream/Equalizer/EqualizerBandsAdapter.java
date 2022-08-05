@@ -88,6 +88,7 @@ public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAd
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     touchStarted = false;
+                    equalizerViewModel.getSelectedPresetIndex().setValue(-1); // Set to no preset (Custom)
                     equalizerViewModel.updateBandLevel((short) progress, bandNumber, equalizer);
                 }
             });
