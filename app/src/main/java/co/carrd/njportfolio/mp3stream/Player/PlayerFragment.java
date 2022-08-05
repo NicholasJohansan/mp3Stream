@@ -60,6 +60,8 @@ public class PlayerFragment extends Fragment {
     private ImageView playPauseButton;
     private ProgressBar loadingView;
     private SeekBar seekBar;
+    private ImageButton skipNextButton;
+    private ImageButton skipPreviousButton;
     private ArrayList<Song> songsList;
     private ArrayList<String> streamUrlsList;
 
@@ -91,6 +93,8 @@ public class PlayerFragment extends Fragment {
         playPauseButton = fragmentView.findViewById(R.id.player_play_pause_button);
         loadingView = fragmentView.findViewById(R.id.player_loading_view);
         seekBar = fragmentView.findViewById(R.id.player_seekbar);
+        skipNextButton = fragmentView.findViewById(R.id.player_skip_next_button);
+        skipPreviousButton = fragmentView.findViewById(R.id.player_skip_previous_button);
 
         // Get exoplayer
 
@@ -152,6 +156,10 @@ public class PlayerFragment extends Fragment {
 
         // Set up play/pause button on click listener
         playPauseButton.setOnClickListener(v -> playPause());
+
+        // Set up skip next/previous button
+        skipNextButton.setOnClickListener(v -> player.seekToNextMediaItem());
+        skipPreviousButton.setOnClickListener(v -> player.seekToPreviousMediaItem());
 
         // Set listener on player
         player.addListener(new Player.Listener() {
