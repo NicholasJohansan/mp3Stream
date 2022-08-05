@@ -14,9 +14,11 @@ public class EqualizerViewModel extends ViewModel {
     private SharedPreferences sharedPreferences = MainApplication.getInstance().getSharedPreferences("equalizer", Context.MODE_PRIVATE);
     private MutableLiveData<int[]> bandLevels = new MutableLiveData<>(new int[5]);
     private MutableLiveData<Integer> selectedPresetIndex = new MutableLiveData<>(0);
+    private MutableLiveData<Boolean> enabled = new MutableLiveData<>(false);
 
     public void syncEqualizer(Equalizer equalizer) {
         selectedPresetIndex.setValue(sharedPreferences.getInt("selectedPresetIndex", 0));
+        enabled.setValue(sharedPreferences.getBoolean("enabled", false));
         int bands = equalizer.getNumberOfBands();
         int[] storedBandLevels = new int[bands];
         for (int i = 0; i < bands; i++) {
@@ -30,6 +32,7 @@ public class EqualizerViewModel extends ViewModel {
     public void updateEqualizer(Equalizer equalizer) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("selectedPresetIndex", selectedPresetIndex.getValue());
+        editor.putBoolean("enabled", enabled.getValue());
         for (int i = 0; i < bandLevels.getValue().length; i++) {
             editor.putInt("band" + i, bandLevels.getValue()[i]);
         }
@@ -64,5 +67,15 @@ public class EqualizerViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getSelectedPresetIndex() {
         return selectedPresetIndex;
+    }
+
+    public void toggleEnabled(Equalizer equalizer) {
+        enabled.setValue(!enabled.getValue());
+        equalizer.setEnabled(enabled.getValue());
+        updateEqualizer(equalizer);
+    }
+
+    public MutableLiveData<Boolean> getEnabled() {
+        return enabled;
     }
 }

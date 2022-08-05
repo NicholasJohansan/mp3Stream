@@ -75,8 +75,6 @@ public class EqualizerFragment extends Fragment {
         }
         // Configure preset dropdown menu with fetched presets
         presetDropdown.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, presets) {
-            int s = Log.d("EQUALIZER", "hi");
-
             // Disable filtering for the autocompletetextview
             @Override
             public Filter getFilter() {
@@ -95,7 +93,7 @@ public class EqualizerFragment extends Fragment {
         });
 
         // Set preset dropdown to observe selected preset index
-        equalizerViewModel.getSelectedPresetIndex().observe(this, selectedIndex -> {
+        equalizerViewModel.getSelectedPresetIndex().observe(getViewLifecycleOwner(), selectedIndex -> {
             if (selectedIndex != -1) {
                 // Valid preset was selected
                 equalizerViewModel.usePreset(equalizer, (short) (int) selectedIndex);
@@ -142,8 +140,13 @@ public class EqualizerFragment extends Fragment {
             }
         });
 
+        // Configure switch to reflect state based on view model
+        equalizerViewModel.getEnabled().observe(getViewLifecycleOwner(), enabled -> {
+            enableSwitch.setChecked(enabled);
+        });
+
         // Configure enable switch to toggle whether equalizer is active
-        enableSwitch.setOnClickListener(v -> equalizer.setEnabled(!equalizer.getEnabled()));
+        enableSwitch.setOnClickListener(v -> equalizerViewModel.toggleEnabled(equalizer));
     }
 
     private int convertToPixels(int dp) {
