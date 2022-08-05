@@ -1,6 +1,7 @@
 package co.carrd.njportfolio.mp3stream;
 
 import android.app.Application;
+import android.media.audiofx.Equalizer;
 
 import com.google.android.exoplayer2.ExoPlayer;
 
@@ -10,6 +11,7 @@ public class MainApplication extends Application {
     private static MainApplication application;
     private ApiWrapper soundcloudApi;
     private ExoPlayer player;
+    private Equalizer equalizer;
 
     public static MainApplication getInstance() {
         return application;
@@ -22,6 +24,7 @@ public class MainApplication extends Application {
         soundcloudApi = new ApiWrapper();
         player = new ExoPlayer.Builder(this)
                 .build();
+        equalizer = new Equalizer(0, MainApplication.getInstance().getPlayer().getAudioSessionId());
     }
 
     @Override
@@ -36,5 +39,8 @@ public class MainApplication extends Application {
     }
     public ExoPlayer getPlayer() {
         return player;
+    }
+    public Equalizer getEqualizer() {
+        return equalizer;
     }
 }

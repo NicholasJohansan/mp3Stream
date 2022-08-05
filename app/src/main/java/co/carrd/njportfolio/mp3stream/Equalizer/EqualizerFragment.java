@@ -54,7 +54,7 @@ public class EqualizerFragment extends Fragment {
         equalizerViewModel = new ViewModelProvider(requireActivity()).get(EqualizerViewModel.class);
 
         // Initialise Equalizer
-        equalizer = new Equalizer(0, MainApplication.getInstance().getPlayer().getAudioSessionId());
+        equalizer = MainApplication.getInstance().getEqualizer();
 
         return fragmentView;
     }
