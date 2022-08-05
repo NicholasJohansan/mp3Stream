@@ -42,7 +42,7 @@ public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAd
 
     @Override
     public void onBindViewHolder(@NonNull EqualizerBandViewHolder holder, int position) {
-        holder.bindBandData(position);
+        holder.bindBandData((short) position);
     }
 
     public class EqualizerBandViewHolder extends RecyclerView.ViewHolder {
@@ -55,7 +55,7 @@ public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAd
             equalizerViewModel = new ViewModelProvider(activity).get(EqualizerViewModel.class);
         }
 
-        public void bindBandData(int bandNumber) {
+        public void bindBandData(short bandNumber) {
             //
             short band = equalizer.getBand(bandNumber);
             short bandLevel = equalizer.getBandLevel((short) bandNumber);
@@ -72,6 +72,29 @@ public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAd
             Log.d("EQUALIZER", band + " " + bandLevel + " " + centerFreq + " " + freqRange + " " + levelRange);
             equalizerViewModel.getBandLevels().observeForever(bandLevels -> {
                 equalizerBandBar.setProgress(bandLevels[bandNumber]);
+            });
+
+            equalizerBandBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                private boolean touchStarted;
+                private int progress;
+
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (touchStarted && fromUser) {
+                        this.progress = progress;
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    touchStarted = true;
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    touchStarted = false;
+                    equalizerViewModel.updateBandLevel((short) progress, bandNumber, equalizer);
+                }
             });
         }
     }

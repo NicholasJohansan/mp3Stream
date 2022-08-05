@@ -57,11 +57,7 @@ public class EqualizerFragment extends Fragment {
         presetTextView.setOnItemClickListener((adapterView, view, position, id) -> {
             // Select Preset
             equalizer.usePreset((short) position);
-            int[] bandLevels = new int[equalizer.getNumberOfBands()];
-            for (int i = 0; i < equalizer.getNumberOfBands(); i++) {
-                bandLevels[i] = equalizer.getBandLevel((short) i);
-            }
-            equalizerViewModel.getBandLevels().setValue(bandLevels);
+            equalizerViewModel.syncBandLevels(equalizer);
         });
 
 
