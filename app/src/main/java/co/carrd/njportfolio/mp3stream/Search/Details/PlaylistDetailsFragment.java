@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.MainApplication;
+import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Search.Classes.EndlessRecyclerViewScrollListener;
 import co.carrd.njportfolio.mp3stream.Search.Results.SearchResultsAdapter;
@@ -148,5 +149,13 @@ public class PlaylistDetailsFragment extends Fragment {
 //
 //        noResultsView.setVisibility(View.GONE);
 //        notSearchedView.setVisibility(View.GONE);
+    }
+
+    public void playPlaylist(int startSongIndex) {
+        MainApplication.getInstance().getSoundcloudApi().getPlaylistTracks(playlist.getTrackIds(), songsList -> {
+            UiUtils.runOnUiThread(getActivity(), () -> {
+                PlayerFragment.getInstance().setPlaylist(songsList, startSongIndex);
+            });
+        });
     }
 }

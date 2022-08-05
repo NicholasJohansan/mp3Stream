@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.Player.PlayerViewModel;
 import co.carrd.njportfolio.mp3stream.R;
+import co.carrd.njportfolio.mp3stream.Search.Details.PlaylistDetailsFragment;
 import co.carrd.njportfolio.mp3stream.Search.Details.TestFragment;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
@@ -63,7 +64,13 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
         });
 
         playButton.setOnClickListener(view -> {
-            PlayerFragment.getInstance().setSong(song);
+            if (parentFragment.getClass().getSimpleName().equals(PlaylistDetailsFragment.class.getSimpleName())) {
+                // Play as playlist
+                ((PlaylistDetailsFragment) parentFragment).playPlaylist(getLayoutPosition());
+            } else {
+                // Play as a single song
+                PlayerFragment.getInstance().setSong(song);
+            }
         });
 
         UiUtils.loadImage(coverImageView, song.getCoverUrl());

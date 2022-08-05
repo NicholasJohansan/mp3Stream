@@ -34,6 +34,11 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.IntStream;
+
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
@@ -55,6 +60,8 @@ public class PlayerFragment extends Fragment {
     private ImageView playPauseButton;
     private ProgressBar loadingView;
     private SeekBar seekBar;
+    private ArrayList<Song> songsList;
+    private ArrayList<String> streamUrlsList;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
@@ -166,6 +173,14 @@ public class PlayerFragment extends Fragment {
                     player.pause();
                 }
             }
+
+            @Override
+            public void onMediaItemTransition(@Nullable MediaItem mediaItem, int reason) {
+                if (mediaItem != null && mediaItem.localConfiguration.tag != null) {
+                    int index = Integer.parseInt((String) mediaItem.localConfiguration.tag);
+                    playerViewModel.getCurrentSong().setValue(songsList.get(index));
+                }
+            }
         });
 
         // Set up seekbar seeking
@@ -221,6 +236,39 @@ public class PlayerFragment extends Fragment {
                 player.play();
             });
         });
+    }
+
+    public void setPlaylist(List<Song> songsList, int startSongIndex) {
+        this.songsList = (ArrayList<Song>) songsList;
+        playerViewModel.getCurrentSong().setValue(songsList.get(startSongIndex));
+        player.stop();
+        player.clearMediaItems();
+        streamUrlsList = new ArrayList<>();
+        playerViewModel.getIsLoading().setValue(true);
+        fetchPlaylistUrl(0, s -> {
+            UiUtils.runOnUiThread(getActivity(), () -> {
+                IntStream.range(0, streamUrlsList.size()).forEach(index -> {
+                    player.addMediaItem(new MediaItem.Builder().setUri(streamUrlsList.get(index)).setTag(String.valueOf(index)).build());
+                });
+                player.prepare();
+                player.seekTo(startSongIndex, 0);
+                player.play();
+            });
+        });
+//        songsList.
+    }
+
+    private void fetchPlaylistUrl(int index, Consumer<String> callback) {
+        if (index < songsList.size()) {
+            soundcloudApi.getSongStreamUrl(songsList.get(index), streamUrl -> {
+                streamUrlsList.add(streamUrl);
+                if (index == songsList.size() - 1) {
+                    callback.accept(streamUrl);
+                } else {
+                    fetchPlaylistUrl(index + 1, callback);
+                }
+            });
+        }
     }
 
     private void updateProgress() {
