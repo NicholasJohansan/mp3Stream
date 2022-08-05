@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -15,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerFragment;
+import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerViewModel;
 import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
 import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
@@ -51,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.player_fragment_container, playerFragment)
                 .commitNow();
 
-        // Set up player swipe
-//        setUpPlayerSwipe();
+        // Ensure equalizer settings are restored on start
+        new ViewModelProvider(this).get(EqualizerViewModel.class).syncEqualizer(MainApplication.getInstance().getEqualizer());
+
     }
 
     private NavigationBarView.OnItemSelectedListener navListener = item -> {

@@ -19,6 +19,7 @@ public class EqualizerViewModel extends ViewModel {
     public void syncEqualizer(Equalizer equalizer) {
         selectedPresetIndex.setValue(sharedPreferences.getInt("selectedPresetIndex", 0));
         enabled.setValue(sharedPreferences.getBoolean("enabled", false));
+        equalizer.setEnabled(enabled.getValue());
         int bands = equalizer.getNumberOfBands();
         int[] storedBandLevels = new int[bands];
         for (int i = 0; i < bands; i++) {
