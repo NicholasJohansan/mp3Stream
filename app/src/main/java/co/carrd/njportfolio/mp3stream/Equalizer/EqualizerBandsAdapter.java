@@ -53,6 +53,16 @@ public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAd
         }
 
         public void bindBandData(short bandNumber) {
+
+            // Get initial values
+            short bandLevel = equalizer.getBandLevel((short) bandNumber);
+            short[] bandLevelRange = equalizer.getBandLevelRange();
+
+            // Set initial values on equalizer band
+            equalizerBandBar.setMin(bandLevelRange[0]);
+            equalizerBandBar.setMax(bandLevelRange[1]);
+            equalizerBandBar.setProgress(bandLevel);
+
             // Set equalizer band to observe value of its band level
             equalizerViewModel.getBandLevels().observeForever(bandLevels -> {
                 equalizerBandBar.setProgress(bandLevels[bandNumber]);

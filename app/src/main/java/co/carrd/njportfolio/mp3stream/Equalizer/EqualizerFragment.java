@@ -70,9 +70,10 @@ public class EqualizerFragment extends Fragment {
         presetDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, presets));
         // Set preset to be Normal (preset number 0) by default
         equalizerViewModel.usePreset(equalizer, (short) 0);
+        presetDropdown.setText(presets[0], false);
         // Configure preset to be set when selected from preset dropdown menu
         presetDropdown.setOnItemClickListener((adapterView, itemView, position, id) -> {
-            equalizer.usePreset((short) position);
+            equalizerViewModel.usePreset(equalizer, (short) position);
         });
 
         // Set up equalizer band recycler view
