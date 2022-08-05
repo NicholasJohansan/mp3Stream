@@ -17,17 +17,23 @@ import android.widget.AutoCompleteTextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Arrays;
+
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
+import co.carrd.njportfolio.mp3stream.Player.PlayerViewModel;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class EqualizerFragment extends Fragment {
     private RecyclerView recyclerView;
     private Equalizer equalizer;
+
+    private EqualizerViewModel equalizerViewModel;
 
     @Nullable
     @Override
@@ -38,6 +44,8 @@ public class EqualizerFragment extends Fragment {
         // Link UI
         recyclerView = fragmentView.findViewById(R.id.equalizer_bands_recycler_view);
 
+        equalizerViewModel = new ViewModelProvider(requireActivity()).get(EqualizerViewModel.class);
+
         AutoCompleteTextView presetTextView = fragmentView.findViewById(R.id.preset_text_field);
         equalizer = new Equalizer(0, MainApplication.getInstance().getPlayer().getAudioSessionId());
         String[] presets = new String[equalizer.getNumberOfPresets()];
@@ -46,10 +54,15 @@ public class EqualizerFragment extends Fragment {
         }
         presetTextView.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, presets));
         presetTextView.setText(presets[0], false);
-//        presetTextView.setOnItemClickListener((adapterView, view, position, id) -> {
-//            // Select Preset
-//            equalizer.usePreset((short) position);
-//        });
+        presetTextView.setOnItemClickListener((adapterView, view, position, id) -> {
+            // Select Preset
+            equalizer.usePreset((short) position);
+            int[] bandLevels = new int[equalizer.getNumberOfBands()];
+            for (int i = 0; i < equalizer.getNumberOfBands(); i++) {
+                bandLevels[i] = equalizer.getBandLevel((short) i);
+            }
+            equalizerViewModel.getBandLevels().setValue(bandLevels);
+        });
 
 
 
@@ -61,7 +74,7 @@ public class EqualizerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Set up equalizer band recycler view
-        recyclerView.setAdapter(new EqualizerBandsAdapter(equalizer));
+        recyclerView.setAdapter(new EqualizerBandsAdapter(equalizer, getActivity()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -74,6 +87,16 @@ public class EqualizerFragment extends Fragment {
 //                if (parent.getChildLayoutPosition(view) != itemCount - 1) {
                 outRect.left = spacing;
 //                }
+            }
+        });
+
+        equalizer.setParameterListener((equalizer, status, paramType, bandNum, value) -> {
+            Log.d("EQUALIZER", paramType + "");
+            if (paramType == Equalizer.PARAM_BAND_LEVEL) {
+                int[] bandLevels = equalizerViewModel.getBandLevels().getValue();
+                bandLevels[bandNum] = value;
+                Log.d("EQUALIZER", String.join(",", Arrays.stream(bandLevels).mapToObj(String::valueOf).toArray(String[]::new)));
+                equalizerViewModel.getBandLevels().setValue(bandLevels);
             }
         });
     }

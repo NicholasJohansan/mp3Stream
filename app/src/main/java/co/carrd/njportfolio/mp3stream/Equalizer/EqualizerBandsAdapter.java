@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Arrays;
@@ -17,9 +19,11 @@ import co.carrd.njportfolio.mp3stream.R;
 
 public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAdapter.EqualizerBandViewHolder> {
     private Equalizer equalizer;
+    private FragmentActivity activity;
 
-    public EqualizerBandsAdapter(Equalizer equalizer) {
+    public EqualizerBandsAdapter(Equalizer equalizer, FragmentActivity activity) {
         this.equalizer = equalizer;
+        this.activity = activity;
     }
 
     @NonNull
@@ -43,10 +47,12 @@ public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAd
 
     public class EqualizerBandViewHolder extends RecyclerView.ViewHolder {
         private SeekBar equalizerBandBar;
+        private EqualizerViewModel equalizerViewModel;
 
         public EqualizerBandViewHolder(@NonNull View itemView) {
             super(itemView);
             equalizerBandBar = itemView.findViewById(R.id.equalizer_band_bar);
+            equalizerViewModel = new ViewModelProvider(activity).get(EqualizerViewModel.class);
         }
 
         public void bindBandData(int bandNumber) {
@@ -64,6 +70,9 @@ public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAd
             equalizerBandBar.setMax(bandLevelRange[1]);
             equalizerBandBar.setProgress(bandLevel);
             Log.d("EQUALIZER", band + " " + bandLevel + " " + centerFreq + " " + freqRange + " " + levelRange);
+            equalizerViewModel.getBandLevels().observeForever(bandLevels -> {
+                equalizerBandBar.setProgress(bandLevels[bandNumber]);
+            });
         }
     }
 }
