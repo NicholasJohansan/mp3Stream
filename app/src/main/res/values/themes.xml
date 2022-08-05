@@ -167,4 +167,20 @@
         <item name="backgroundColor">@android:color/transparent</item>
     </style>
     <!--  End: Tab Bar Styles  -->
+
+    <!-- Start: Switch Styles -->
+    <style name="Widget.Mp3Stream.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Mp3Stream.Switch</item>
+        <item name="trackDecorationTint">@android:color/transparent</item>
+        <item name="trackTint">@color/switch_track_tint_selector</item>
+<!--        <item name="switch"-->
+    </style>
+
+    <style name="ThemeOverlay.Mp3Stream.Switch" parent="ThemeOverlay.MaterialComponents">
+        <item name="colorOnSurface">@color/light_gray</item>
+        <item name="colorSecondary">@color/orange</item>
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+    <!-- End: Switch Styles -->
 </resources>
