@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.materialswitch.MaterialSwitch;
+
 import java.util.Arrays;
 
 import co.carrd.njportfolio.mp3stream.MainActivity;
@@ -34,6 +36,7 @@ public class EqualizerFragment extends Fragment {
     private Equalizer equalizer;
 
     private EqualizerViewModel equalizerViewModel;
+    private MaterialSwitch enableSwitch;
 
     @Nullable
     @Override
@@ -43,6 +46,7 @@ public class EqualizerFragment extends Fragment {
 
         // Link UI
         recyclerView = fragmentView.findViewById(R.id.equalizer_bands_recycler_view);
+        enableSwitch = fragmentView.findViewById(R.id.equalizer_enabled_switch);
 
         equalizerViewModel = new ViewModelProvider(requireActivity()).get(EqualizerViewModel.class);
 
@@ -95,6 +99,8 @@ public class EqualizerFragment extends Fragment {
                 equalizerViewModel.getBandLevels().setValue(bandLevels);
             }
         });
+
+        enableSwitch.setOnClickListener(v -> equalizer.setEnabled(!equalizer.getEnabled()));
     }
 
     private void setUpStyles(View fragmentView) {
