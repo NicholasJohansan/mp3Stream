@@ -2,7 +2,6 @@ package co.carrd.njportfolio.mp3stream.Equalizer;
 
 import android.content.Context;
 import android.media.audiofx.Equalizer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.Arrays;
 
 import co.carrd.njportfolio.mp3stream.R;
 
@@ -56,24 +53,12 @@ public class EqualizerBandsAdapter extends RecyclerView.Adapter<EqualizerBandsAd
         }
 
         public void bindBandData(short bandNumber) {
-            //
-            short band = equalizer.getBand(bandNumber);
-            short bandLevel = equalizer.getBandLevel((short) bandNumber);
-            int centerFreq = equalizer.getCenterFreq((short) bandNumber);
-            String freqRange = String.join(",", Arrays.stream(equalizer.getBandFreqRange((short) bandNumber)).mapToObj(String::valueOf).toArray(String[]::new));
-            short[] bandLevelRange = equalizer.getBandLevelRange();
-            String levelRange = "";
-            for (short s : bandLevelRange) {
-                levelRange += "," + s;
-            }
-            equalizerBandBar.setMin(bandLevelRange[0]);
-            equalizerBandBar.setMax(bandLevelRange[1]);
-            equalizerBandBar.setProgress(bandLevel);
-            Log.d("EQUALIZER", band + " " + bandLevel + " " + centerFreq + " " + freqRange + " " + levelRange);
+            // Set equalizer band to observe value of its band level
             equalizerViewModel.getBandLevels().observeForever(bandLevels -> {
                 equalizerBandBar.setProgress(bandLevels[bandNumber]);
             });
 
+            // Configure equalizer band to update equalizer band level when value is changed
             equalizerBandBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 private boolean touchStarted;
                 private int progress;

@@ -34,77 +34,79 @@ import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 public class EqualizerFragment extends Fragment {
     private RecyclerView recyclerView;
     private Equalizer equalizer;
-
     private EqualizerViewModel equalizerViewModel;
+
+    private AutoCompleteTextView presetDropdown;
     private MaterialSwitch enableSwitch;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_equalizer, container, false);
-        setUpStyles(fragmentView);
+        UiUtils.setToolbarGradientTitle(fragmentView);
 
         // Link UI
         recyclerView = fragmentView.findViewById(R.id.equalizer_bands_recycler_view);
         enableSwitch = fragmentView.findViewById(R.id.equalizer_enabled_switch);
+        presetDropdown = fragmentView.findViewById(R.id.preset_text_field);
 
+        // Link View Model
         equalizerViewModel = new ViewModelProvider(requireActivity()).get(EqualizerViewModel.class);
 
-        AutoCompleteTextView presetTextView = fragmentView.findViewById(R.id.preset_text_field);
+        // Initialise Equalizer
         equalizer = new Equalizer(0, MainApplication.getInstance().getPlayer().getAudioSessionId());
-        String[] presets = new String[equalizer.getNumberOfPresets()];
-        for (short i = 0; i < presets.length; i++) {
-            presets[i] = equalizer.getPresetName(i);
-        }
-        presetTextView.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, presets));
-        presetTextView.setText(presets[0], false);
-        presetTextView.setOnItemClickListener((adapterView, view, position, id) -> {
-            // Select Preset
-            equalizer.usePreset((short) position);
-            equalizerViewModel.syncBandLevels(equalizer);
-        });
-
-
-
-//        equalizer.usePreset();
 
         return fragmentView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        // Fetch all presets
+        String[] presets = new String[equalizer.getNumberOfPresets()];
+        for (short i = 0; i < presets.length; i++) {
+            presets[i] = equalizer.getPresetName(i);
+        }
+        // Configure preset dropdown menu with fetched presets
+        presetDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, presets));
+        // Set preset to be Normal (preset number 0) by default
+        equalizerViewModel.usePreset(equalizer, (short) 0);
+        // Configure preset to be set when selected from preset dropdown menu
+        presetDropdown.setOnItemClickListener((adapterView, itemView, position, id) -> {
+            equalizer.usePreset((short) position);
+        });
+
         // Set up equalizer band recycler view
         recyclerView.setAdapter(new EqualizerBandsAdapter(equalizer, getActivity()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        // Add Item Decoration that is configured to give equal spacing
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
+
+                // Set up dimensions
                 int totalWidth = parent.getMeasuredWidth();
                 int itemCount = state.getItemCount();
-                int spacing = (totalWidth - convertToPixels(32) * itemCount) / (itemCount + 1);
-                Log.d("EQUALIZER", totalWidth + " " + spacing + " " + view.getMeasuredWidth() + " " + view.getPaddingLeft());
-//                if (parent.getChildLayoutPosition(view) != itemCount - 1) {
+                int equalizerBandWidth = convertToPixels(32);
+
+                // Calculate dimensions
+                int totalSpacing = (totalWidth) - (equalizerBandWidth * itemCount);
+                int spacing = totalSpacing / (itemCount + 1); // itemCount + 1 -> number of gaps
+
+                // Set offset
                 outRect.left = spacing;
-//                }
             }
         });
 
+        // Configure equalizer to update band levels if changed from outside applications
         equalizer.setParameterListener((equalizer, status, paramType, bandNum, value) -> {
-            Log.d("EQUALIZER", paramType + "");
             if (paramType == Equalizer.PARAM_BAND_LEVEL) {
-                int[] bandLevels = equalizerViewModel.getBandLevels().getValue();
-                bandLevels[bandNum] = value;
-                Log.d("EQUALIZER", String.join(",", Arrays.stream(bandLevels).mapToObj(String::valueOf).toArray(String[]::new)));
-                equalizerViewModel.getBandLevels().setValue(bandLevels);
+                equalizerViewModel.updateBandLevel((short) value, (short) bandNum, equalizer);
             }
         });
 
+        // Configure enable switch to toggle whether equalizer is active
         enableSwitch.setOnClickListener(v -> equalizer.setEnabled(!equalizer.getEnabled()));
-    }
-
-    private void setUpStyles(View fragmentView) {
-        UiUtils.setToolbarGradientTitle(fragmentView);
     }
 
     private int convertToPixels(int dp) {

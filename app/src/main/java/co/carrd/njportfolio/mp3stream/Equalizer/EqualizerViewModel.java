@@ -12,6 +12,11 @@ public class EqualizerViewModel extends ViewModel {
         return bandLevels;
     }
 
+    public void usePreset(Equalizer equalizer, short presetNumber) {
+        equalizer.usePreset(presetNumber);
+        syncBandLevels(equalizer);
+    }
+
     public void syncBandLevels(Equalizer equalizer) {
         int[] syncedBandLevels = new int[equalizer.getNumberOfBands()];
         for (int i = 0; i < equalizer.getNumberOfBands(); i++) {
