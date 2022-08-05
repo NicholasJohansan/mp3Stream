@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -37,10 +38,15 @@ public class ApiUtils {
         this.httpClient = httpClient;
     }
 
-    public void fetchPlaylistTracksList(String url, Consumer<List<Song>> playlistTracksListConsumer) {
+    public void fetchPlaylistTracksList(String url, int[] trackIdsOrder, Consumer<List<Song>> playlistTracksListConsumer) {
         fetchHttp(url, responseString -> {
             List<Song> playlistSongs = ApiParser.parseSongList(responseString);
-            playlistTracksListConsumer.accept(playlistSongs);
+            List<Song> orderedSongs = new ArrayList<>();
+            for (int trackId : trackIdsOrder) {
+                Optional<Song> foundSong = playlistSongs.stream().filter(song -> song.getId() == trackId).findFirst();
+                orderedSongs.add(foundSong.get());
+            }
+            playlistTracksListConsumer.accept(orderedSongs);
         });
     }
 

@@ -102,10 +102,11 @@ public class ApiWrapper {
 
   public void getPlaylistTracks(int[] trackIds, Consumer<List<Song>> consumer) {
     String trackIdsParam = String.join(",", Arrays.stream(trackIds).mapToObj(String::valueOf).toArray(String[]::new));
+    Log.d("PLAYLIST", String.join(",", Arrays.stream(trackIds).mapToObj(e -> String.valueOf(e)).toArray(String[]::new)));
     String url = "https://api-v2.soundcloud.com/tracks?ids="
             + Uri.encode(trackIdsParam)
             + "&client_id=" + clientId;
-    apiUtils.fetchPlaylistTracksList(url, consumer);
+    apiUtils.fetchPlaylistTracksList(url, trackIds, consumer);
   }
 
   public void getArtistTracks(int artistId, Consumer<SongCollection> consumer) {

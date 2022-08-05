@@ -28,6 +28,7 @@ import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
+import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class PlaylistDetailsFragment extends Fragment {
@@ -116,6 +117,7 @@ public class PlaylistDetailsFragment extends Fragment {
     public void getInitialSongs() {
         songsPage = 1;
         int[] paginatedTrackIds = ApiUtils.paginateIds(songsPage, playlist.getTrackIds());
+
         if (paginatedTrackIds == null) {
             // TODO: Handle no songs
 
@@ -124,7 +126,7 @@ public class PlaylistDetailsFragment extends Fragment {
             return;
         }
         songsPage++;
-        Log.d("TRACKS", Arrays.stream(paginatedTrackIds).mapToObj(e -> String.valueOf(e)).toArray(String[]::new).toString());
+        Log.d("TRACKS", String.join(" ", Arrays.stream(playlist.getTrackIds()).mapToObj(e -> String.valueOf(e)).toArray(String[]::new)));
 
         ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
         soundcloudApi.getPlaylistTracks(paginatedTrackIds, playlistTracks -> {
@@ -152,8 +154,14 @@ public class PlaylistDetailsFragment extends Fragment {
     }
 
     public void playPlaylist(int startSongIndex) {
+        Log.d("PLAYLIST", String.join(" ", Arrays.stream(playlist.getTrackIds()).mapToObj(e -> String.valueOf(e)).toArray(String[]::new)));
         MainApplication.getInstance().getSoundcloudApi().getPlaylistTracks(playlist.getTrackIds(), songsList -> {
             UiUtils.runOnUiThread(getActivity(), () -> {
+                String songs = "";
+                for (Song song : songsList) {
+                    songs += ", " + song.getTitle();
+                }
+                Log.d("PLAYLIST", songs);
                 PlayerFragment.getInstance().setPlaylist(songsList, startSongIndex);
             });
         });

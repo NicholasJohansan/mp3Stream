@@ -66,6 +66,7 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
         playButton.setOnClickListener(view -> {
             if (parentFragment.getClass().getSimpleName().equals(PlaylistDetailsFragment.class.getSimpleName())) {
                 // Play as playlist
+                Log.d("PLAYLIST", getLayoutPosition() + " " + getBindingAdapterPosition() + " " + getAbsoluteAdapterPosition() + " " + getOldPosition());
                 ((PlaylistDetailsFragment) parentFragment).playPlaylist(getLayoutPosition());
             } else {
                 // Play as a single song
