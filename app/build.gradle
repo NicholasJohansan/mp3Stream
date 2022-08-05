@@ -61,6 +61,9 @@ dependencies {
     // For Latest Fragment Implementation
     implementation 'androidx.fragment:fragment:1.5.1'
 
+    // For Equalizer Band
+    implementation 'com.h6ah4i.android.widget.verticalseekbar:verticalseekbar:1.0.0'
+
     // For MaterialUI
     implementation 'com.google.android.material:material:1.7.0-alpha02'
 
