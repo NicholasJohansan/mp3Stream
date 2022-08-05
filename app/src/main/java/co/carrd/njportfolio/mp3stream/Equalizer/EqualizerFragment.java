@@ -13,6 +13,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Filter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,7 +68,23 @@ public class EqualizerFragment extends Fragment {
             presets[i] = equalizer.getPresetName(i);
         }
         // Configure preset dropdown menu with fetched presets
-        presetDropdown.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, presets));
+        presetDropdown.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, presets) {
+            // Disable filtering for the autocompletetextview
+            @Override
+            public Filter getFilter() {
+                return new Filter() {
+                    @Override
+                    protected FilterResults performFiltering(CharSequence charSequence) {
+                        return null;
+                    }
+
+                    @Override
+                    protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+                    }
+                };
+            }
+        });
         // Set preset to be Normal (preset number 0) by default
         equalizerViewModel.usePreset(equalizer, (short) 0);
         presetDropdown.setText(presets[0], false);
