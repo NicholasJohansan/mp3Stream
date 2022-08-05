@@ -1,7 +1,9 @@
 package co.carrd.njportfolio.mp3stream.Player;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -158,6 +161,34 @@ public class PlayerFragment extends Fragment {
                 } else {
                     playerViewModel.getIsLoading().setValue(false);
                 }
+            }
+        });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            private boolean startedTouch = false;
+            private int progress;
+
+            @RequiresApi(api = Build.VERSION_CODES.Q)
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (startedTouch && fromUser) {
+                    this.progress = progress;
+                    elapsedTimeTextView.setText(ApiUtils.getFriendlyDuration(progress));
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                startedTouch = true;
+                seekBarHandler.removeCallbacks(updateProgressRunnable);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                startedTouch = false;
+                player.seekTo(progress);
+                updateProgress();
             }
         });
     }
