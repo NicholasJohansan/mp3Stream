@@ -1,5 +1,6 @@
 package co.carrd.njportfolio.mp3stream.Search.ViewHolders;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
+import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
+import co.carrd.njportfolio.mp3stream.Library.LibraryViewModel;
 import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.Player.PlayerViewModel;
 import co.carrd.njportfolio.mp3stream.R;
@@ -29,8 +34,10 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
     private ImageView coverImageView;
     private ConstraintLayout georestrictedView;
     private ImageButton playButton;
+    private ImageButton likeButton;
 
     private Fragment parentFragment;
+    private LibraryViewModel libraryViewModel;
 
     public SongResultViewHolder(@NonNull View itemView, @NonNull Fragment parentFragment) {
         super(itemView);
@@ -40,6 +47,9 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
         coverImageView = itemView.findViewById(R.id.song_result_item_cover);
         georestrictedView = itemView.findViewById(R.id.song_result_georestricted_view);
         playButton = itemView.findViewById(R.id.song_result_play_button);
+        likeButton = itemView.findViewById(R.id.song_result_like_button);
+
+        libraryViewModel = LibraryFragment.getInstance().getLibraryViewModel();
         this.parentFragment = parentFragment;
     }
 
@@ -72,6 +82,16 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
                 // Play as a single song
                 PlayerFragment.getInstance().setSong(song);
             }
+        });
+
+        libraryViewModel.getLikedSongsIdList().observe(parentFragment, songsIdList -> {
+            likeButton.setImageResource(songsIdList.contains(song.getId())
+                    ? R.drawable.icon_song_liked
+                    : R.drawable.icon_song_not_liked);
+        });
+
+        likeButton.setOnClickListener(v -> {
+            libraryViewModel.toggleLike(song.getId());
         });
 
         UiUtils.loadImage(coverImageView, song.getCoverUrl());
