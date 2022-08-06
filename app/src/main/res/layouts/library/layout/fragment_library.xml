@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
             android:textSize="20dp"
-            android:text="@string/new_"
+            android:text="@string/add"
             app:layout_constraintRight_toLeftOf="@id/library_fragment_song_see_all"
             app:layout_constraintBottom_toBottomOf="@id/library_fragment_song_label"/>
 
@@ -109,6 +109,28 @@
             android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/library_fragment_song_label"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/library_fragment_no_songs_indicator"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/library_fragment_songs_recycler_view"
+            app:layout_constraintLeft_toLeftOf="@id/library_fragment_songs_recycler_view"
+            app:layout_constraintRight_toRightOf="@id/library_fragment_songs_recycler_view"
+            app:layout_constraintBottom_toBottomOf="@id/library_fragment_songs_recycler_view">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No songs in library"
+                android:textSize="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
