@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +46,7 @@ public class PlaylistDetailsFragment extends Fragment {
     private SearchResultsAdapter songsRecyclerViewAdapter;
     private ProgressBar progressBar;
     private ImageButton playButton;
+    private ConstraintLayout noSongsView;
 
     private int songsPage;
 
@@ -67,6 +69,7 @@ public class PlaylistDetailsFragment extends Fragment {
         songsRecyclerView = fragmentView.findViewById(R.id.playlist_details_songs_recycler_view);
         progressBar = fragmentView.findViewById(R.id.playlist_details_endless_progress);
         playButton = fragmentView.findViewById(R.id.playlist_details_play_button);
+        noSongsView = fragmentView.findViewById(R.id.view_no_songs);
 
         return fragmentView;
     }
@@ -122,7 +125,9 @@ public class PlaylistDetailsFragment extends Fragment {
         songsPage = 1;
         int[] paginatedTrackIds = ApiUtils.paginateIds(songsPage, playlist.getTrackIds());
 
+        noSongsView.setVisibility(View.GONE);
         if (paginatedTrackIds == null) {
+            noSongsView.setVisibility(View.VISIBLE);
             return;
         }
         songsPage++;
