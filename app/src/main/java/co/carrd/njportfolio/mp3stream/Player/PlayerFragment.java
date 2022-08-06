@@ -64,8 +64,6 @@ public class PlayerFragment extends Fragment {
     private SeekBar seekBar;
     private ImageButton skipNextButton;
     private ImageButton skipPreviousButton;
-    private ArrayList<Song> songsList;
-    private ArrayList<String> streamUrlsList;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
@@ -188,8 +186,8 @@ public class PlayerFragment extends Fragment {
             public void onMediaItemTransition(@Nullable MediaItem mediaItem, int reason) {
                 if (mediaItem != null && mediaItem.localConfiguration.tag != null) {
                     SongMediaMetaData metaData = (SongMediaMetaData) mediaItem.localConfiguration.tag;
-                    int index = metaData.getMediaIndex();
-                    playerViewModel.getCurrentSong().setValue(songsList.get(index));
+                    Log.d("PLAYE", "S " + metaData.getSong().getTitle());
+                    playerViewModel.getCurrentSong().setValue(metaData.getSong());
                 }
             }
         });
@@ -246,7 +244,6 @@ public class PlayerFragment extends Fragment {
     }
 
     public void setPlaylist(List<Song> songsList, int startSongIndex) {
-        this.songsList = (ArrayList<Song>) songsList;
         playerViewModel.getCurrentSong().setValue(songsList.get(startSongIndex));
         player.stop();
         player.clearMediaItems();
@@ -254,7 +251,7 @@ public class PlayerFragment extends Fragment {
         for (int i = 0; i < songsList.size(); i++) {
             player.addMediaItem(new MediaItem.Builder()
                 .setUri(songsList.get(i).getPartialStreamUrl())
-                .setTag(new SongMediaMetaData(i))
+                .setTag(new SongMediaMetaData(i, songsList.get(i)))
                 .build());
         }
         player.prepare();
@@ -264,13 +261,19 @@ public class PlayerFragment extends Fragment {
 
     public class SongMediaMetaData {
         private int mediaIndex;
+        private Song song;
 
-        public SongMediaMetaData(int mediaIndex) {
+        public SongMediaMetaData(int mediaIndex, Song song) {
             this.mediaIndex = mediaIndex;
+            this.song = song;
         }
 
         public int getMediaIndex() {
             return mediaIndex;
+        }
+
+        public Song getSong() {
+            return song;
         }
     }
 
