@@ -66,6 +66,10 @@ public class LibraryPlaylistsAdapter extends RecyclerView.Adapter<LibraryPlaylis
                 libraryFragment.getLibraryViewModel().getLikedSongsIdList().observe(libraryFragment, newSongIdsList -> {
                     songsCountTextView.setText(newSongIdsList.size() + " Songs");
                 });
+
+                itemView.setOnClickListener(v -> {
+                    LibraryFragment.getInstance().addToBackStack(new LikedPlaylistDetailsFragment());
+                });
             }
         }
     }

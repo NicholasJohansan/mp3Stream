@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,5 +74,23 @@ public class LibraryFragment extends Fragment {
 
     private void setUpStyles(View fragmentView) {
         UiUtils.setToolbarGradientTitle(fragmentView);
+    }
+
+    public void addToBackStack(Fragment fragment) {
+        FragmentManager fm = getParentFragmentManager();
+        String backStackTag = "LIBRARY_FRAGMENT";
+        if (fm.getBackStackEntryCount() > 1) {
+            backStackTag = null;
+        }
+        fm.beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.main_fragment_container, fragment)
+                .addToBackStack(backStackTag)
+                .commit();
+        getParentFragmentManager().executePendingTransactions();
+    }
+
+    public void popBackStack() {
+        getActivity().onBackPressed();
     }
 }

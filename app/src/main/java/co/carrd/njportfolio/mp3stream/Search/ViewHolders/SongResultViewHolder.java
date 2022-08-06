@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
 import co.carrd.njportfolio.mp3stream.Library.LibraryViewModel;
+import co.carrd.njportfolio.mp3stream.Library.LikedPlaylistDetailsFragment;
 import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Search.Details.PlaylistDetailsFragment;
@@ -58,10 +59,13 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
         }
 
         playButton.setOnClickListener(view -> {
-            if (parentFragment.getClass().getSimpleName().equals(PlaylistDetailsFragment.class.getSimpleName())) {
+            String simpleName = parentFragment.getClass().getSimpleName();
+            if (simpleName.equals(PlaylistDetailsFragment.class.getSimpleName())) {
                 // Play as playlist
                 Log.d("PLAYLIST", getLayoutPosition() + " " + getBindingAdapterPosition() + " " + getAbsoluteAdapterPosition() + " " + getOldPosition());
                 ((PlaylistDetailsFragment) parentFragment).playPlaylist(getLayoutPosition());
+            } else if (simpleName.equals(LikedPlaylistDetailsFragment.class.getSimpleName())) {
+                ((LikedPlaylistDetailsFragment) parentFragment).playPlaylist(getLayoutPosition());
             } else {
                 // Play as a single song
                 PlayerFragment.getInstance().setSong(song);

@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment selectedFragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
+        fragmentManager.saveBackStack("LIBRARY_FRAGMENT");
         fragmentManager.saveBackStack("SEARCH_FRAGMENT");
 
         switch (item.getItemId()) {
@@ -80,12 +81,14 @@ public class MainActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .replace(R.id.main_fragment_container, selectedFragment).commit();
 
-        if (selectedFragment.equals(searchFragment)) {
-            try {
+        try {
+            if (selectedFragment.equals(searchFragment)) {
                 fragmentManager.restoreBackStack("SEARCH_FRAGMENT");
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else if (selectedFragment.equals(libraryFragment)) {
+                fragmentManager.restoreBackStack("LIBRARY_FRAGMENT");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return true;
