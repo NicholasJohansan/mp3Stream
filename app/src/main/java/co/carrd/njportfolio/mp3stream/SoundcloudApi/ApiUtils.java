@@ -107,10 +107,14 @@ public class ApiUtils {
     }
 
     public static int[] paginateIds(int page, int[] ids) {
+        return paginateIds(page, ids, PAGE_SIZE);
+    }
+
+    public static int[] paginateIds(int page, int[] ids, int pageSize) {
         page -= 1;
-        int startIndex = page * PAGE_SIZE;
+        int startIndex = page * pageSize;
         if (startIndex >= ids.length) return null;
-        int endIndex = Math.min(startIndex + PAGE_SIZE, ids.length);
+        int endIndex = Math.min(startIndex + pageSize, ids.length);
         return Arrays.copyOfRange(ids, startIndex, endIndex);
     }
 

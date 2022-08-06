@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -155,14 +156,28 @@ public class PlaylistDetailsFragment extends Fragment {
 
     public void playPlaylist(int startSongIndex) {
         Log.d("PLAYLIST", String.join(" ", Arrays.stream(playlist.getTrackIds()).mapToObj(e -> String.valueOf(e)).toArray(String[]::new)));
-        MainApplication.getInstance().getSoundcloudApi().getPlaylistTracks(playlist.getTrackIds(), songsList -> {
+        List<int[]> chunkedIds = new ArrayList<>();
+        int chunkSize = 40;
+        int[] trackIds = playlist.getTrackIds();
+        int chunk = 0;
+        while ((chunk * chunkSize) < trackIds.length) {
+            chunkedIds.add(ApiUtils.paginateIds(chunk + 1, trackIds, chunkSize));
+            chunk++;
+        }
+        fetchSongs(chunkedIds, new ArrayList<>(), 0, startSongIndex);
+    }
+
+    private void fetchSongs(List<int[]> chunkedIds, List<Song> aggregatedSongsList, int chunk, int startSongIndex) {
+        MainApplication.getInstance().getSoundcloudApi().getPlaylistTracks(chunkedIds.get(chunk), songsList -> {
             UiUtils.runOnUiThread(getActivity(), () -> {
-                String songs = "";
-                for (Song song : songsList) {
-                    songs += ", " + song.getTitle();
+                aggregatedSongsList.addAll(songsList);
+                if (chunk < chunkedIds.size()) {
+                    // Last already
+                    PlayerFragment.getInstance().setPlaylist(aggregatedSongsList, startSongIndex);
+                } else {
+                    // Continue
+                    fetchSongs(chunkedIds, aggregatedSongsList, chunk + 1, startSongIndex);
                 }
-                Log.d("PLAYLIST", songs);
-                PlayerFragment.getInstance().setPlaylist(songsList, startSongIndex);
             });
         });
     }
