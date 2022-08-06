@@ -76,9 +76,6 @@ public class LikedPlaylistDetailsFragment extends Fragment {
         // Set up back nav
         navBackButton.setOnClickListener(v -> LibraryFragment.getInstance().popBackStack());
 
-        // Load playlist metadata
-        songCountTextView.setText(trackIds.size() + " Songs");
-
         // Set up recycler view
         songsRecyclerViewAdapter = new SearchResultsAdapter(this);
         songsRecyclerView.setAdapter(songsRecyclerViewAdapter);
@@ -104,6 +101,15 @@ public class LikedPlaylistDetailsFragment extends Fragment {
             }
         });
 
+        libraryViewModel.getLikedSongsIdList().observe(requireActivity(), songIdsList -> {
+            trackIds = songIdsList;
+            updateUi();
+        });
+    }
+
+    public void updateUi() {
+
+        songCountTextView.setText(trackIds.size() + " Songs");
         getInitialSongs();
     }
 
