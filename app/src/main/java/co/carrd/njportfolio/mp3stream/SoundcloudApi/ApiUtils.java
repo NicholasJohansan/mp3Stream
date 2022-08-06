@@ -12,9 +12,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.ArtistCollection;
@@ -95,6 +99,13 @@ public class ApiUtils {
         });
     }
 
+    public static String fetchSyncResponseString(String url) throws IOException {
+        Request request = new Request.Builder().url(url).build();
+        Response response = httpClient.newCall(request).execute();
+        String responseString = response.body().string();
+        return responseString;
+    }
+
     public static int[] paginateIds(int page, int[] ids) {
         page -= 1;
         int startIndex = page * PAGE_SIZE;
@@ -113,5 +124,61 @@ public class ApiUtils {
             return String.format("%02d:%02d:%02d", hours, minutes, seconds);
         }
         return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    // Initialise variables used for managing just-in-time stream resolution with updated auth params
+    private static Map<String, String> streamIdToUrlMap = new HashMap<>();
+    private static Pattern streamIdPattern = Pattern.compile("(/playlist/)(.*)\\.128\\.mp3(/)");
+    private static Pattern streamChunkIdPattern = Pattern.compile("(/\\d+/)(\\d+/)(\\d+/)(.*)\\.128\\.mp3");
+    private static Pattern urlPattern = Pattern.compile("(https)(.*)");
+
+    private static String findStreamChunkId(String data) {
+        Matcher matcher = streamChunkIdPattern.matcher(data);
+        matcher.find();
+        return matcher.group(4);
+    }
+
+    private static String findStreamId(String data) {
+        Matcher matcher = streamIdPattern.matcher(data);
+        matcher.find();
+        return matcher.group(2);
+    }
+
+    private static String findUrl(String data) {
+        Matcher matcher = urlPattern.matcher(data);
+        matcher.find();
+        return matcher.group(0);
+    }
+
+    public static String getStreamFileUrl(String partialStreamUrl, String clientId) throws IOException {
+        String url = partialStreamUrl + "?client_id=" + clientId;
+        String responseString = fetchSyncResponseString(url);
+        String mainStreamUrl = ApiParser.parseStreamUrl(responseString);
+        return mainStreamUrl;
+    }
+
+    private static String getStreamAuthParams(String streamId, String clientId) throws IOException {
+        // Get the main HLS stream file url
+        String partialStreamUrl = streamIdToUrlMap.get(streamId);
+        String mainStreamUrl = getStreamFileUrl(partialStreamUrl, clientId);
+        // Fetch the main HLS stream file
+        String responseString = fetchSyncResponseString(mainStreamUrl);
+        String foundChunkUrl = findUrl(responseString);
+        String authParams = "?" + foundChunkUrl.split("\\?")[1]; // because url params are behind ?
+        return authParams;
+    }
+
+    public static String resolveStreamChunkUrl(String streamChunkUrl, String clientId) throws IOException {
+        String streamChunkId = findStreamChunkId(streamChunkUrl);
+        String authParams = getStreamAuthParams(streamChunkId, clientId);
+        streamChunkUrl = streamChunkUrl.split("\\?")[0]; // Drop url params for new auth params
+        return streamChunkUrl + authParams;
+    }
+
+    public static void registerStreamId(String streamUrl, String partialStreamUrl) {
+        String streamId = findStreamId(streamUrl);
+        if (!streamIdToUrlMap.containsKey(streamId)) {
+            streamIdToUrlMap.put(streamId, partialStreamUrl);
+        }
     }
 }

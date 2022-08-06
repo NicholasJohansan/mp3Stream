@@ -1,5 +1,6 @@
 package co.carrd.njportfolio.mp3stream.Player;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +33,7 @@ import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.source.ShuffleOrder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -185,7 +187,8 @@ public class PlayerFragment extends Fragment {
             @Override
             public void onMediaItemTransition(@Nullable MediaItem mediaItem, int reason) {
                 if (mediaItem != null && mediaItem.localConfiguration.tag != null) {
-                    int index = Integer.parseInt((String) mediaItem.localConfiguration.tag);
+                    SongMediaMetaData metaData = (SongMediaMetaData) mediaItem.localConfiguration.tag;
+                    int index = metaData.getMediaIndex();
                     playerViewModel.getCurrentSong().setValue(songsList.get(index));
                 }
             }
@@ -237,13 +240,9 @@ public class PlayerFragment extends Fragment {
         playerViewModel.getCurrentSong().setValue(song);
         player.stop();
         player.clearMediaItems();
-        soundcloudApi.getSongStreamUrl(playerViewModel.getCurrentSong().getValue(), streamUrl -> {
-            UiUtils.runOnUiThread(getActivity(), () -> {
-                player.setMediaItem(MediaItem.fromUri(streamUrl));
-                player.prepare();
-                player.play();
-            });
-        });
+        player.setMediaItem(MediaItem.fromUri(song.getPartialStreamUrl()));
+        player.prepare();
+        player.play();
     }
 
     public void setPlaylist(List<Song> songsList, int startSongIndex) {
@@ -251,33 +250,31 @@ public class PlayerFragment extends Fragment {
         playerViewModel.getCurrentSong().setValue(songsList.get(startSongIndex));
         player.stop();
         player.clearMediaItems();
-        streamUrlsList = new ArrayList<>();
         playerViewModel.getIsLoading().setValue(true);
-        fetchPlaylistUrl(0, s -> {
-            UiUtils.runOnUiThread(getActivity(), () -> {
-                IntStream.range(0, streamUrlsList.size()).forEach(index -> {
-                    player.addMediaItem(new MediaItem.Builder().setUri(streamUrlsList.get(index)).setTag(String.valueOf(index)).build());
-                });
-                player.prepare();
-                player.seekTo(startSongIndex, 0);
-                player.play();
-            });
-        });
-//        songsList.
+        for (int i = 0; i < songsList.size(); i++) {
+            player.addMediaItem(new MediaItem.Builder()
+                .setUri(songsList.get(i).getPartialStreamUrl())
+                .setTag(new SongMediaMetaData(i))
+                .build());
+        }
+        player.prepare();
+        player.seekTo(startSongIndex, 0);
+        player.play();
     }
 
-    private void fetchPlaylistUrl(int index, Consumer<String> callback) {
-        if (index < songsList.size()) {
-            soundcloudApi.getSongStreamUrl(songsList.get(index), streamUrl -> {
-                streamUrlsList.add(streamUrl);
-                if (index == songsList.size() - 1) {
-                    callback.accept(streamUrl);
-                } else {
-                    fetchPlaylistUrl(index + 1, callback);
-                }
-            });
+    public class SongMediaMetaData {
+        private int mediaIndex;
+
+        public SongMediaMetaData(int mediaIndex) {
+            this.mediaIndex = mediaIndex;
+        }
+
+        public int getMediaIndex() {
+            return mediaIndex;
         }
     }
+
+    // Code for updating progress bar
 
     private void updateProgress() {
         int elapsedTime = (int) player.getCurrentPosition();
@@ -375,6 +372,8 @@ public class PlayerFragment extends Fragment {
         OnSwipeTouchListener swipeTouchListener = new OnSwipeTouchListener();
         swipeTouchListener.addAction(swipeAction);
         swipeTouchListener.attachToView(miniPlayerView);
+
+
 
         // Ensure mini player is collapsed
         swipeAction.collapse();

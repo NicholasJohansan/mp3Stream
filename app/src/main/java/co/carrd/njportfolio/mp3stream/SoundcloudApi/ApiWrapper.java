@@ -5,14 +5,18 @@ import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -136,6 +140,18 @@ public class ApiWrapper {
       String streamUrl = ApiParser.parseStreamUrl(responseString);
       consumer.accept(streamUrl);
     });
+  }
+
+  public String getSongStreamUrl(String partialStreamUrl) throws IOException {
+    if (partialStreamUrl.contains("https://cf-hls-media.sndcdn.com")) {
+      // Signifies that the url passed in is a chunk url from the HLS stream file
+      String streamChunkUrl = ApiUtils.resolveStreamChunkUrl(partialStreamUrl, clientId);
+      return streamChunkUrl;
+    }
+    // Otherwise construct query url and obtain stream url
+    String streamUrl = ApiUtils.getStreamFileUrl(partialStreamUrl, clientId);
+    ApiUtils.registerStreamId(streamUrl, partialStreamUrl);
+    return streamUrl;
   }
 
   /**
