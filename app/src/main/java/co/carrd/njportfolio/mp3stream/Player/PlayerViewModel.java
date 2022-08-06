@@ -31,6 +31,10 @@ public class PlayerViewModel extends ViewModel {
         return isLoading;
     }
 
+    public MutableLiveData<List<Song>> getPlayerQueue() {
+        return playerQueue;
+    }
+
     public void setCurrentSong(Song song) {
         currentSong.setValue(song);
     }

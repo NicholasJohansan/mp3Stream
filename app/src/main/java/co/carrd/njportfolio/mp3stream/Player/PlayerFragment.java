@@ -186,9 +186,22 @@ public class PlayerFragment extends Fragment {
             public void onMediaItemTransition(@Nullable MediaItem mediaItem, int reason) {
                 if (mediaItem != null && mediaItem.localConfiguration.tag != null) {
                     SongMediaMetaData metaData = (SongMediaMetaData) mediaItem.localConfiguration.tag;
-                    Log.d("PLAYE", "S " + metaData.getSong().getTitle());
                     playerViewModel.getCurrentSong().setValue(metaData.getSong());
                 }
+            }
+
+            @Override
+            public void onTimelineChanged(Timeline timeline, int reason) {
+                List<Song> queue = new ArrayList<>();
+                int windowCount = timeline.getWindowCount();
+                for (int i = 0; i < windowCount; i++) {
+                    Timeline.Window window = new Timeline.Window();
+                    timeline.getWindow(i, window);
+                    MediaItem mediaItem = window.mediaItem;
+                    SongMediaMetaData metaData = (SongMediaMetaData) mediaItem.localConfiguration.tag;
+                    queue.add(metaData.getSong());
+                }
+                playerViewModel.getPlayerQueue().setValue(queue);
             }
         });
 
@@ -238,7 +251,10 @@ public class PlayerFragment extends Fragment {
         playerViewModel.getCurrentSong().setValue(song);
         player.stop();
         player.clearMediaItems();
-        player.setMediaItem(MediaItem.fromUri(song.getPartialStreamUrl()));
+        player.addMediaItem(new MediaItem.Builder()
+                .setUri(song.getPartialStreamUrl())
+                .setTag(new SongMediaMetaData(0, song))
+                .build());
         player.prepare();
         player.play();
     }
