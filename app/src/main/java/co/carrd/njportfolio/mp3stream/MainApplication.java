@@ -77,6 +77,7 @@ public class MainApplication extends Application {
                 .name(realmName)
                 .allowWritesOnUiThread(true)
                 .allowQueriesOnUiThread(true)
+                .deleteRealmIfMigrationNeeded()
                 .build();
     }
 

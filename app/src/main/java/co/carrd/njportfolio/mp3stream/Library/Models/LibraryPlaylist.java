@@ -1,8 +1,8 @@
-package co.carrd.njportfolio.todolist.Models;
+package co.carrd.njportfolio.mp3stream.Library.Models;
 
-import java.util.List;
 import java.util.UUID;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -10,7 +10,7 @@ import io.realm.annotations.Required;
 public class LibraryPlaylist extends RealmObject {
     @PrimaryKey private UUID id;
     @Required private String name;
-    @Required private List<Integer> trackIds;
+    @Required private RealmList<Integer> trackIds;
 
     public LibraryPlaylist(String name) {
         this.name = name;
@@ -29,7 +29,7 @@ public class LibraryPlaylist extends RealmObject {
         return id;
     }
 
-    public List<Integer> getTrackIds() {
+    public RealmList<Integer> getTrackIds() {
         return trackIds;
     }
 
