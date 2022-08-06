@@ -64,6 +64,7 @@ public class PlayerFragment extends Fragment {
     private SeekBar seekBar;
     private ImageButton skipNextButton;
     private ImageButton skipPreviousButton;
+    private ImageButton shuffleButton;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
@@ -95,6 +96,7 @@ public class PlayerFragment extends Fragment {
         seekBar = fragmentView.findViewById(R.id.player_seekbar);
         skipNextButton = fragmentView.findViewById(R.id.player_skip_next_button);
         skipPreviousButton = fragmentView.findViewById(R.id.player_skip_previous_button);
+        shuffleButton = fragmentView.findViewById(R.id.player_shuffle_button);
 
         // Get exoplayer
 
@@ -153,6 +155,11 @@ public class PlayerFragment extends Fragment {
                 }
             }
         });
+        playerViewModel.getShuffleEnabled().observeForever(shuffleEnabled -> {
+            shuffleButton.setImageResource(shuffleEnabled
+                    ? R.drawable.icon_player_shuffle_active
+                    : R.drawable.icon_player_shuffle_inactive);
+        });
 
         // Set up play/pause button on click listener
         playPauseButton.setOnClickListener(v -> playPause());
@@ -160,6 +167,17 @@ public class PlayerFragment extends Fragment {
         // Set up skip next/previous button
         skipNextButton.setOnClickListener(v -> player.seekToNextMediaItem());
         skipPreviousButton.setOnClickListener(v -> player.seekToPreviousMediaItem());
+
+        // Set up shuffle button
+        shuffleButton.setOnClickListener(v -> {
+            boolean shuffleEnabled = playerViewModel.getShuffleEnabled().getValue();
+            int queueLength = playerViewModel.getPlayerQueue().getValue().size();
+            if (shuffleEnabled) {
+                player.setShuffleOrder(new ShuffleOrder.DefaultShuffleOrder(queueLength));
+            }
+            player.setShuffleModeEnabled(!shuffleEnabled);
+            playerViewModel.getShuffleEnabled().setValue(!shuffleEnabled);
+        });
 
         // Set listener on player
         player.addListener(new Player.Listener() {
@@ -192,6 +210,7 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public void onTimelineChanged(Timeline timeline, int reason) {
+                Log.d("PLAYE", "timeline");
                 List<Song> queue = new ArrayList<>();
                 int windowCount = timeline.getWindowCount();
                 for (int i = 0; i < windowCount; i++) {

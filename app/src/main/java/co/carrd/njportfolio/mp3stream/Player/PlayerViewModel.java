@@ -18,6 +18,7 @@ public class PlayerViewModel extends ViewModel {
     private MutableLiveData<Song> currentSong = new MutableLiveData<>(null);
     private MutableLiveData<Boolean> isPlaying = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> shuffleEnabled = new MutableLiveData<>(false);
 
     public MutableLiveData<Song> getCurrentSong() {
         return currentSong;
@@ -37,5 +38,9 @@ public class PlayerViewModel extends ViewModel {
 
     public void setCurrentSong(Song song) {
         currentSong.setValue(song);
+    }
+
+    public MutableLiveData<Boolean> getShuffleEnabled() {
+        return shuffleEnabled;
     }
 }
