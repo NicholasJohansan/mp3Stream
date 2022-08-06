@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
+import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerFragment;
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
@@ -66,6 +67,7 @@ public class PlayerFragment extends Fragment {
     private ImageButton skipPreviousButton;
     private ImageButton shuffleButton;
     private ImageButton loopButton;
+    private ImageButton equalizerButton;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
@@ -99,6 +101,7 @@ public class PlayerFragment extends Fragment {
         skipPreviousButton = fragmentView.findViewById(R.id.player_skip_previous_button);
         shuffleButton = fragmentView.findViewById(R.id.player_shuffle_button);
         loopButton = fragmentView.findViewById(R.id.player_loop_button);
+        equalizerButton = fragmentView.findViewById(R.id.player_equalizer_button);
 
         // Get exoplayer
 
@@ -176,6 +179,12 @@ public class PlayerFragment extends Fragment {
                     break;
             }
             loopButton.setImageResource(imageResource);
+        });
+
+        // Set up equalizer button
+        equalizerButton.setOnClickListener(v -> {
+            EqualizerFragment equalizerFragment = new EqualizerFragment();
+            equalizerFragment.show(getChildFragmentManager(), equalizerFragment.getTag());
         });
 
         // Set up play/pause button on click listener

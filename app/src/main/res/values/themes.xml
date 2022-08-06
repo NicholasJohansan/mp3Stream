@@ -183,4 +183,14 @@
         <item name="colorSurface">@color/white</item>
     </style>
     <!-- End: Switch Styles -->
+
+    <!-- Start: Bottom Sheet Dialog Fragment Styles -->
+    <style name="Theme.Mp3Stream.BottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+    </style>
+    <!-- End: Bottom Sheet Dialog Fragment Styles -->
+
 </resources>
