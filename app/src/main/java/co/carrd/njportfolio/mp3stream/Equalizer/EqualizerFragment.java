@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,7 +73,13 @@ public class EqualizerFragment extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return new BottomSheetDialog(getContext(), R.style.Theme_Mp3Stream_BottomSheetDialog);
+        Dialog dialog = new BottomSheetDialog(getContext(), R.style.Theme_Mp3Stream_BottomSheetDialog);
+        dialog.setOnShowListener(dialogInterface -> {
+            ImageButton closeDialogButton = dialog.findViewById(R.id.equalizer_fragment_close_dialog_button);
+            closeDialogButton.setVisibility(View.VISIBLE);
+            closeDialogButton.setOnClickListener(v -> dismiss());
+        });
+        return dialog;
     }
 
     @Override

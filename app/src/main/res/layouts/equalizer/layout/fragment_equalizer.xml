@@ -23,6 +23,17 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:src="@drawable/logo_toolbar_equalizer" />
+
+            <ImageButton
+                android:id="@+id/equalizer_fragment_close_dialog_button"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="right"
+                android:layout_marginRight="16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/icon_nav_close"
+                android:visibility="gone"/>
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
