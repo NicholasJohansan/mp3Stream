@@ -46,6 +46,7 @@ public class LikedPlaylistDetailsFragment extends Fragment {
     private RecyclerView songsRecyclerView;
     private SearchResultsAdapter songsRecyclerViewAdapter;
     private ProgressBar progressBar;
+    private ImageButton playButton;
     private ConstraintLayout noSongsView;
 
     private int songsPage;
@@ -60,6 +61,7 @@ public class LikedPlaylistDetailsFragment extends Fragment {
         songCountTextView = fragmentView.findViewById(R.id.playlist_details_song_count_text_view);
         songsRecyclerView = fragmentView.findViewById(R.id.playlist_details_songs_recycler_view);
         progressBar = fragmentView.findViewById(R.id.playlist_details_endless_progress);
+        playButton = fragmentView.findViewById(R.id.playlist_details_play_button);
         noSongsView = fragmentView.findViewById(R.id.view_no_songs);
 
         // Retrieve Data
@@ -75,6 +77,9 @@ public class LikedPlaylistDetailsFragment extends Fragment {
 
         // Set up back nav
         navBackButton.setOnClickListener(v -> LibraryFragment.getInstance().popBackStack());
+
+        // Set up play button
+        playButton.setOnClickListener(v -> playPlaylist(0));
 
         // Set up recycler view
         songsRecyclerViewAdapter = new SearchResultsAdapter(this);
@@ -108,7 +113,6 @@ public class LikedPlaylistDetailsFragment extends Fragment {
     }
 
     public void updateUi() {
-
         songCountTextView.setText(trackIds.size() + " Songs");
         getInitialSongs();
     }

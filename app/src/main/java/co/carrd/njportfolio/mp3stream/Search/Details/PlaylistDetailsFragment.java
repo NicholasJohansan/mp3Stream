@@ -44,6 +44,7 @@ public class PlaylistDetailsFragment extends Fragment {
     private RecyclerView songsRecyclerView;
     private SearchResultsAdapter songsRecyclerViewAdapter;
     private ProgressBar progressBar;
+    private ImageButton playButton;
 
     private int songsPage;
 
@@ -65,6 +66,7 @@ public class PlaylistDetailsFragment extends Fragment {
         topbarTitleTextView = fragmentView.findViewById(R.id.playlist_details_topbar_title);
         songsRecyclerView = fragmentView.findViewById(R.id.playlist_details_songs_recycler_view);
         progressBar = fragmentView.findViewById(R.id.playlist_details_endless_progress);
+        playButton = fragmentView.findViewById(R.id.playlist_details_play_button);
 
         return fragmentView;
     }
@@ -73,10 +75,11 @@ public class PlaylistDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO: Implement progress bar
-
         // Set up back nav
         navBackButton.setOnClickListener(v -> SearchFragment.getInstance().popBackStack());
+
+        // Set up play button
+        playButton.setOnClickListener(v -> playPlaylist(0));
 
         // Load cover image
         UiUtils.loadImage(coverImageView, playlist.getCoverUrl());
@@ -120,10 +123,6 @@ public class PlaylistDetailsFragment extends Fragment {
         int[] paginatedTrackIds = ApiUtils.paginateIds(songsPage, playlist.getTrackIds());
 
         if (paginatedTrackIds == null) {
-            // TODO: Handle no songs
-
-//            notSearchedView.setVisibility(View.GONE);
-//            noResultsView.setVisibility(View.VISIBLE);
             return;
         }
         songsPage++;
@@ -138,20 +137,6 @@ public class PlaylistDetailsFragment extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
             });
         });
-//        recyclerView.smoothScrollToPosition(0);
-//        progressBar.setVisibility(View.VISIBLE);
-//
-//        ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
-//        soundcloudApi.searchPlaylists(searchQuery, playlistCol -> {
-//            UiUtils.runOnUiThread(getActivity(), () -> {
-//                List<? extends Object> castedResults = playlistCol.getPlaylists();
-//                setSearchResults((List<Object>) castedResults, playlistCol.getNextUrl());
-//            });
-//        });
-//
-//
-//        noResultsView.setVisibility(View.GONE);
-//        notSearchedView.setVisibility(View.GONE);
     }
 
     public void playPlaylist(int startSongIndex) {
