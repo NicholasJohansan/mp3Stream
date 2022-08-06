@@ -42,6 +42,9 @@ android {
 
 dependencies {
 
+    // Data Storage
+    implementation "com.orhanobut:hawk:2.0.1"
+
     // For HTTP Requests
     implementation "com.squareup.okhttp3:okhttp:4.9.3"
 

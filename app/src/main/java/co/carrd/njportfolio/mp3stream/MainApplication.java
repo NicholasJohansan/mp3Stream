@@ -9,6 +9,7 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
 import com.google.android.exoplayer2.upstream.ResolvingDataSource;
+import com.orhanobut.hawk.Hawk;
 
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
 
@@ -40,6 +41,9 @@ public class MainApplication extends Application {
                 .build();
 
         equalizer = new Equalizer(0, MainApplication.getInstance().getPlayer().getAudioSessionId());
+
+        // Initialise Hawk Data Storage
+        Hawk.init(getApplicationContext()).build();
     }
 
     @Override
