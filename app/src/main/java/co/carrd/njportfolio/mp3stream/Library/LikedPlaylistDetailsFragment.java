@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +46,7 @@ public class LikedPlaylistDetailsFragment extends Fragment {
     private RecyclerView songsRecyclerView;
     private SearchResultsAdapter songsRecyclerViewAdapter;
     private ProgressBar progressBar;
+    private ConstraintLayout noSongsView;
 
     private int songsPage;
 
@@ -58,6 +60,7 @@ public class LikedPlaylistDetailsFragment extends Fragment {
         songCountTextView = fragmentView.findViewById(R.id.playlist_details_song_count_text_view);
         songsRecyclerView = fragmentView.findViewById(R.id.playlist_details_songs_recycler_view);
         progressBar = fragmentView.findViewById(R.id.playlist_details_endless_progress);
+        noSongsView = fragmentView.findViewById(R.id.view_no_songs);
 
         // Retrieve Data
         libraryViewModel = new ViewModelProvider(requireActivity()).get(LibraryViewModel.class);
@@ -108,7 +111,9 @@ public class LikedPlaylistDetailsFragment extends Fragment {
         songsPage = 1;
         int[] paginatedTrackIds = ApiUtils.paginateIds(songsPage, trackIds.stream().mapToInt(i -> (int) i).toArray());
 
+        noSongsView.setVisibility(View.GONE);
         if (paginatedTrackIds == null) {
+            noSongsView.setVisibility(View.VISIBLE);
             return;
         }
         songsPage++;
@@ -122,8 +127,6 @@ public class LikedPlaylistDetailsFragment extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
             });
         });
-//        recyclerView.smoothScrollToPosition(0);
-//        progressBar.setVisibility(View.VISIBLE);
     }
 
     public void playPlaylist(int startSongIndex) {
