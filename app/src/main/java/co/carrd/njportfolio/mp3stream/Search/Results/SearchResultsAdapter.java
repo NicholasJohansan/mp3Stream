@@ -18,17 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.R;
-import co.carrd.njportfolio.mp3stream.Search.Details.ArtistDetailsFragment;
-import co.carrd.njportfolio.mp3stream.Search.Details.PlaylistDetailsFragment;
-import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
-import co.carrd.njportfolio.mp3stream.Search.Details.TestFragment;
 import co.carrd.njportfolio.mp3stream.Search.ViewHolders.ArtistResultViewHolder;
 import co.carrd.njportfolio.mp3stream.Search.ViewHolders.PlaylistResultViewHolder;
 import co.carrd.njportfolio.mp3stream.Search.ViewHolders.SongResultViewHolder;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Artist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
-import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private MutableLiveData<List<Object>> searchResults;
