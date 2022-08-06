@@ -65,6 +65,7 @@ public class PlayerFragment extends Fragment {
     private ImageButton skipNextButton;
     private ImageButton skipPreviousButton;
     private ImageButton shuffleButton;
+    private ImageButton loopButton;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
@@ -97,6 +98,7 @@ public class PlayerFragment extends Fragment {
         skipNextButton = fragmentView.findViewById(R.id.player_skip_next_button);
         skipPreviousButton = fragmentView.findViewById(R.id.player_skip_previous_button);
         shuffleButton = fragmentView.findViewById(R.id.player_shuffle_button);
+        loopButton = fragmentView.findViewById(R.id.player_loop_button);
 
         // Get exoplayer
 
@@ -160,6 +162,21 @@ public class PlayerFragment extends Fragment {
                     ? R.drawable.icon_player_shuffle_active
                     : R.drawable.icon_player_shuffle_inactive);
         });
+        playerViewModel.getRepeatMode().observeForever(repeatMode -> {
+            int imageResource = R.drawable.icon_player_loop_inactive;
+            switch (repeatMode) {
+                case ExoPlayer.REPEAT_MODE_OFF:
+                    imageResource = R.drawable.icon_player_loop_inactive;
+                    break;
+                case ExoPlayer.REPEAT_MODE_ONE:
+                    imageResource = R.drawable.icon_player_loop_one;
+                    break;
+                case ExoPlayer.REPEAT_MODE_ALL:
+                    imageResource = R.drawable.icon_player_loop_active;
+                    break;
+            }
+            loopButton.setImageResource(imageResource);
+        });
 
         // Set up play/pause button on click listener
         playPauseButton.setOnClickListener(v -> playPause());
@@ -171,12 +188,21 @@ public class PlayerFragment extends Fragment {
         // Set up shuffle button
         shuffleButton.setOnClickListener(v -> {
             boolean shuffleEnabled = playerViewModel.getShuffleEnabled().getValue();
+            boolean newShuffleEnabled = !shuffleEnabled;
             int queueLength = playerViewModel.getPlayerQueue().getValue().size();
             if (shuffleEnabled) {
                 player.setShuffleOrder(new ShuffleOrder.DefaultShuffleOrder(queueLength));
             }
-            player.setShuffleModeEnabled(!shuffleEnabled);
-            playerViewModel.getShuffleEnabled().setValue(!shuffleEnabled);
+            player.setShuffleModeEnabled(newShuffleEnabled);
+            playerViewModel.getShuffleEnabled().setValue(newShuffleEnabled);
+        });
+
+        // Set up loop button
+        loopButton.setOnClickListener(v -> {
+            int repeatMode = playerViewModel.getRepeatMode().getValue(); // 0 (off), 1 (loop one), 2 (loop all)
+            int newRepeatMode = (repeatMode + 1) % 3;
+            player.setRepeatMode(newRepeatMode);
+            playerViewModel.getRepeatMode().setValue(newRepeatMode);
         });
 
         // Set listener on player

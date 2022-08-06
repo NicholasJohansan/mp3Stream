@@ -71,6 +71,9 @@
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/equalizer/layout/item_equalizer_band.xml" value="0.18461539003270633" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/library/layout/fragment_library.xml" value="0.2436923148431724" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/drawable/icon_player_equalizer.xml" value="0.137" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/drawable/icon_player_loop_active.xml" value="0.135" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/drawable/icon_player_loop_inactive.xml" value="0.135" />
+        <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/drawable/icon_player_loop_one.xml" value="0.135" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/drawable/icon_player_minimize.xml" value="0.137" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/drawable/icon_player_more.xml" value="0.1185" />
         <entry key="..\:/Users/Nicholas/AndroidStudioProjects/mp3Stream/app/src/main/res/layouts/player/drawable/icon_player_more_24.xml" value="0.1185" />
