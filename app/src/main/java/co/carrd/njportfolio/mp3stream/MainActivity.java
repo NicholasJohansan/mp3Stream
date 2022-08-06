@@ -23,7 +23,7 @@ import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment libraryFragment = new LibraryFragment();
+    private Fragment libraryFragment = LibraryFragment.getInstance();
     private Fragment searchFragment = SearchFragment.getInstance();
     private Fragment equalizerFragment = new EqualizerFragment();
 
