@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,6 +35,8 @@ public class LibraryFragment extends Fragment {
     private RecyclerView libraryPlaylistsRecyclerView;
     private LibraryPlaylistsAdapter libraryPlaylistsAdapter;
 
+    private ConstraintLayout noSongsIndicator;
+
     public static LibraryFragment getInstance() {
         if (instance == null) {
             instance = new LibraryFragment();
@@ -49,6 +52,7 @@ public class LibraryFragment extends Fragment {
 
         // Link UI
         libraryPlaylistsRecyclerView = fragmentView.findViewById(R.id.library_fragment_playlists_recycler_view);
+        noSongsIndicator = fragmentView.findViewById(R.id.library_fragment_no_songs_indicator);
 
         libraryViewModel = new ViewModelProvider(requireActivity()).get(LibraryViewModel.class);
         return fragmentView;
@@ -65,6 +69,15 @@ public class LibraryFragment extends Fragment {
         LinearLayoutManager recyclerViewLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         libraryPlaylistsRecyclerView.setLayoutManager(recyclerViewLayoutManager);
+
+        // Observe saved songs
+        libraryViewModel.getSavedSongsIdList().observe(requireActivity(), savedSongsIdList -> {
+            if (savedSongsIdList.size() == 0) {
+                noSongsIndicator.setVisibility(View.VISIBLE);
+            } else {
+                noSongsIndicator.setVisibility(View.GONE);
+            }
+        });
 
     }
 
