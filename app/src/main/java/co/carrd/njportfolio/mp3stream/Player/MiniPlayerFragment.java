@@ -84,10 +84,13 @@ public class MiniPlayerFragment extends Fragment {
 
                 noSongLabel.setVisibility(View.GONE);
                 likeButton.setVisibility(View.VISIBLE);
-                playPauseButton.setVisibility(View.VISIBLE);
                 songCoverImageView.setVisibility(View.VISIBLE);
                 songNameTextView.setVisibility(View.VISIBLE);
                 artistNameTextView.setVisibility(View.VISIBLE);
+
+                if (!playerViewModel.getIsLoading().getValue()) {
+                    playPauseButton.setVisibility(View.VISIBLE);
+                }
 
                 songNameTextView.setSelected(true); // Makes sure that marquee effect works
             }
