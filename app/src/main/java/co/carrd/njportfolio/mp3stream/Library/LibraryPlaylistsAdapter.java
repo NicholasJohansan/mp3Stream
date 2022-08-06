@@ -61,10 +61,8 @@ public class LibraryPlaylistsAdapter extends RecyclerView.Adapter<LibraryPlaylis
         public void bindPosition(int position) {
             if (position == 0) {
                 // Liked Playlist
-                List<Integer> songIdsList = libraryFragment.getLibraryViewModel().getLikedSongsIdList().getValue();
                 nameTextView.setText("Liked Songs");
                 playlistCover.setImageResource(R.drawable.liked_playlist_drawable);
-                songsCountTextView.setText(songIdsList.size() + " Songs");
                 libraryFragment.getLibraryViewModel().getLikedSongsIdList().observe(libraryFragment, newSongIdsList -> {
                     songsCountTextView.setText(newSongIdsList.size() + " Songs");
                 });

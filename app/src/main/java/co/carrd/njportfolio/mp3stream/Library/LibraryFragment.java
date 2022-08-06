@@ -55,6 +55,9 @@ public class LibraryFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        // Fetch data
+        libraryViewModel.syncData();
+
         // Set up recycler view
         libraryPlaylistsAdapter = new LibraryPlaylistsAdapter(this);
         libraryPlaylistsRecyclerView.setAdapter(libraryPlaylistsAdapter);
