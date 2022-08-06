@@ -20,6 +20,7 @@ public class PlayerViewModel extends ViewModel {
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
     private MutableLiveData<Boolean> shuffleEnabled = new MutableLiveData<>(false);
     private MutableLiveData<Integer> repeatMode = new MutableLiveData<>(0);
+    private MutableLiveData<Boolean> isLiked = new MutableLiveData<>(false);
 
     public MutableLiveData<Song> getCurrentSong() {
         return currentSong;
@@ -47,5 +48,14 @@ public class PlayerViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getRepeatMode() {
         return repeatMode;
+    }
+
+    public MutableLiveData<Boolean> getIsLiked() {
+        return isLiked;
+    }
+
+    public void setSong(Song song, boolean isLiked) {
+        getCurrentSong().setValue(song);
+        getIsLiked().setValue(isLiked);
     }
 }

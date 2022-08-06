@@ -42,6 +42,8 @@ import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerFragment;
+import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
+import co.carrd.njportfolio.mp3stream.Library.LibraryViewModel;
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
@@ -68,9 +70,11 @@ public class PlayerFragment extends Fragment {
     private ImageButton shuffleButton;
     private ImageButton loopButton;
     private ImageButton equalizerButton;
+    private ImageButton likeButton;
 
     private static PlayerFragment instance;
     private PlayerViewModel playerViewModel;
+    private LibraryViewModel libraryViewModel;
     private Handler seekBarHandler;
     private ExoPlayer player = MainApplication.getInstance().getPlayer();
     private ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
@@ -102,8 +106,7 @@ public class PlayerFragment extends Fragment {
         shuffleButton = fragmentView.findViewById(R.id.player_shuffle_button);
         loopButton = fragmentView.findViewById(R.id.player_loop_button);
         equalizerButton = fragmentView.findViewById(R.id.player_equalizer_button);
-
-        // Get exoplayer
+        likeButton = fragmentView.findViewById(R.id.player_like_button);
 
         return fragmentView;
     }
@@ -126,8 +129,9 @@ public class PlayerFragment extends Fragment {
         // Set Up Minimize Button
         minimizeButton.setOnClickListener(v -> swipeAction.collapse());
 
-        // Instantiate PlayerViewModel
+        // Instantiate ViewModels
         playerViewModel = new ViewModelProvider(requireActivity()).get(PlayerViewModel.class);
+        libraryViewModel = new ViewModelProvider(requireActivity()).get(LibraryViewModel.class);
 
         // Set up observer
         playerViewModel.getCurrentSong().observeForever(song -> {
@@ -180,6 +184,15 @@ public class PlayerFragment extends Fragment {
             }
             loopButton.setImageResource(imageResource);
         });
+        playerViewModel.getIsLiked().observeForever(songIsLiked -> {
+            likeButton.setImageResource(songIsLiked
+                ? R.drawable.icon_song_liked
+                : R.drawable.icon_song_not_liked);
+        });
+        libraryViewModel.getLikedSongsIdList().observeForever(songsIdList -> {
+            if (playerViewModel.getCurrentSong().getValue() == null) return;
+            playerViewModel.getIsLiked().setValue(libraryViewModel.songIsLiked(playerViewModel.getCurrentSong().getValue().getId()));
+        });
 
         // Set up equalizer button
         equalizerButton.setOnClickListener(v -> {
@@ -214,6 +227,11 @@ public class PlayerFragment extends Fragment {
             playerViewModel.getRepeatMode().setValue(newRepeatMode);
         });
 
+        // Set up like button
+        likeButton.setOnClickListener(v -> {
+            libraryViewModel.toggleLike(playerViewModel.getCurrentSong().getValue().getId());
+        });
+
         // Set listener on player
         player.addListener(new Player.Listener() {
             @Override
@@ -239,7 +257,8 @@ public class PlayerFragment extends Fragment {
             public void onMediaItemTransition(@Nullable MediaItem mediaItem, int reason) {
                 if (mediaItem != null && mediaItem.localConfiguration.tag != null) {
                     SongMediaMetaData metaData = (SongMediaMetaData) mediaItem.localConfiguration.tag;
-                    playerViewModel.getCurrentSong().setValue(metaData.getSong());
+                    Song song = metaData.getSong();
+                    playerViewModel.setSong(song, libraryViewModel.songIsLiked(song.getId()));
                 }
             }
 

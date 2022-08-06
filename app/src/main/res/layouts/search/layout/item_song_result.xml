@@ -80,8 +80,8 @@
 
         <ImageButton
             android:id="@+id/song_result_like_button"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
             android:layout_marginRight="6dp"
@@ -92,9 +92,10 @@
 
         <ImageButton
             android:id="@+id/song_result_play_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginRight="12dp"
+            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"

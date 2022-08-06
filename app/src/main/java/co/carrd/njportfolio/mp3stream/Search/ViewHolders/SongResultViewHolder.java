@@ -85,7 +85,7 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
         });
 
         libraryViewModel.getLikedSongsIdList().observe(parentFragment, songsIdList -> {
-            likeButton.setImageResource(songsIdList.contains(song.getId())
+            likeButton.setImageResource(libraryViewModel.songIsLiked(song.getId())
                     ? R.drawable.icon_song_liked
                     : R.drawable.icon_song_not_liked);
         });
