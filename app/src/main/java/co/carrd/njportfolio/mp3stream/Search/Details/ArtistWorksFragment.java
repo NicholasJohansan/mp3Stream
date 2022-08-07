@@ -125,7 +125,7 @@ public class ArtistWorksFragment extends Fragment {
 
     public void setSearchResults(List<Object> searchResults, String nextUrl) {
 
-        if (searchResults.size() == 0 && nextUrl == null) {
+        if (searchResults.size() == 0 && nextUrl == "null") {
             noWorksView.setVisibility(View.VISIBLE);
             return;
         }
@@ -133,7 +133,7 @@ public class ArtistWorksFragment extends Fragment {
         searchResultsAdapter.getSearchResults().setValue(searchResults);
         searchResultsAdapter.setNextUrl(nextUrl);
 
-        if (searchResults.size() == 0 && nextUrl != null) {
+        if (searchResults.size() == 0 && nextUrl != "null") {
             loadMore();
             return;
         }
@@ -148,14 +148,11 @@ public class ArtistWorksFragment extends Fragment {
         searchResultsAdapter.setNextUrl(nextUrl);
         searchResultsAdapter.notifyItemRangeInserted(originalResultsLength, newSearchResults.size());
 
-        if (newSearchResults.size() == 0 && nextUrl != null) {
+        if (newSearchResults.size() == 0 && nextUrl != "null") {
             loadMore();
             return;
         }
 
-        if (searchResultsAdapter.getNextUrl() == null) {
-            progressBar.setVisibility(View.GONE);
-        }
         progressBar.setVisibility(View.INVISIBLE);
     }
 
