@@ -28,7 +28,6 @@ import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class LibraryAddSongsFragment extends BottomSheetDialogFragment {
     private AutoCompleteTextView searchEditText;
-    private FragmentContainerView searchResultsFragmentContainer;
 
     public String searchQuery = null;
     private String latestSearchQuery = null;
@@ -43,7 +42,6 @@ public class LibraryAddSongsFragment extends BottomSheetDialogFragment {
 
         // Link UI
         searchEditText = fragmentView.findViewById(R.id.search_text_field);
-        searchResultsFragmentContainer = fragmentView.findViewById(R.id.search_results_container_view);
 
         return fragmentView;
     }
@@ -53,6 +51,8 @@ public class LibraryAddSongsFragment extends BottomSheetDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Dialog dialog = new BottomSheetDialog(getContext(), R.style.Theme_Mp3Stream_BottomSheetDialog);
         dialog.setOnShowListener(dialogInterface -> {
+            ImageButton minimizeButton = dialog.findViewById(R.id.minimize_button);
+            minimizeButton.setOnClickListener(v -> dismiss());
         });
         return dialog;
     }
