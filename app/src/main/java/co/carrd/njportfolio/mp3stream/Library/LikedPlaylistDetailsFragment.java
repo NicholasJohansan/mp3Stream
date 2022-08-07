@@ -134,6 +134,7 @@ public class LikedPlaylistDetailsFragment extends Fragment {
     }
 
     public void playPlaylist(int startSongIndex) {
+        if (trackIds.size() == 0) return;
         List<int[]> chunkedIds = new ArrayList<>();
         int chunkSize = 40;
         int chunk = 0;

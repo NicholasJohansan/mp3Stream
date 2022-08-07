@@ -142,6 +142,7 @@ public class PlaylistDetailsFragment extends Fragment {
     }
 
     public void playPlaylist(int startSongIndex) {
+        if (playlist.getTrackIds().length == 0) return;
         List<int[]> chunkedIds = new ArrayList<>();
         int chunkSize = 40;
         int[] trackIds = playlist.getTrackIds();
