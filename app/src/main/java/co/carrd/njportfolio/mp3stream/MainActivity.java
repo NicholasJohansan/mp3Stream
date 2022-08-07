@@ -1,23 +1,19 @@
 package co.carrd.njportfolio.mp3stream;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.util.TypedValue;
 
-import com.colorgreen.swiper.OnSwipeTouchListener;
-import com.colorgreen.swiper.SwipeAction;
-import com.colorgreen.swiper.SwipeActionListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerFragment;
 import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerViewModel;
 import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
+import co.carrd.njportfolio.mp3stream.Library.LibraryViewModel;
 import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 
@@ -43,10 +39,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(navListener);
         bottomNav.setItemIconTintList(null); // This line is needed to have gradient icons work
 
-        // Open library fragment as first fragment
+        // Open search fragment as first fragment
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.main_fragment_container, libraryFragment).commit();
+                .replace(R.id.main_fragment_container, searchFragment).commit();
+        bottomNav.setSelectedItemId(R.id.bottom_nav_search);
 
         // Insert player fragment
         getSupportFragmentManager().beginTransaction()
@@ -56,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         // Ensure equalizer settings are restored on start
         new ViewModelProvider(this).get(EqualizerViewModel.class).syncEqualizer(MainApplication.getInstance().getEqualizer());
 
+        // Ensure library view model are restored
+        new ViewModelProvider(this).get(LibraryViewModel.class).syncData();
     }
 
     private NavigationBarView.OnItemSelectedListener navListener = item -> {

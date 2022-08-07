@@ -1,7 +1,5 @@
 package co.carrd.njportfolio.mp3stream.SoundcloudApi.Models;
 
-import java.net.URI;
-
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 
 public class Song {

@@ -1,12 +1,10 @@
 package co.carrd.njportfolio.mp3stream.Library;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,19 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Search.Classes.EndlessRecyclerViewScrollListener;
 import co.carrd.njportfolio.mp3stream.Search.Results.SearchResultsAdapter;
-import co.carrd.njportfolio.mp3stream.Search.SearchFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
-import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 

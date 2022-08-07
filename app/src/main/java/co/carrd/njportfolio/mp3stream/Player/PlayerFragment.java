@@ -1,7 +1,5 @@
 package co.carrd.njportfolio.mp3stream.Player;
 
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -38,11 +35,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.stream.IntStream;
 
 import co.carrd.njportfolio.mp3stream.Equalizer.EqualizerFragment;
-import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
 import co.carrd.njportfolio.mp3stream.Library.LibraryViewModel;
 import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
@@ -338,6 +332,12 @@ public class PlayerFragment extends Fragment {
         player.clearMediaItems();
         playerViewModel.getIsLoading().setValue(true);
         for (int i = 0; i < songsList.size(); i++) {
+            if (songsList.get(i).getPartialStreamUrl() == null) {
+                if (startSongIndex > i) {
+                    startSongIndex--;
+                }
+                continue;
+            }
             player.addMediaItem(new MediaItem.Builder()
                 .setUri(songsList.get(i).getPartialStreamUrl())
                 .setTag(new SongMediaMetaData(i, songsList.get(i)))

@@ -4,8 +4,6 @@ import android.app.Application;
 import android.media.audiofx.Equalizer;
 import android.net.Uri;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.upstream.DataSource;

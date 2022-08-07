@@ -1,13 +1,7 @@
 package co.carrd.njportfolio.mp3stream.SoundcloudApi;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,11 +13,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.ArtistCollection;
-import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
-import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PlaylistCollection;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.SongCollection;

@@ -1,7 +1,6 @@
 package co.carrd.njportfolio.mp3stream.Search.Details;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import co.carrd.njportfolio.mp3stream.MainApplication;
@@ -131,7 +129,6 @@ public class PlaylistDetailsFragment extends Fragment {
             return;
         }
         songsPage++;
-        Log.d("TRACKS", String.join(" ", Arrays.stream(playlist.getTrackIds()).mapToObj(e -> String.valueOf(e)).toArray(String[]::new)));
 
         ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
         soundcloudApi.getPlaylistTracks(paginatedTrackIds, playlistTracks -> {
@@ -145,7 +142,6 @@ public class PlaylistDetailsFragment extends Fragment {
     }
 
     public void playPlaylist(int startSongIndex) {
-        Log.d("PLAYLIST", String.join(" ", Arrays.stream(playlist.getTrackIds()).mapToObj(e -> String.valueOf(e)).toArray(String[]::new)));
         List<int[]> chunkedIds = new ArrayList<>();
         int chunkSize = 40;
         int[] trackIds = playlist.getTrackIds();

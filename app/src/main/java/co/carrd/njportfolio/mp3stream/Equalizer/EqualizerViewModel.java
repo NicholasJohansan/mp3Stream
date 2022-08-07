@@ -3,7 +3,6 @@ package co.carrd.njportfolio.mp3stream.Equalizer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.audiofx.Equalizer;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,6 +14,16 @@ public class EqualizerViewModel extends ViewModel {
     private MutableLiveData<int[]> bandLevels = new MutableLiveData<>(new int[5]);
     private MutableLiveData<Integer> selectedPresetIndex = new MutableLiveData<>(0);
     private MutableLiveData<Boolean> enabled = new MutableLiveData<>(false);
+
+    public MutableLiveData<int[]> getBandLevels() {
+        return bandLevels;
+    }
+    public MutableLiveData<Integer> getSelectedPresetIndex() {
+        return selectedPresetIndex;
+    }
+    public MutableLiveData<Boolean> getEnabled() {
+        return enabled;
+    }
 
     public void syncEqualizer(Equalizer equalizer) {
         selectedPresetIndex.setValue(sharedPreferences.getInt("selectedPresetIndex", 0));
@@ -40,10 +49,6 @@ public class EqualizerViewModel extends ViewModel {
         editor.commit();
     }
 
-    public MutableLiveData<int[]> getBandLevels() {
-        return bandLevels;
-    }
-
     public void usePreset(Equalizer equalizer, short presetNumber) {
         equalizer.usePreset(presetNumber);
         syncBandLevels(equalizer);
@@ -66,17 +71,10 @@ public class EqualizerViewModel extends ViewModel {
         updateEqualizer(equalizer);
     }
 
-    public MutableLiveData<Integer> getSelectedPresetIndex() {
-        return selectedPresetIndex;
-    }
 
     public void toggleEnabled(Equalizer equalizer) {
         enabled.setValue(!enabled.getValue());
         equalizer.setEnabled(enabled.getValue());
         updateEqualizer(equalizer);
-    }
-
-    public MutableLiveData<Boolean> getEnabled() {
-        return enabled;
     }
 }

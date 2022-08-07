@@ -11,10 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 import co.carrd.njportfolio.mp3stream.R;
-import co.carrd.njportfolio.mp3stream.Search.ViewHolders.PlaylistResultViewHolder;
 
 public class LibraryPlaylistsAdapter extends RecyclerView.Adapter<LibraryPlaylistsAdapter.LibraryPlaylistViewHolder> {
     private LibraryFragment libraryFragment;

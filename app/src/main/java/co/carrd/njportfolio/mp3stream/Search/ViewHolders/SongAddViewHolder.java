@@ -1,6 +1,5 @@
 package co.carrd.njportfolio.mp3stream.Search.ViewHolders;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,10 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
 import co.carrd.njportfolio.mp3stream.Library.LibraryViewModel;
-import co.carrd.njportfolio.mp3stream.Library.LikedPlaylistDetailsFragment;
-import co.carrd.njportfolio.mp3stream.Player.PlayerFragment;
 import co.carrd.njportfolio.mp3stream.R;
-import co.carrd.njportfolio.mp3stream.Search.Details.PlaylistDetailsFragment;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 

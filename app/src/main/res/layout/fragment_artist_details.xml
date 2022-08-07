@@ -197,6 +197,7 @@
             android:id="@+id/artist_details_tab_layout"
             app:tabMode="fixed">
 
+<!-- Commented for reference as to what will be in the tab layout -->
 <!--                        <com.google.android.material.tabs.TabItem-->
 <!--                            android:layout_width="wrap_content"-->
 <!--                            android:layout_height="wrap_content"-->

@@ -3,8 +3,6 @@ package co.carrd.njportfolio.mp3stream.SoundcloudApi.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.net.URI;
-
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 
 public class Playlist implements Parcelable {

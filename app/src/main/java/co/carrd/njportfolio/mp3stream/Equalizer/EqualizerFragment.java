@@ -1,31 +1,20 @@
 package co.carrd.njportfolio.mp3stream.Equalizer;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Rect;
-import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,11 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
-import java.util.Arrays;
-
-import co.carrd.njportfolio.mp3stream.MainActivity;
 import co.carrd.njportfolio.mp3stream.MainApplication;
-import co.carrd.njportfolio.mp3stream.Player.PlayerViewModel;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 

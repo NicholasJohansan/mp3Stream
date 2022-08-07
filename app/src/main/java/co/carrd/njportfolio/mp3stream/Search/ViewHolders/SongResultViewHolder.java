@@ -1,6 +1,5 @@
 package co.carrd.njportfolio.mp3stream.Search.ViewHolders;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import co.carrd.njportfolio.mp3stream.Library.LibraryFragment;
@@ -42,7 +42,7 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
         playButton = itemView.findViewById(R.id.song_result_play_button);
         likeButton = itemView.findViewById(R.id.song_result_like_button);
 
-        libraryViewModel = LibraryFragment.getInstance().getLibraryViewModel();
+        libraryViewModel = new ViewModelProvider(parentFragment.requireActivity()).get(LibraryViewModel.class);
         this.parentFragment = parentFragment;
     }
 
@@ -62,7 +62,6 @@ public class SongResultViewHolder extends RecyclerView.ViewHolder {
             String simpleName = parentFragment.getClass().getSimpleName();
             if (simpleName.equals(PlaylistDetailsFragment.class.getSimpleName())) {
                 // Play as playlist
-                Log.d("PLAYLIST", getLayoutPosition() + " " + getBindingAdapterPosition() + " " + getAbsoluteAdapterPosition() + " " + getOldPosition());
                 ((PlaylistDetailsFragment) parentFragment).playPlaylist(getLayoutPosition());
             } else if (simpleName.equals(LikedPlaylistDetailsFragment.class.getSimpleName())) {
                 ((LikedPlaylistDetailsFragment) parentFragment).playPlaylist(getLayoutPosition());

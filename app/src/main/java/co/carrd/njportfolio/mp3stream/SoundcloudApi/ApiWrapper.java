@@ -1,42 +1,23 @@
 package co.carrd.njportfolio.mp3stream.SoundcloudApi;
 
 import android.net.Uri;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.ArtistCollection;
-import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PartialArtist;
-import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.PlaylistCollection;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.SongCollection;
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
  * Implementation of a wrapper for Soundcloud API
@@ -116,7 +97,7 @@ public class ApiWrapper {
   public void getArtistTracks(int artistId, Consumer<SongCollection> consumer) {
     String url = "https://api-v2.soundcloud.com/users/" + artistId + "/tracks"
             + "?client_id=" + clientId
-            + "&limit=20";
+            + "&limit=20" + "";
     apiUtils.fetchSongCollection(url, consumer);;
   }
 

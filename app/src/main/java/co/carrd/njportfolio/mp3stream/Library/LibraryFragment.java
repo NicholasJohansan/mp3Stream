@@ -15,17 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.appbar.MaterialToolbar;
-
-import java.util.List;
-
-import co.carrd.njportfolio.mp3stream.MainActivity;
-import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
-import co.carrd.njportfolio.mp3stream.Search.Classes.EndlessRecyclerViewScrollListener;
-import co.carrd.njportfolio.mp3stream.Search.Results.SearchResultsAdapter;
-import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiWrapper;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
 public class LibraryFragment extends Fragment {
@@ -86,7 +76,6 @@ public class LibraryFragment extends Fragment {
             LibraryAddSongsFragment libraryAddSongsFragment = new LibraryAddSongsFragment();
             libraryAddSongsFragment.show(getChildFragmentManager(), libraryAddSongsFragment.getTag());
         });
-
     }
 
     public LibraryViewModel getLibraryViewModel() {

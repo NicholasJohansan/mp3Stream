@@ -1,9 +1,7 @@
 package co.carrd.njportfolio.mp3stream.Search.Classes;
 
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 // Adapted from https://guides.codepath.com/android/endless-scrolling-with-adapterviews-and-recyclerview
 

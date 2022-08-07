@@ -19,7 +19,6 @@ import com.google.android.exoplayer2.ExoPlayer;
 
 import co.carrd.njportfolio.mp3stream.Library.LibraryViewModel;
 import co.carrd.njportfolio.mp3stream.R;
-import co.carrd.njportfolio.mp3stream.SoundcloudApi.ApiUtils;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 
