@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import co.carrd.njportfolio.mp3stream.Library.LibraryAddSongsFragment;
 import co.carrd.njportfolio.mp3stream.MainApplication;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Search.Classes.EndlessRecyclerViewScrollListener;
@@ -25,7 +26,7 @@ import co.carrd.njportfolio.mp3stream.Utils.UiUtils;
 public class SearchResultsFragment extends Fragment {
     private String label;
     private TextView labelTextView;
-    private SearchFragment searchFragment;
+    private Fragment searchFragment;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private SearchResultsAdapter searchResultsAdapter;
@@ -35,7 +36,7 @@ public class SearchResultsFragment extends Fragment {
 
     private boolean viewInitialised = false;
 
-    public SearchResultsFragment(String label, SearchFragment searchFragment) {
+    public SearchResultsFragment(String label, Fragment searchFragment) {
         super();
         this.label = label;
         this.searchFragment = searchFragment;
@@ -108,7 +109,11 @@ public class SearchResultsFragment extends Fragment {
         // Ensure that search is also performed if the fragment has not been initialised
         viewInitialised = true;
         labelTextView.setText(label);
-        submitSearch(searchFragment.searchQuery);
+        if (searchFragment.getClass().getSimpleName().equals(SearchFragment.class.getSimpleName())) {
+            submitSearch(((SearchFragment) searchFragment).searchQuery);
+        } else {
+            submitSearch(((LibraryAddSongsFragment) searchFragment).searchQuery);
+        }
     }
 
     public void submitSearch(String searchQuery) {

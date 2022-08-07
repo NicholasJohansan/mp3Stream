@@ -35,6 +35,7 @@ public class LibraryFragment extends Fragment {
     private RecyclerView libraryPlaylistsRecyclerView;
     private LibraryPlaylistsAdapter libraryPlaylistsAdapter;
 
+    private TextView addSongsButton;
     private ConstraintLayout noSongsIndicator;
 
     public static LibraryFragment getInstance() {
@@ -53,6 +54,7 @@ public class LibraryFragment extends Fragment {
         // Link UI
         libraryPlaylistsRecyclerView = fragmentView.findViewById(R.id.library_fragment_playlists_recycler_view);
         noSongsIndicator = fragmentView.findViewById(R.id.library_fragment_no_songs_indicator);
+        addSongsButton = fragmentView.findViewById(R.id.library_fragment_song_add);
 
         libraryViewModel = new ViewModelProvider(requireActivity()).get(LibraryViewModel.class);
         return fragmentView;
@@ -77,6 +79,12 @@ public class LibraryFragment extends Fragment {
             } else {
                 noSongsIndicator.setVisibility(View.GONE);
             }
+        });
+
+        // Set up add song button
+        addSongsButton.setOnClickListener(v -> {
+            LibraryAddSongsFragment libraryAddSongsFragment = new LibraryAddSongsFragment();
+            libraryAddSongsFragment.show(getChildFragmentManager(), libraryAddSongsFragment.getTag());
         });
 
     }
