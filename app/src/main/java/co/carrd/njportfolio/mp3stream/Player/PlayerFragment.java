@@ -2,7 +2,6 @@ package co.carrd.njportfolio.mp3stream.Player;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -258,7 +257,6 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public void onTimelineChanged(Timeline timeline, int reason) {
-                Log.d("PLAYE", "timeline");
                 List<Song> queue = new ArrayList<>();
                 int windowCount = timeline.getWindowCount();
                 for (int i = 0; i < windowCount; i++) {
@@ -331,9 +329,10 @@ public class PlayerFragment extends Fragment {
         player.stop();
         player.clearMediaItems();
         playerViewModel.getIsLoading().setValue(true);
+        int originalStartSongIndex = startSongIndex;
         for (int i = 0; i < songsList.size(); i++) {
             if (songsList.get(i).getPartialStreamUrl() == null) {
-                if (startSongIndex > i) {
+                if (originalStartSongIndex > i) {
                     startSongIndex--;
                 }
                 continue;
