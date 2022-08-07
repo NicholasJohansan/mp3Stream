@@ -55,7 +55,7 @@ public class LibraryViewModel extends ViewModel {
 
     public void toggleSave(int songId) {
         List<Integer> savedSongsIdList = getSavedSongsIdList().getValue();
-        if (songIsLiked(songId)) {
+        if (getSongIsSaved(songId)) {
             savedSongsIdList.remove((Integer) songId);
         } else {
             savedSongsIdList.add(songId);

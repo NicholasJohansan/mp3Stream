@@ -62,7 +62,7 @@ public class SearchResultsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Set up recycler view
-        searchResultsAdapter = new SearchResultsAdapter(this);
+        searchResultsAdapter = new SearchResultsAdapter(this, label.equals("AddSongs"));
         recyclerView.setAdapter(searchResultsAdapter);
         LinearLayoutManager recyclerViewLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
@@ -72,7 +72,7 @@ public class SearchResultsFragment extends Fragment {
                 if (searchResultsAdapter.getNextUrl() != null) {
                     progressBar.setVisibility(View.VISIBLE);
                     ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
-                    if (label.equals("Songs")) {
+                    if (label.equals("Songs") || label.equals("AddSongs")) {
                         soundcloudApi.getNextTracks(searchResultsAdapter.getNextUrl(), songCol -> {
                             UiUtils.runOnUiThread(getActivity(), () -> {
                                 List<? extends Object> castedResults = songCol.getSongs();
@@ -134,7 +134,7 @@ public class SearchResultsFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
 
             ApiWrapper soundcloudApi = MainApplication.getInstance().getSoundcloudApi();
-            if (label.equals("Songs")) {
+            if (label.equals("Songs") || label.equals("AddSongs")) {
                 soundcloudApi.searchTracks(searchQuery, songCol -> {
                     UiUtils.runOnUiThread(getActivity(), () -> {
                         List<? extends Object> castedResults = songCol.getSongs();

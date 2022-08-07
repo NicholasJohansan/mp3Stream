@@ -20,6 +20,7 @@ import java.util.List;
 import co.carrd.njportfolio.mp3stream.R;
 import co.carrd.njportfolio.mp3stream.Search.ViewHolders.ArtistResultViewHolder;
 import co.carrd.njportfolio.mp3stream.Search.ViewHolders.PlaylistResultViewHolder;
+import co.carrd.njportfolio.mp3stream.Search.ViewHolders.SongAddViewHolder;
 import co.carrd.njportfolio.mp3stream.Search.ViewHolders.SongResultViewHolder;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Artist;
 import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Playlist;
@@ -28,10 +29,18 @@ import co.carrd.njportfolio.mp3stream.SoundcloudApi.Models.Song;
 public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private MutableLiveData<List<Object>> searchResults;
     private String nextUrl;
+    private boolean addVariant = false;
 
     private Fragment parentFragment;
 
     public SearchResultsAdapter(Fragment parent) {
+        parentFragment = parent;
+        searchResults = new MutableLiveData<>();
+        searchResults.setValue(new ArrayList<>());
+    }
+
+    public SearchResultsAdapter(Fragment parent, boolean addVariant) {
+        this.addVariant = addVariant;
         parentFragment = parent;
         searchResults = new MutableLiveData<>();
         searchResults.setValue(new ArrayList<>());
@@ -56,6 +65,10 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         if (viewType == 0) {
+            if (addVariant) {
+                View songResultView = inflater.inflate(R.layout.item_song_add_result, parent, false);
+                return new SongAddViewHolder(songResultView, parentFragment);
+            }
             View songResultView = inflater.inflate(R.layout.item_song_result, parent, false);
             return new SongResultViewHolder(songResultView, parentFragment);
         } else if (viewType == 1) {
@@ -74,7 +87,11 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.View
         int itemViewType = holder.getItemViewType();
         if (itemViewType == 0) {
             Song song = (Song) searchResults.getValue().get(position);
-            ((SongResultViewHolder) holder).bindSong(song);
+            if (addVariant) {
+                ((SongAddViewHolder) holder).bindSong(song);
+            } else {
+                ((SongResultViewHolder) holder).bindSong(song);
+            }
         } else if (itemViewType == 1) {
             Playlist playlist = (Playlist) searchResults.getValue().get(position);
             ((PlaylistResultViewHolder) holder).bindPlaylist(playlist);

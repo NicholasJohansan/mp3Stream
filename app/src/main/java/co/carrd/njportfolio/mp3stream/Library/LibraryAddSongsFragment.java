@@ -33,7 +33,7 @@ public class LibraryAddSongsFragment extends BottomSheetDialogFragment {
     private String latestSearchQuery = null;
     private boolean searchOpened = false;
 
-    private SearchResultsFragment searchResultsFragment = new SearchResultsFragment("Songs", this);
+    private SearchResultsFragment searchResultsFragment = new SearchResultsFragment("AddSongs", this);
 
     @Nullable
     @Override
